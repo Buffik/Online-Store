@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../../Components/header';
+import Cart from '../../Pages/Cart/cart';
 import Main from '../../Pages/Main';
 import Other from '../../Pages/Other';
 import PageNotFound from '../../Pages/PageNotFound';
@@ -17,6 +18,7 @@ export default function RootRouter() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/other" element={<Other />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>

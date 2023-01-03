@@ -36,6 +36,12 @@ export default function Header() {
         >
           Other page
         </NavLink>
+        <NavLink
+          className={({ isActive }: { isActive: boolean }) => activeStyles(isActive)}
+          to="/cart"
+        >
+          Cart
+        </NavLink>
       </nav>
     </div>
   );
