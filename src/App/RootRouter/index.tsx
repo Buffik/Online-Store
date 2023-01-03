@@ -4,6 +4,7 @@ import Header from '../../Components/header';
 import Cart from '../../Pages/Cart/cart';
 import Main from '../../Pages/Main';
 import Other from '../../Pages/Other';
+import PageNotFound from '../../Pages/PageNotFound';
 
 // Компонент который осуществляет роутинг по страницам SPA,
 // header вынесен из роутов,то он будет постоянным
@@ -18,6 +19,7 @@ export default function RootRouter() {
         <Route path="/" element={<Main />} />
         <Route path="/other" element={<Other />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );
