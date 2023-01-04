@@ -4,23 +4,16 @@ import ProductAddDropButton from '../../Components/UI/button/ProductAddDropButto
 // import TestForMain from '../../Components/TestForMain';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
 
-type TProps = {
+type TMainProps = {
   productsInCart: TProductPartialProps[];
-  // productsInCartCount: TProductPartialProps[];
-  // products: TProductsItem[] | null;
-  // eslint-disable-next-line no-unused-vars
-  // increaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
-  // eslint-disable-next-line no-unused-vars
-  // decreaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
   // eslint-disable-next-line no-unused-vars
   addToCart(id: number): void;
   // eslint-disable-next-line no-unused-vars
   dropFromCart(id: number): void;
 }
 
-function Main(props: TProps) {
+function Main(props: TMainProps) {
   const { productsInCart, addToCart, dropFromCart } = props;
-  // const testArr = [1, 2, 3, 4];
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
@@ -32,20 +25,6 @@ function Main(props: TProps) {
   useEffect(() => {
     fetchProducts();
   }, []);
-
-  // type TProductsItem = {
-  //   id: number;
-  //   title: string;
-  //   description: string;
-  //   price: number;
-  //   category: string;
-  //   brand: string;
-  //   discountPercentage: number;
-  //   images: string[];
-  //   rating: number;
-  //   stock: number;
-  //   thumbnail: string;
-  // }
 
   return (
     <>
@@ -87,8 +66,6 @@ function Main(props: TProps) {
                 <ProductAddDropButton
                   value={item.id}
                   productsInCart={productsInCart}
-                  // isProductInCart={isProductInCart(item.id)}
-                  // onClick={}
                   addToCart={addToCart}
                   dropFromCart={dropFromCart}
                 />

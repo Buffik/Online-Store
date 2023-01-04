@@ -2,12 +2,8 @@ import React from 'react';
 import { TProductPartialProps } from '../../../types/types';
 
 type ProductAddDropButtonProps = {
-  // children: React.ReactNode;
-  // eslint-disable-next-line no-unused-vars
-  // onClick(event:React.MouseEvent<HTMLButtonElement>): void;
   value: number | undefined;
   productsInCart: TProductPartialProps[];
-  // isProductInCart: boolean;
   // eslint-disable-next-line no-unused-vars
   addToCart(id: number | undefined): void;
   // eslint-disable-next-line no-unused-vars
@@ -16,10 +12,8 @@ type ProductAddDropButtonProps = {
 
 function ProductAddDropButton(props: ProductAddDropButtonProps) {
   const {
-    // onClick,
     value,
     productsInCart,
-    // isProductInCart
     addToCart,
     dropFromCart,
   } = props;

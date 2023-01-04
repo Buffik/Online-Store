@@ -7,11 +7,6 @@ import { TProductsItem, TProductPartialProps } from '../types/types';
 // import { isTemplateExpression } from 'typescript';
 
 function App() {
-  // type TCartItem = {
-  //   id: number;
-  //   count: number;
-  // }
-  // const [cartItems, setCartItems] = useState<TCartItem[]>([]);
   const arr = [{ id: 1, count: 1 }, { id: 3, count: 1 }, { id: 4, count: 1 }];
   const [productsInCart, setProductsInCart] = useState<TProductPartialProps[]>(arr);
   const [productsInCartCount, setproductsInCartCount] = useState<TProductPartialProps[]>(arr);

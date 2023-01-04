@@ -7,16 +7,7 @@ import Other from '../../Pages/Other';
 import PageNotFound from '../../Pages/PageNotFound';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
 
-// Компонент который осуществляет роутинг по страницам SPA,
-// header вынесен из роутов,то он будет постоянным
-// Можно сдеать каждому компоненту к которому мы роутим свой хедер внутри компонента,
-// если нам нужен индивидуальный хедер на каждой страницы или убрать где-то хедер
-// type TCartItem = {
-//   id: number;
-//   count: number;
-// }
-
-type TProps = {
+type TRootRouterProps = {
   productsInCart: TProductPartialProps[];
   productsInCartCount: TProductPartialProps[];
   products: TProductsItem[] | null;
@@ -30,7 +21,7 @@ type TProps = {
   dropFromCart(id: number): void;
 }
 
-export default function RootRouter(props: TProps) {
+export default function RootRouter(props: TRootRouterProps) {
   const {
     productsInCart,
     productsInCartCount,
@@ -59,7 +50,6 @@ export default function RootRouter(props: TProps) {
           path="/cart"
           element={(
             <Cart
-              // productsInCart={productsInCart}
               productsInCartCount={productsInCartCount}
               products={products}
               increaseProductCount={increaseProductCount}
