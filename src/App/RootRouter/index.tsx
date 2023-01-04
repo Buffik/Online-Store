@@ -33,7 +33,7 @@ export default function RootRouter(props: TRootRouterProps) {
   } = props;
   return (
     <div>
-      <Header productsInCart={productsInCartCount} />
+      <Header productsInCart={productsInCartCount} products={products} />
       <Routes>
         <Route
           path="/"
