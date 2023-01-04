@@ -64,7 +64,7 @@ function Main(props: TMainProps) {
                   <dd>{item.stock}</dd>
                 </dl>
                 <ProductAddDropButton
-                  value={item.id}
+                  productId={item.id}
                   productsInCart={productsInCart}
                   addToCart={addToCart}
                   dropFromCart={dropFromCart}

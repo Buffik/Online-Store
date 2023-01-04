@@ -2,7 +2,7 @@ import React from 'react';
 import { TProductPartialProps } from '../../../types/types';
 
 type ProductAddDropButtonProps = {
-  value: number | undefined;
+  productId: number | undefined;
   productsInCart: TProductPartialProps[];
   // eslint-disable-next-line no-unused-vars
   addToCart(id: number | undefined): void;
@@ -12,7 +12,7 @@ type ProductAddDropButtonProps = {
 
 function ProductAddDropButton(props: ProductAddDropButtonProps) {
   const {
-    value,
+    productId,
     productsInCart,
     addToCart,
     dropFromCart,
@@ -26,16 +26,16 @@ function ProductAddDropButton(props: ProductAddDropButtonProps) {
   };
 
   const handleClick = (): void => {
-    if (isProductInCart(value)) {
-      dropFromCart(value);
+    if (isProductInCart(productId)) {
+      dropFromCart(productId);
     } else {
-      addToCart(value);
+      addToCart(productId);
     }
   };
 
   return (
-    <button type="button" value={value} onClick={handleClick}>
-      {(isProductInCart(value)) ? 'Drop From Cart' : 'Add to Cart'}
+    <button type="button" onClick={handleClick}>
+      {(isProductInCart(productId)) ? 'Drop From Cart' : 'Add to Cart'}
     </button>
   );
 }
