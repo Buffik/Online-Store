@@ -99,8 +99,6 @@ function Cart() {
     setCodeAdded(result);
   };
 
-  console.log(codeAdded);
-
   if (isPending) {
     return (
       <div>
