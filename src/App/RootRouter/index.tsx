@@ -17,24 +17,43 @@ import { TProductsItem, TProductPartialProps } from '../../types/types';
 // }
 
 type TProps = {
-  // productsInCart: TProductPartialProps[];
+  productsInCart: TProductPartialProps[];
   productsInCartCount: TProductPartialProps[];
   products: TProductsItem[] | null;
   // eslint-disable-next-line no-unused-vars
   increaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
   // eslint-disable-next-line no-unused-vars
   decreaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
+  // eslint-disable-next-line no-unused-vars
+  addToCart(id: number): void;
+  // eslint-disable-next-line no-unused-vars
+  dropFromCart(id: number): void;
 }
 
 export default function RootRouter(props: TProps) {
   const {
-    productsInCartCount, products, increaseProductCount, decreaseProductCount,
+    productsInCart,
+    productsInCartCount,
+    products,
+    increaseProductCount,
+    decreaseProductCount,
+    addToCart,
+    dropFromCart,
   } = props;
   return (
     <div>
-      <Header productsInCartCount={productsInCartCount} />
+      <Header productsInCart={productsInCartCount} />
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route
+          path="/"
+          element={(
+            <Main
+              productsInCart={productsInCart}
+              addToCart={addToCart}
+              dropFromCart={dropFromCart}
+            />
+          )}
+        />
         <Route path="/other" element={<Other />} />
         <Route
           path="/cart"

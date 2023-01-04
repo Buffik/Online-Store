@@ -1,9 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import ProductAddDropButton from '../../Components/UI/button/ProductAddDropButton';
 // import TestForMain from '../../Components/TestForMain';
+import { TProductsItem, TProductPartialProps } from '../../types/types';
 
-function Main() {
-  // const { cartItems } = props;
+type TProps = {
+  productsInCart: TProductPartialProps[];
+  // productsInCartCount: TProductPartialProps[];
+  // products: TProductsItem[] | null;
+  // eslint-disable-next-line no-unused-vars
+  // increaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
+  // eslint-disable-next-line no-unused-vars
+  // decreaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
+  // eslint-disable-next-line no-unused-vars
+  addToCart(id: number): void;
+  // eslint-disable-next-line no-unused-vars
+  dropFromCart(id: number): void;
+}
+
+function Main(props: TProps) {
+  const { productsInCart, addToCart, dropFromCart } = props;
   // const testArr = [1, 2, 3, 4];
   const [products, setProducts] = useState([]);
 
@@ -17,19 +33,19 @@ function Main() {
     fetchProducts();
   }, []);
 
-  type TProductsItem = {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    category: string;
-    brand: string;
-    discountPercentage: number;
-    images: string[];
-    rating: number;
-    stock: number;
-    thumbnail: string;
-  }
+  // type TProductsItem = {
+  //   id: number;
+  //   title: string;
+  //   description: string;
+  //   price: number;
+  //   category: string;
+  //   brand: string;
+  //   discountPercentage: number;
+  //   images: string[];
+  //   rating: number;
+  //   stock: number;
+  //   thumbnail: string;
+  // }
 
   return (
     <>
@@ -68,7 +84,14 @@ function Main() {
                   <dt>Stock: </dt>
                   <dd>{item.stock}</dd>
                 </dl>
-                <button type="button">Add to cart</button>
+                <ProductAddDropButton
+                  value={item.id}
+                  productsInCart={productsInCart}
+                  // isProductInCart={isProductInCart(item.id)}
+                  // onClick={}
+                  addToCart={addToCart}
+                  dropFromCart={dropFromCart}
+                />
                 <Link to={`/${item.id}`}>Details</Link>
               </div>
             ))

@@ -8,7 +8,7 @@ import { TProductPartialProps } from '../../types/types';
 
 type TProps = {
   // productsInCart: TProductPartialProps[];
-  productsInCartCount: TProductPartialProps[];
+  productsInCart: TProductPartialProps[];
   // products: TProductsItem[] | null;
   // eslint-disable-next-line no-unused-vars
   // increaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
@@ -19,7 +19,7 @@ type TProps = {
 // компонент созданный при помощи function declaration,
 // можно писать и используя expression. В другом компоненте будет пример
 export default function Header(props: TProps) {
-  const { productsInCartCount } = props;
+  const { productsInCart } = props;
   // console.log(`header: ${productsInCartCount.reduce((acc, elem) => acc + elem.count, 0)}`);
   // const { cartItems } = props;
   // можно не обращать внимание на useMemo, это уже более продвинутый уровень
@@ -58,7 +58,7 @@ export default function Header(props: TProps) {
         </NavLink>
         <p style={{ marginLeft: '20px' }}>
           Count:
-          {productsInCartCount.reduce((acc, elem) => acc + elem.count, 0)}
+          {productsInCart.reduce((acc, elem) => acc + elem.count, 0)}
         </p>
       </nav>
     </div>

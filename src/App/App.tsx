@@ -4,6 +4,7 @@ import RootRouter from './RootRouter';
 import PostService from '../Components/API/PostService';
 import useFetching from '../hooks/useFetching';
 import { TProductsItem, TProductPartialProps } from '../types/types';
+// import { isTemplateExpression } from 'typescript';
 
 function App() {
   // type TCartItem = {
@@ -62,14 +63,37 @@ function App() {
     setproductsInCartCount(result);
   };
 
+  const isProductInCart = (id?: number): boolean => {
+    if (productsInCart.find((item) => item.id === id)) {
+      return true;
+    }
+    return false;
+  };
+
+  const addToCart = (id: number) => {
+    if (!isProductInCart(id)) {
+      setProductsInCart([...productsInCart, { id, count: 1 }]);
+      setproductsInCartCount([...productsInCartCount, { id, count: 1 }]);
+    }
+  };
+
+  const dropFromCart = (id: number) => {
+    if (isProductInCart(id)) {
+      setProductsInCart(productsInCart.filter((item) => item.id !== id));
+      setproductsInCartCount(productsInCartCount.filter((item) => item.id !== id));
+    }
+  };
+
   return (
     <HashRouter>
       <RootRouter
-        // productsInCart={productsInCart}
+        productsInCart={productsInCart}
         productsInCartCount={productsInCartCount}
         products={products}
         increaseProductCount={increaseProductCount}
         decreaseProductCount={decreaseProductCount}
+        addToCart={addToCart}
+        dropFromCart={dropFromCart}
       />
     </HashRouter>
 
