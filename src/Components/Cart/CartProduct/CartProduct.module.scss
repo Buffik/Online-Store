@@ -1,0 +1,73 @@
+.cardProduct {
+  margin: auto;
+  margin-bottom: 20px;
+  max-width: 100%;
+  padding: 1rem;
+  border: 2px solid teal;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.infoWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 15px;
+  & hr {
+    width: 100%;
+    height: 2px;
+    background-color: teal;
+    border-radius: 5px;
+  }
+}
+
+.infoImg {
+  width: 30%;
+  height: auto;
+  border: 2px solid teal;
+  border-radius: 10px;
+}
+
+.buttonsWrapper {
+  width: 100%;
+  max-width: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.textAbout, .textStock {
+  text-align: center;
+}
+
+.textStock {
+  margin-bottom: 10px;
+}
+
+.textCount {
+  padding: 5px 10px;
+  background-color: teal;
+  color: white;
+  border-radius: 5px;
+}
+
+.ratingWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  & div {
+    color: teal;
+  }
+}
+
+.textPrice {
+  margin-top: 10px;
+  font-weight: bold;
+  color: teal
+}
+
