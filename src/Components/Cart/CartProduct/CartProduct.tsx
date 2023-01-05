@@ -7,6 +7,7 @@ import styles from './CartProduct.module.scss';
 function CartProduct(props:TProductsCart) {
   // eslint-disable-next-line max-len
   const {
+    id,
     title,
     description,
     price,
@@ -61,9 +62,9 @@ function CartProduct(props:TProductsCart) {
           Available stock:
           {stock}
         </div>
-        <ProductCartButton value={data.id} onClick={onClickHandlerIncrease}><div>+</div></ProductCartButton>
+        <ProductCartButton value={id} onClick={onClickHandlerIncrease}><div>+</div></ProductCartButton>
         <div className={styles.textCount}>{data.count}</div>
-        <ProductCartButton value={data.id} onClick={onClickHandlerDecrease}><div>{data.count === 1 ? 'Delete from cart' : '-'}</div></ProductCartButton>
+        <ProductCartButton value={id} onClick={onClickHandlerDecrease}><div>{data.count === 1 ? 'Delete from cart' : '-'}</div></ProductCartButton>
         <div className={styles.textPrice}>
           €
           {price * data.count}

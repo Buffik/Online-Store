@@ -62,16 +62,17 @@ function Cart(props: TCartProps) {
   // }
   const params = { limit: productsPerPage.toString(), page: currentPage.toString() };
 
-  useEffect(() => {
-    setSearchParams(params);
-  }, [currentPage, productsPerPage]);
-
-  const lastProductIndex = currentPage * productsPerPage;
-  const firstProductIndex = lastProductIndex - productsPerPage;
+  let lastProductIndex = currentPage * productsPerPage;
+  let firstProductIndex = lastProductIndex - productsPerPage;
   let maxPages = 1;
   if (products && products.length) {
     maxPages = Math.ceil(products.length / productsPerPage);
   }
+  useEffect(() => {
+    setSearchParams(params);
+    lastProductIndex = currentPage * productsPerPage;
+    firstProductIndex = lastProductIndex - productsPerPage;
+  }, [currentPage, productsPerPage, products]);
 
   const currentProducts = products?.slice(firstProductIndex, lastProductIndex);
 
@@ -142,6 +143,7 @@ function Cart(props: TCartProps) {
         { currentProducts?.map((product: TProductsItem, index) => (
           <CartProduct
             key={product.id}
+            id={product.id}
             title={product.title}
             description={product.description}
             price={product.price}
