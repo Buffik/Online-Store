@@ -7,7 +7,8 @@ import { TProductsItem, TProductPartialProps } from '../types/types';
 // import { isTemplateExpression } from 'typescript';
 
 function App() {
-  const arr = [{ id: 1, count: 1 }, { id: 3, count: 1 }, { id: 4, count: 1 }];
+  // eslint-disable-next-line max-len
+  const arr = [{ id: 1, count: 1 }, { id: 3, count: 1 }, { id: 4, count: 1 }, { id: 11, count: 1 }, { id: 15, count: 1 }, { id: 27, count: 1 }, { id: 37, count: 1 }];
   const [productsInCart, setProductsInCart] = useState<TProductPartialProps[]>(arr);
   const [productsInCartCount, setProductsInCartCount] = useState<TProductPartialProps[]>(arr);
   const [products, setProducts] = useState<TProductsItem[] | null>(null);

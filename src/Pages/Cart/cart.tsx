@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 // import React, { useEffect, useState } from 'react';
 // import PostService from '../../Components/API/PostService';
 import CartProduct from '../../Components/Cart/CartProduct/CartProduct';
@@ -38,8 +39,15 @@ function Cart(props: TCartProps) {
   const [codeAdded, setCodeAdded] = useState<number[]>([]);
 
   //  Блок с пагинацией
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(3);
+
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const initialStateToProductsPerPage = Number(searchParams.get('limit')) || 3;
+  const initialStateToCurrentPage = Number(searchParams.get('page')) || 1;
+
+  const [currentPage, setCurrentPage] = useState(initialStateToCurrentPage);
+  const [productsPerPage, setProductsPerPage] = useState(initialStateToProductsPerPage);
 
   const handleProductsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const currenValue = Number(event.target.value);
@@ -47,6 +55,16 @@ function Cart(props: TCartProps) {
       setProductsPerPage(currenValue);
     }
   };
+
+  // type TParams = {
+  //   limit?: string
+  //   page?: string
+  // }
+  const params = { limit: productsPerPage.toString(), page: currentPage.toString() };
+
+  useEffect(() => {
+    setSearchParams(params);
+  }, [currentPage, productsPerPage]);
 
   const lastProductIndex = currentPage * productsPerPage;
   const firstProductIndex = lastProductIndex - productsPerPage;
