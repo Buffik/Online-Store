@@ -1,8 +1,10 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 // import React, { useEffect, useState } from 'react';
 // import PostService from '../../Components/API/PostService';
 import CartProduct from '../../Components/Cart/CartProduct/CartProduct';
+import CartPagination from '../../Components/Cart/Pagination/CartPagination';
 import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
 import Promo from '../../Components/Cart/Promo/Promo';
 // eslint-disable-next-line no-unused-vars
@@ -35,6 +37,61 @@ function Cart(props: TCartProps) {
   const [isCodeValid, setIsCodeValid] = useState(false);
   const [isCodeAdd, setIsCodeAdd] = useState(false);
   const [codeAdded, setCodeAdded] = useState<number[]>([]);
+
+  //  Блок с пагинацией
+
+  // eslint-disable-next-line no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const initialStateToProductsPerPage = Number(searchParams.get('limit')) || 3;
+  const initialStateToCurrentPage = Number(searchParams.get('page')) || 1;
+
+  const [currentPage, setCurrentPage] = useState(initialStateToCurrentPage);
+  const [productsPerPage, setProductsPerPage] = useState(initialStateToProductsPerPage);
+
+  const handleProductsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const currenValue = Number(event.target.value);
+    if (products && currenValue <= products.length) {
+      setProductsPerPage(currenValue);
+    }
+  };
+
+  // type TParams = {
+  //   limit?: string
+  //   page?: string
+  // }
+  const params = { limit: productsPerPage.toString(), page: currentPage.toString() };
+
+  let lastProductIndex = currentPage * productsPerPage;
+  let firstProductIndex = lastProductIndex - productsPerPage;
+  let maxPages = 1;
+  if (products && products.length) {
+    maxPages = Math.ceil(products.length / productsPerPage);
+  }
+  useEffect(() => {
+    setSearchParams(params);
+    lastProductIndex = currentPage * productsPerPage;
+    firstProductIndex = lastProductIndex - productsPerPage;
+  }, [currentPage, productsPerPage, products]);
+
+  const currentProducts = products?.slice(firstProductIndex, lastProductIndex);
+
+  const goNextFromCurrentPage = () => {
+    if (currentPage <= maxPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const goBackFromCurrentPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  if (currentProducts && !currentProducts.length) {
+    goBackFromCurrentPage();
+  }
+  //  Конец блока с пагинацией
 
   useEffect(() => {
     setTotalCount(countTotalCount(productsInCartCount));
@@ -71,12 +128,22 @@ function Cart(props: TCartProps) {
     );
   }
 
+  if (!products?.length) {
+    return (
+      <div>
+        Cart is empty
+      </div>
+    );
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.productsWrapper}>
-        { products?.map((product: TProductsItem, index) => (
+        <CartPagination handleProductsPerPage={handleProductsPerPage} productsPerPage={productsPerPage} maxPages={maxPages} currentPage={currentPage} goNextFromCurrentPage={goNextFromCurrentPage} goBackFromCurrentPage={goBackFromCurrentPage} />
+        { currentProducts?.map((product: TProductsItem, index) => (
           <CartProduct
             key={product.id}
+            id={product.id}
             title={product.title}
             description={product.description}
             price={product.price}
