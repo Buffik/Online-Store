@@ -1,13 +1,21 @@
 /* eslint-disable max-len */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // import React, { useEffect, useState } from 'react';
 // import PostService from '../../Components/API/PostService';
-import CartProduct from '../../Components/CartProduct/CartProduct';
+import CartProduct from '../../Components/Cart/CartProduct/CartProduct';
+import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
+import Promo from '../../Components/Cart/Promo/Promo';
+// eslint-disable-next-line no-unused-vars
+import countTotalCost from '../../Components/utils/countTotalCost';
+import countTotalCount from '../../Components/utils/countTotalCount';
+import countTotalSumWithDiscounts from '../../Components/utils/countTotalSumWithDiscounts';
 // import useFetching from '../../hooks/useFetching';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
 import styles from './cart.module.scss';
 
 type TCartProps = {
+  productsInCart: TProductPartialProps[]
+  isPending: boolean;
   productsInCartCount: TProductPartialProps[];
   products: TProductsItem[] | null;
   // eslint-disable-next-line no-unused-vars
@@ -18,8 +26,25 @@ type TCartProps = {
 
 function Cart(props: TCartProps) {
   const {
-    productsInCartCount, products, increaseProductCount, decreaseProductCount,
+    productsInCart, isPending, productsInCartCount, products, increaseProductCount, decreaseProductCount,
   } = props;
+  // eslint-disable-next-line no-unused-vars
+  const [totalCount, setTotalCount] = useState(countTotalCount(productsInCartCount));
+  // eslint-disable-next-line no-unused-vars
+  const [totalCost, setTotalCost] = useState(0);
+  const [isCodeValid, setIsCodeValid] = useState(false);
+  const [isCodeAdd, setIsCodeAdd] = useState(false);
+  const [codeAdded, setCodeAdded] = useState<number[]>([]);
+
+  useEffect(() => {
+    setTotalCount(countTotalCount(productsInCartCount));
+  }, [productsInCartCount, productsInCart]);
+
+  useEffect(() => {
+    if (products) {
+      setTotalCost(countTotalCost(products, productsInCartCount));
+    }
+  }, [productsInCartCount, products]);
 
   const addPromoCode = (event: React.MouseEvent<HTMLButtonElement>, isAdd: boolean) => {
     setIsCodeAdd(isAdd);

@@ -9,9 +9,9 @@ import { TProductsItem, TProductPartialProps } from '../types/types';
 function App() {
   const arr = [{ id: 1, count: 1 }, { id: 3, count: 1 }, { id: 4, count: 1 }];
   const [productsInCart, setProductsInCart] = useState<TProductPartialProps[]>(arr);
-  const [productsInCartCount, setproductsInCartCount] = useState<TProductPartialProps[]>(arr);
+  const [productsInCartCount, setProductsInCartCount] = useState<TProductPartialProps[]>(arr);
   const [products, setProducts] = useState<TProductsItem[] | null>(null);
-  const [fetchProductsById] = useFetching(async () => {
+  const [fetchProductsById, isPending] = useFetching(async () => {
     const response = await PostService.getCartItems(productsInCart)
       .then((items) => items.map((item) => item));
     setProducts(response);
@@ -38,7 +38,7 @@ function App() {
       }
       return product;
     });
-    setproductsInCartCount(result);
+    setProductsInCartCount(result);
   };
 
   const decreaseProductCount = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -55,7 +55,7 @@ function App() {
       acc.push(product);
       return acc;
     }, []);
-    setproductsInCartCount(result);
+    setProductsInCartCount(result);
   };
 
   const isProductInCart = (id?: number): boolean => {
@@ -68,20 +68,21 @@ function App() {
   const addToCart = (id: number) => {
     if (!isProductInCart(id)) {
       setProductsInCart([...productsInCart, { id, count: 1 }]);
-      setproductsInCartCount([...productsInCartCount, { id, count: 1 }]);
+      setProductsInCartCount([...productsInCartCount, { id, count: 1 }]);
     }
   };
 
   const dropFromCart = (id: number) => {
     if (isProductInCart(id)) {
       setProductsInCart(productsInCart.filter((item) => item.id !== id));
-      setproductsInCartCount(productsInCartCount.filter((item) => item.id !== id));
+      setProductsInCartCount(productsInCartCount.filter((item) => item.id !== id));
     }
   };
 
   return (
     <HashRouter>
       <RootRouter
+        isPending={isPending}
         productsInCart={productsInCart}
         productsInCartCount={productsInCartCount}
         products={products}
