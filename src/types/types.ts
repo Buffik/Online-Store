@@ -30,3 +30,21 @@ export type TProductHandlers = {
 }
 
 export type TProductsCart = TProductsItem & TProductHandlers & TProductCartIdCountProps
+
+export type TPromoCodesArr = {
+  name: string
+  discount: number
+}[];
+
+export interface IPromoCodeHandler {
+  todo: string
+  discount: number
+  // eslint-disable-next-line no-unused-vars, no-undef
+  setCode: (event: React.MouseEvent<HTMLButtonElement>, isAdd: boolean) => void
+}
+
+export interface IAddHandler extends IPromoCodeHandler{
+  code: string
+  // eslint-disable-next-line no-unused-vars
+  inputData: (string:string) => void
+}

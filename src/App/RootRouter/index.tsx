@@ -8,6 +8,7 @@ import PageNotFound from '../../Pages/PageNotFound';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
 
 type TRootRouterProps = {
+  isPending: boolean;
   productsInCart: TProductPartialProps[];
   productsInCartCount: TProductPartialProps[];
   products: TProductsItem[] | null;
@@ -23,6 +24,7 @@ type TRootRouterProps = {
 
 export default function RootRouter(props: TRootRouterProps) {
   const {
+    isPending,
     productsInCart,
     productsInCartCount,
     products,
@@ -50,6 +52,8 @@ export default function RootRouter(props: TRootRouterProps) {
           path="/cart"
           element={(
             <Cart
+              productsInCart={productsInCart}
+              isPending={isPending}
               productsInCartCount={productsInCartCount}
               products={products}
               increaseProductCount={increaseProductCount}

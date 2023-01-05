@@ -1,0 +1,51 @@
+.wrapper {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.productsWrapper {
+  width: 65%;
+}
+
+.summaryWrapper {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid teal;
+  border-radius: 10px;
+  height: 100%;
+
+}
+
+.textSummary {
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgb(26, 180, 180);
+  margin-bottom: 10px;
+}
+
+.textSummaryLineThrough {
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgb(26, 180, 180);
+  margin-bottom: 10px;
+  text-decoration: line-through;
+}
+
+.textSummaryWithDiscount {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: rgb(26, 180, 180);
+  margin-bottom: 10px;
+}
+
+
+.textProducts, .textTotal {
+  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: teal
+}
