@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import ProductAddDropButton from '../../Components/UI/button/ProductAddDropButton';
+import FiltersList from '../../Components/Main/FiltersList';
+import ProductsList from '../../Components/Main/ProductsList';
 // import TestForMain from '../../Components/TestForMain';
-import { TProductsItem, TProductPartialProps } from '../../types/types';
+import { TProductPartialProps } from '../../types/types';
 
 type TMainProps = {
   productsInCart: TProductPartialProps[];
@@ -27,53 +27,15 @@ function Main(props: TMainProps) {
   }, []);
 
   return (
-    <>
-      {
-            products.map((item: TProductsItem) => (
-              <div key={item.id}>
-                <h3>{item.title}</h3>
-                <img src={item.thumbnail} alt={item.title} />
-                <dl>
-                  <dt>Category: </dt>
-                  <dd>{item.category}</dd>
-                </dl>
-                <dl>
-                  <dt>Brand: </dt>
-                  <dd>{item.brand}</dd>
-                </dl>
-                <dl>
-                  <dt>Price: </dt>
-                  <dd>
-                    $
-                    {item.price}
-                  </dd>
-                </dl>
-                <dl>
-                  <dt>Discount: </dt>
-                  <dd>
-                    {item.discountPercentage}
-                    %
-                  </dd>
-                </dl>
-                <dl>
-                  <dt>Rating: </dt>
-                  <dd>{item.rating}</dd>
-                </dl>
-                <dl>
-                  <dt>Stock: </dt>
-                  <dd>{item.stock}</dd>
-                </dl>
-                <ProductAddDropButton
-                  productId={item.id}
-                  productsInCart={productsInCart}
-                  addToCart={addToCart}
-                  dropFromCart={dropFromCart}
-                />
-                <Link to={`/${item.id}`}>Details</Link>
-              </div>
-            ))
-        }
-    </>
+    <main style={{ display: 'flex', gap: '50px' }}>
+      <FiltersList products={products} />
+      <ProductsList
+        productsInCart={productsInCart}
+        addToCart={addToCart}
+        dropFromCart={dropFromCart}
+        products={products}
+      />
+    </main>
   );
 }
 
