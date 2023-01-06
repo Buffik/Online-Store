@@ -56,10 +56,6 @@ function Cart(props: TCartProps) {
     }
   };
 
-  // type TParams = {
-  //   limit?: string
-  //   page?: string
-  // }
   const params = { limit: productsPerPage.toString(), page: currentPage.toString() };
 
   let lastProductIndex = currentPage * productsPerPage;
@@ -143,6 +139,7 @@ function Cart(props: TCartProps) {
         { currentProducts?.map((product: TProductsItem, index) => (
           <CartProduct
             key={product.id}
+            productIndex={index + 1 + firstProductIndex}
             id={product.id}
             title={product.title}
             description={product.description}
@@ -155,7 +152,7 @@ function Cart(props: TCartProps) {
             thumbnail={product.thumbnail}
             onClickHandlerIncrease={increaseProductCount}
             onClickHandlerDecrease={decreaseProductCount}
-            data={productsInCartCount[index]}
+            data={productsInCartCount[index + firstProductIndex]}
           />
         ))}
       </div>

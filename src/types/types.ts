@@ -19,6 +19,7 @@ export type TProductPartialProps = {
 
 export type TProductCartIdCountProps = {
   data: TProductPartialProps
+  productIndex: number
 }
 
 export type TProductHandlers = {
