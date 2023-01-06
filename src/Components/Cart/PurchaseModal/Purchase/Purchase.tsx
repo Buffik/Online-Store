@@ -14,7 +14,12 @@ function Purchase() {
   const phone = useInput('', runValidate, {
     isEmpty: true, isPhoneLengthInvalid: true, isPhoneNotStartWithPlus: true, isPhoneInvalid: true,
   });
-  const address = useInput('', runValidate, { minLengthAddressForEachWord: true, minLengthAddress: true });
+  const address = useInput('', runValidate, { isEmpty: true, minLengthAddressForEachWord: true, minLengthAddress: true });
+  const email = useInput('', runValidate, { isEmpty: true, isMailInvalid: true });
+  const cardNumber = useInput('', runValidate, { isEmpty: true, isCardNumberInvalid: true, isCardNumberLengthInvalid: true });
+  const cardMonth = useInput('', runValidate, { isEmpty: true, isCardDateMonthInvalid: true });
+  const cardYear = useInput('', runValidate, { isCardDateYearInvalid: true });
+  const cardCVV = useInput('', runValidate, { isEmpty: true, isCardCVVInvalid: true });
 
   return (
     <div className={styles.formWrapper}>
@@ -43,10 +48,10 @@ function Purchase() {
           </div>
           )}
         <input onChange={(e) => phone.onChange(e)} value={phone.value} type="text" name="Phone" placeholder="Phone" />
-        {(phone.isDirty)
+        {(address.isDirty)
           && (
           <div className={styles.errorTextWrapper}>
-            {address.isEmpty && <div>!! Enter your phone !!</div>}
+            {address.isEmpty && <div>!! Enter your address !!</div>}
             {address.minLengthAddress && <div>!! Minimum 3 words required !!</div>}
             {address.minLengthAddressForEachWord && (
             <div>
@@ -56,25 +61,60 @@ function Purchase() {
           </div>
           )}
         <input onChange={(e) => address.onChange(e)} type="text" name="Address" placeholder="Delivery address" />
-        <input type="text" name="Email" placeholder="E-mail" />
+        {(email.isDirty)
+          && (
+          <div className={styles.errorTextWrapper}>
+            {email.isEmpty && <div>!! Enter your e-mail !!</div>}
+            {email.isMailInvalid && <div>!! E-mail should be correct !!</div>}
+          </div>
+          )}
+        <input onChange={(e) => email.onChange(e)} type="text" name="Email" placeholder="E-mail" />
         <div className={styles.cardWrapper}>
           <h3>Credit card details</h3>
+          {(cardNumber.isDirty)
+          && (
+          <div className={styles.errorTextWrapper}>
+            {cardNumber.isEmpty && <div>!! Enter your card number !!</div>}
+            {cardNumber.isCardNumberInvalid && (
+            <div>
+              !! Card number should contain only digits !!
+            </div>
+            )}
+            {cardNumber.isCardNumberLengthInvalid && (
+            <div>
+              !! Card number length should be at least 16 !!
+            </div>
+            )}
+          </div>
+          )}
           <div className={styles.cardNumber}>
             <img alt="" src="https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/1.8.0/package/dist/img/logos/dls-logo-stack.svg" />
-            <input type="text" name="cardNumber" placeholder="Card number" className={styles.cardNumberInput} />
+            <input onChange={(e) => cardNumber.onChange(e)} type="text" name="cardNumber" placeholder="Card number" className={styles.cardNumberInput} />
           </div>
+          {(cardMonth.isDirty)
+          && (
+          <div className={styles.errorTextWrapper}>
+            {cardMonth.isEmpty && <div>!! Enter your card date !!</div>}
+            {cardCVV.isEmpty && <div>!! Enter your card CVV !!</div>}
+            {cardMonth.isCardDateMonthInvalid && <div>!! Enter correct month !!</div>}
+            {cardYear.isCardDateYearInvalid && <div>!! Enter correct year !!</div>}
+            {cardCVV.isCardCVVInvalid && <div>!! Enter correct CVV !!</div>}
+          </div>
+          )}
           <div className={styles.otherData}>
-            <div className="valid-data">
-              {' '}
-              VALID:
-              {' '}
-              <input type="text" name="cardDate" placeholder="Valid Thru" className={styles.otherDataDate} />
+            <div className={styles.otherDataExpirationWrapper}>
+              <span className={styles.otherDataExpirationPlaceholder}>Date:</span>
+              <div className={styles.dataExpiration}>
+                <input onChange={(e) => cardMonth.onChange(e)} type="text" name="month" placeholder="MM" />
+                <span>/</span>
+                <input onChange={(e) => cardYear.onChange(e)} type="text" name="year" placeholder="YY" />
+              </div>
             </div>
-            <div className="cvv-data">
+            <div>
               {' '}
               CVV:
               {' '}
-              <input type="text" name="cardCVV" placeholder="Code" className={styles.otherDataCVV} />
+              <input onChange={(e) => cardCVV.onChange(e)} type="text" name="cardCVV" placeholder="CVV" className={styles.otherDataCVV} />
             </div>
           </div>
         </div>

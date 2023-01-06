@@ -48,17 +48,45 @@ input {
 
 .otherData {
   display: flex;
-  width: 90%;
+  width: 300px;
   align-items: center;
   justify-content: space-between;
 }
 
-.otherDataDate, .otherDataCVV {
+.otherDataCVV {
+  width: 35px;
   font-size: 1rem;
   padding: 5px;
   border: 2px solid teal;
+  margin-bottom: 0;
   &:focus {
     outline: 0;
+  }
+}
+
+.otherDataExpirationWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.otherDataExpirationPlaceholder {
+  margin-right: 3px;
+}
+
+.dataExpiration {
+  margin-right: 5px;
+  display: flex;
+  border: 2px solid teal;
+  border-radius: 5px;
+  & input {
+    width: 30px;
+    border: 0;
+    font-size: 1rem;
+    padding: 5px;
+    margin-bottom: 0;
+    &:focus {
+      outline: 0;
+    }
   }
 }
 

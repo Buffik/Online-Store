@@ -5,6 +5,8 @@ import { TValidations } from '../types/types';
 const useValidation = (value: string, validations:TValidations) => {
   const [isEmpty, setIsEmpty] = useState(false);
 
+  // Валидация личных данных
+
   // Имя должно состоять минимум из двух слов
   const [minLengthName, setMinLengthName] = useState(false);
   // Каждое слово в имени не менее 3-х символов
@@ -24,6 +26,21 @@ const useValidation = (value: string, validations:TValidations) => {
 
   // Валидациея почты
   const [isMailInvalid, setIsMailInvalid] = useState(false);
+
+  // Валидация банковской карточки
+
+  // Номер карты должен состоять только из цифр
+  const [isCardNumberInvalid, setIsCardNumberInvalid] = useState(false);
+  // Номер карты должен состоять из 16 цифр
+  const [isCardNumberLengthInvalid, setIsCardNumberLengthInvalid] = useState(false);
+
+  // Верное количество месяцев
+  const [isCardDateMonthInvalid, setIsCardDateMonthInvalid] = useState(false);
+  // Верное количество лет
+  const [isCardDateYearInvalid, setIsCardDateYearInvalid] = useState(false);
+
+  // Верное количество лет
+  const [isCardCVVInvalid, setIsCardCVVInvalid] = useState(false);
 
   useEffect(() => {
     const validationsKeys = Object.keys(validations);
@@ -101,11 +118,44 @@ const useValidation = (value: string, validations:TValidations) => {
           break;
 
         case 'isMailInvalid':
-          if (/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu.test(value) && isMailInvalid) {
-            setIsMailInvalid(true);
-          } else if (isMailInvalid) {
+          if (/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu.test(value)) {
             setIsMailInvalid(false);
+          } else {
+            setIsMailInvalid(true);
           }
+          break;
+
+        case 'isCardNumberInvalid':
+          if (!value.length) setIsCardNumberInvalid(true);
+          value.split('').forEach((char) => {
+            if (!/[0-9]/.test(char)) {
+              setIsCardNumberInvalid(true);
+            } else setIsCardNumberInvalid(false);
+          });
+          break;
+
+        case 'isCardNumberLengthInvalid':
+          if (value.length < 16) {
+            setIsCardNumberLengthInvalid(true);
+          } else setIsCardNumberLengthInvalid(false);
+          break;
+
+        case 'isCardDateMonthInvalid':
+          if (!/^(0[1-9]|1[0-2])$/.test(value)) {
+            setIsCardDateMonthInvalid(true);
+          } else setIsCardDateMonthInvalid(false);
+          break;
+
+        case 'isCardDateYearInvalid':
+          if (!/^(2[3-9]|[3-9][0-9])$/.test(value)) {
+            setIsCardDateYearInvalid(true);
+          } else setIsCardDateYearInvalid(false);
+          break;
+
+        case 'isCardCVVInvalid':
+          if (!/^\d{3}$/.test(value)) {
+            setIsCardCVVInvalid(true);
+          } else setIsCardCVVInvalid(false);
           break;
 
         default:
@@ -124,6 +174,11 @@ const useValidation = (value: string, validations:TValidations) => {
     minLengthAddress,
     minLengthAddressForEachWord,
     isMailInvalid,
+    isCardNumberInvalid,
+    isCardNumberLengthInvalid,
+    isCardDateMonthInvalid,
+    isCardDateYearInvalid,
+    isCardCVVInvalid,
   };
 };
 
