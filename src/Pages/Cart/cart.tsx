@@ -7,6 +7,8 @@ import CartProduct from '../../Components/Cart/CartProduct/CartProduct';
 import CartPagination from '../../Components/Cart/Pagination/CartPagination';
 import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
 import Promo from '../../Components/Cart/Promo/Promo';
+import Modal from '../../Components/Cart/PurchaseModal/Modal';
+import Purchase from '../../Components/Cart/PurchaseModal/Purchase/Purchase';
 // eslint-disable-next-line no-unused-vars
 import countTotalCost from '../../Components/utils/countTotalCost';
 import countTotalCount from '../../Components/utils/countTotalCount';
@@ -188,6 +190,13 @@ function Cart(props: TCartProps) {
         ) : <h4>No applied codes</h4>}
         <Promo isCodeTrue={isCodeValid} currenCodes={codeAdded} setIsCodeTrue={setIsCodeValid} setIsCodeAdd={addPromoCode} />
       </div>
+      <Modal
+        visible
+        setVisible={(bool) => { console.log(bool); }}
+      >
+        <Purchase />
+
+      </Modal>
     </div>
   );
 }

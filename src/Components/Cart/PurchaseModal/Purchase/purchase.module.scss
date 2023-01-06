@@ -1,0 +1,89 @@
+.formWrapper {
+  width: 60vw;
+  height: 60%;
+}
+
+.myForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  margin-bottom: 20px;
+  width: 60%;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.cardWrapper {
+  width: 55%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid teal;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.cardNumber {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cardNumberInput {
+  border: 2px solid teal;
+  border-radius: 10px;
+  width: 75%;
+  margin: auto 0;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.otherData {
+  display: flex;
+  width: 90%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.otherDataDate, .otherDataCVV {
+  font-size: 1rem;
+  padding: 5px;
+  border: 2px solid teal;
+  &:focus {
+    outline: 0;
+  }
+}
+
+.formButton {
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 10px 20px;
+  background-color: teal;
+  color: white;
+  border: 2px solid teal;
+  border-radius: 10px;
+  &:hover {
+    transition: 0.3s all;
+    color: teal;
+    background-color: white;
+  }
+}
+
+.errorTextWrapper {
+  color: red;
+  width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  & > div {
+    padding: 0 10px 5px 10px;
+  }
+}

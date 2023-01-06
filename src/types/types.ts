@@ -49,3 +49,7 @@ export interface IAddHandler extends IPromoCodeHandler{
   // eslint-disable-next-line no-unused-vars
   inputData: (string:string) => void
 }
+
+export type TValidations = {
+  [key:string]: boolean
+};
