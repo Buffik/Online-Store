@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// import { useLocation } from 'react-router-dom';
 import FiltersList from '../../Components/Main/FiltersList';
 import ProductsList from '../../Components/Main/ProductsList';
 // import TestForMain from '../../Components/TestForMain';
@@ -129,6 +130,18 @@ function Main(props: TMainProps) {
   const filteredSearchedProducts = searchInProducts(filteredProducts);
   const filteredSearchedSortedProducts = sortProducts(filteredSearchedProducts);
 
+  const handleResetClick = () => {
+    setSearchParamsObject({});
+  };
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyClick = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1000);
+    navigator.clipboard.writeText(window.location.href);
+  };
+
   return (
     <main style={{ display: 'flex', gap: '50px' }}>
       <FiltersList
@@ -139,6 +152,9 @@ function Main(props: TMainProps) {
         searchParamsObject={searchParamsObject}
         isInSearchParams={isInSearchParams}
         handleCheckboxChange={handleCheckboxChange}
+        handleResetClick={handleResetClick}
+        handleCopyClick={handleCopyClick}
+        copied={copied}
       />
       <div>
         <div>

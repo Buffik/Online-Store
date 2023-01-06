@@ -1,7 +1,8 @@
-// import React, { useEffect, useState } from 'react';
+import React from 'react';
 // import { isTemplateExpression } from 'typescript';
 // import { useSearchParams } from 'react-router-dom';
 // import ProductsList from '../../Components/Main/ProductsList';
+// import { useLocation } from 'react-router-dom';
 import { TProductsItem } from '../../types/types';
 
 type TParamsObject = Record<string, string>;
@@ -16,6 +17,10 @@ type TFiltersListProps = {
   isInSearchParams(paramName: string, param: string | number, paramsObject: TParamsObject): boolean;
   // eslint-disable-next-line no-unused-vars
   handleCheckboxChange(filterName: string, filter: string | number): void;
+  handleResetClick(): void;
+  // eslint-disable-next-line no-unused-vars
+  handleCopyClick(): void;
+  copied: boolean;
 }
 
 function FiltersList(props: TFiltersListProps) {
@@ -27,11 +32,10 @@ function FiltersList(props: TFiltersListProps) {
     searchParamsObject,
     isInSearchParams,
     handleCheckboxChange,
+    handleResetClick,
+    handleCopyClick,
+    copied,
   } = props;
-
-  // const handleClick = () => {
-  //   setSearchParamsObject({ ...searchParamsObject, category: 'phone,sss' });
-  // };
 
   // const categoriesArray = categoriesList.map((category) => {
   //   const obj = { [category]: isInSearchParams('category', category, searchParamsObject) };
@@ -53,7 +57,8 @@ function FiltersList(props: TFiltersListProps) {
 
   return (
     <section>
-      {/* <button type="button" onClick={handleClick}>add filter</button> */}
+      <button type="button" onClick={handleResetClick}>Reset</button>
+      <button type="button" onClick={handleCopyClick}>{copied ? 'Filters copied' : 'Copy filters'}</button>
       <fieldset>
         <legend>Category:</legend>
         {categoriesList.map((category) => (
