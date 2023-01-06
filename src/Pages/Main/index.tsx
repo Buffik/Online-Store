@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 // import { useLocation } from 'react-router-dom';
 import FiltersList from '../../Components/Main/FiltersList';
 import ProductsList from '../../Components/Main/ProductsList';
@@ -95,6 +95,19 @@ function Main(props: TMainProps) {
     }
   };
 
+  // const [sortingBy, setSortingBy] = useState('');
+  // console.log(sortingBy);
+  const handleSortingChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    // setSortingBy(event.target.value);
+    if (event.target.value === 'default') {
+      const copySearchParamsObject = { ...searchParamsObject };
+      delete copySearchParamsObject.sortby;
+      setSearchParamsObject(copySearchParamsObject);
+    } else {
+      setSearchParamsObject({ ...searchParamsObject, sortby: event.target.value });
+    }
+  };
+
   const filterProducts = (productsArray: TProductsItem[] | []) => {
     let arr = productsArray.slice();
     if (searchParamsObject.category) {
@@ -124,7 +137,28 @@ function Main(props: TMainProps) {
     return arr;
   };
 
-  const sortProducts = (productsArray: TProductsItem[] | []) => productsArray;
+  const sortProducts = (productsArray: TProductsItem[] | []) => {
+    const { sortby } = searchParamsObject;
+    if (sortby === 'price-ascending') {
+      return productsArray.sort((a, b) => a.price - b.price);
+    }
+    if (sortby === 'price-descending') {
+      return productsArray.sort((a, b) => b.price - a.price);
+    }
+    if (sortby === 'rating-ascending') {
+      return productsArray.sort((a, b) => a.rating - b.rating);
+    }
+    if (sortby === 'rating-descending') {
+      return productsArray.sort((a, b) => b.rating - a.rating);
+    }
+    if (sortby === 'discount-ascending') {
+      return productsArray.sort((a, b) => a.discountPercentage - b.discountPercentage);
+    }
+    if (sortby === 'discount-descending') {
+      return productsArray.sort((a, b) => b.discountPercentage - a.discountPercentage);
+    }
+    return productsArray;
+  };
 
   const filteredProducts = filterProducts(products);
   const filteredSearchedProducts = searchInProducts(filteredProducts);
@@ -132,13 +166,14 @@ function Main(props: TMainProps) {
 
   const handleResetClick = () => {
     setSearchParamsObject({});
+    // handleSortingChange();
   };
 
   const [copied, setCopied] = useState(false);
 
   const handleCopyClick = () => {
     setCopied(true);
-    setTimeout(() => setCopied(false), 1000);
+    setTimeout(() => setCopied(false), 500);
     navigator.clipboard.writeText(window.location.href);
   };
 
@@ -163,6 +198,15 @@ function Main(props: TMainProps) {
             {'Found: '}
             {filteredSearchedSortedProducts.length}
           </p>
+          <select name="sort-by" id="sort-by" value={searchParamsObject.sortby} onChange={handleSortingChange}>
+            <option value="default">Sort by</option>
+            <option value="price-ascending">Cheapest first</option>
+            <option value="price-descending">Expensive first</option>
+            <option value="rating-descending">Higher rated first</option>
+            <option value="rating-ascending">Lower rated first</option>
+            <option value="discount-descending">Higher discount first</option>
+            <option value="discount-ascending">Lower discount first</option>
+          </select>
         </div>
         <ProductsList
           productsInCart={productsInCart}

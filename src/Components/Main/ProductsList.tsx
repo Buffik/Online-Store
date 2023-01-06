@@ -37,7 +37,7 @@ export default function ProductsList(props: TProductsListProps) {
               </dl>
               <dl>
                 <dt>Price: </dt>
-                <dd>
+                <dd style={{ fontWeight: 'bold' }}>
                   {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(product.price)}
                 </dd>
               </dl>
