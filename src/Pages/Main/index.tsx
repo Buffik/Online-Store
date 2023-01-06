@@ -28,7 +28,7 @@ function Main(props: TMainProps) {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
-    const response = await fetch('https://dummyjson.com/products?limit=10');
+    const response = await fetch('https://dummyjson.com/products?limit=20');
     const productsList = await response.json();
     setProducts(productsList.products);
   };
@@ -84,6 +84,16 @@ function Main(props: TMainProps) {
     }
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === '') {
+      const copySearchParamsObject = { ...searchParamsObject };
+      delete copySearchParamsObject.search;
+      setSearchParamsObject(copySearchParamsObject);
+    } else {
+      setSearchParamsObject({ ...searchParamsObject, search: event.target.value });
+    }
+  };
+
   const filterProducts = (productsArray: TProductsItem[] | []) => {
     let arr = productsArray.slice();
     if (searchParamsObject.category) {
@@ -97,7 +107,21 @@ function Main(props: TMainProps) {
     return arr;
   };
 
-  const searchInProducts = (productsArray: TProductsItem[] | []) => productsArray;
+  const searchInProducts = (productsArray: TProductsItem[] | []) => {
+    let arr = productsArray.slice();
+    if (searchParamsObject.search) {
+      const query = searchParamsObject.search.trim().toLowerCase();
+      arr = arr.filter((elem) => elem.title.toLowerCase().includes(query)
+      || elem.category.toLowerCase().includes(query)
+      || elem.brand.toLowerCase().includes(query)
+      || elem.description.toLowerCase().includes(query)
+      || elem.price.toString().includes(query)
+      || elem.discountPercentage.toString().includes(query)
+      || elem.rating.toString().includes(query)
+      || elem.stock.toString().includes(query));
+    }
+    return arr;
+  };
 
   const sortProducts = (productsArray: TProductsItem[] | []) => productsArray;
 
@@ -116,12 +140,21 @@ function Main(props: TMainProps) {
         isInSearchParams={isInSearchParams}
         handleCheckboxChange={handleCheckboxChange}
       />
-      <ProductsList
-        productsInCart={productsInCart}
-        addToCart={addToCart}
-        dropFromCart={dropFromCart}
-        products={filteredSearchedSortedProducts}
-      />
+      <div>
+        <div>
+          <input type="text" value={searchParamsObject.search ?? ''} onChange={handleSearchChange} />
+          <p>
+            {'Found: '}
+            {filteredSearchedSortedProducts.length}
+          </p>
+        </div>
+        <ProductsList
+          productsInCart={productsInCart}
+          addToCart={addToCart}
+          dropFromCart={dropFromCart}
+          products={filteredSearchedSortedProducts}
+        />
+      </div>
     </main>
   );
 }
