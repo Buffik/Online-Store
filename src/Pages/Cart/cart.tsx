@@ -1,12 +1,15 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import ApprovePurchase from '../../Components/Cart/ApprovePerchase/ApprovePurchase';
 // import React, { useEffect, useState } from 'react';
 // import PostService from '../../Components/API/PostService';
 import CartProduct from '../../Components/Cart/CartProduct/CartProduct';
 import CartPagination from '../../Components/Cart/Pagination/CartPagination';
 import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
 import Promo from '../../Components/Cart/Promo/Promo';
+import Modal from '../../Components/Cart/PurchaseModal/Modal';
+import Purchase from '../../Components/Cart/PurchaseModal/Purchase/Purchase';
 // eslint-disable-next-line no-unused-vars
 import countTotalCost from '../../Components/utils/countTotalCost';
 import countTotalCount from '../../Components/utils/countTotalCount';
@@ -30,13 +33,14 @@ function Cart(props: TCartProps) {
   const {
     productsInCart, isPending, productsInCartCount, products, increaseProductCount, decreaseProductCount,
   } = props;
-  // eslint-disable-next-line no-unused-vars
   const [totalCount, setTotalCount] = useState(countTotalCount(productsInCartCount));
-  // eslint-disable-next-line no-unused-vars
   const [totalCost, setTotalCost] = useState(0);
   const [isCodeValid, setIsCodeValid] = useState(false);
   const [isCodeAdd, setIsCodeAdd] = useState(false);
   const [codeAdded, setCodeAdded] = useState<number[]>([]);
+  // Подтверждение покупки
+  const [formVisible, setFormVisible] = useState(false);
+  const [showAffirmative, setShowAffirmative] = useState(false);
 
   //  Блок с пагинацией
 
@@ -56,10 +60,6 @@ function Cart(props: TCartProps) {
     }
   };
 
-  // type TParams = {
-  //   limit?: string
-  //   page?: string
-  // }
   const params = { limit: productsPerPage.toString(), page: currentPage.toString() };
 
   let lastProductIndex = currentPage * productsPerPage;
@@ -136,6 +136,12 @@ function Cart(props: TCartProps) {
     );
   }
 
+  if (showAffirmative) {
+    return (
+      <ApprovePurchase showAffirmative={showAffirmative} />
+    );
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.productsWrapper}>
@@ -143,6 +149,7 @@ function Cart(props: TCartProps) {
         { currentProducts?.map((product: TProductsItem, index) => (
           <CartProduct
             key={product.id}
+            productIndex={index + 1 + firstProductIndex}
             id={product.id}
             title={product.title}
             description={product.description}
@@ -155,7 +162,7 @@ function Cart(props: TCartProps) {
             thumbnail={product.thumbnail}
             onClickHandlerIncrease={increaseProductCount}
             onClickHandlerDecrease={decreaseProductCount}
-            data={productsInCartCount[index]}
+            data={productsInCartCount[index + firstProductIndex]}
           />
         ))}
       </div>
@@ -190,7 +197,15 @@ function Cart(props: TCartProps) {
           </div>
         ) : <h4>No applied codes</h4>}
         <Promo isCodeTrue={isCodeValid} currenCodes={codeAdded} setIsCodeTrue={setIsCodeValid} setIsCodeAdd={addPromoCode} />
+        <button className={styles.byuButton} type="button" onClick={() => setFormVisible(true)}> BYU NOW</button>
       </div>
+      <Modal
+        visible={formVisible}
+        setVisible={setFormVisible}
+      >
+        <Purchase setShowAffirmative={setShowAffirmative} />
+
+      </Modal>
     </div>
   );
 }

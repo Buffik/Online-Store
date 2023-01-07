@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './cartPagination.module.scss';
 
 interface ICartPagination {
   // eslint-disable-next-line no-unused-vars
@@ -19,18 +20,21 @@ function CartPagination({
   goBackFromCurrentPage,
 }: ICartPagination) {
   return (
-    <div>
-      Limit:
+    <div className={styles.wrapper}>
+      <span className={styles.text}>Limit:</span>
       {' '}
-      <input type="number" min="1" max="100" value={productsPerPage} onChange={(e) => handleProductsPerPage(e)} />
+      <input className={styles.input} type="number" min="1" max="100" value={productsPerPage} onChange={(e) => handleProductsPerPage(e)} />
       <div>
-        <button type="button" onClick={() => goBackFromCurrentPage()}>{'<'}</button>
-        {currentPage}
-        {' '}
-        /
-        {' '}
-        {maxPages}
-        <button type="button" onClick={() => goNextFromCurrentPage()}>{'>'}</button>
+        <button className={styles.paginateButton} type="button" onClick={() => goBackFromCurrentPage()}>{'<'}</button>
+        <span className={styles.paginateText}>
+          {' '}
+          {currentPage}
+          {' '}
+          /
+          {' '}
+          {maxPages}
+        </span>
+        <button className={styles.paginateButton} type="button" onClick={() => goNextFromCurrentPage()}>{'>'}</button>
       </div>
     </div>
   );
