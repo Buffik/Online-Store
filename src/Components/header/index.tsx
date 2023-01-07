@@ -66,8 +66,11 @@ export default function Header(props: TProps) {
           {productsInCart.reduce((acc, elem) => acc + elem.count, 0)}
         </NavLink>
         <p style={{ marginLeft: '50px' }}>
-          Cart total: $
-          {cartTotal}
+          {'Cart total: '}
+          {/* {cartTotal?.toFixed(2)} */}
+          {cartTotal
+            ? new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(cartTotal)
+            : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(0)}
         </p>
       </nav>
     </div>

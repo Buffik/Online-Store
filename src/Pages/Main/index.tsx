@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import ProductAddDropButton from '../../Components/UI/button/ProductAddDropButton';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+// import { useLocation } from 'react-router-dom';
+import FiltersList from '../../Components/Main/FiltersList';
+import ProductsList from '../../Components/Main/ProductsList';
 // import TestForMain from '../../Components/TestForMain';
-import { TProductsItem, TProductPartialProps } from '../../types/types';
+import { TProductPartialProps, TProductsItem } from '../../types/types';
+import useSearchParamsObject from '../../hooks/useSearchParamsObject';
 
 type TMainProps = {
   productsInCart: TProductPartialProps[];
@@ -12,12 +14,22 @@ type TMainProps = {
   dropFromCart(id: number): void;
 }
 
+type TParamsObject = Record<string, string>;
+
+// type TIsInSearchParams = {
+//   paramName: string;
+//   param: string | number;
+//   paramsObject: TParamsObject;
+// }
+
+type TFilterOptions = 'category' | 'brand' | 'price' | 'stock';
+
 function Main(props: TMainProps) {
   const { productsInCart, addToCart, dropFromCart } = props;
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
-    const response = await fetch('https://dummyjson.com/products?limit=10');
+    const response = await fetch('https://dummyjson.com/products?limit=20');
     const productsList = await response.json();
     setProducts(productsList.products);
   };
@@ -26,54 +38,184 @@ function Main(props: TMainProps) {
     fetchProducts();
   }, []);
 
+  const isInSearchParams = (
+    paramName: string,
+    param: string | number,
+    paramsObject: TParamsObject,
+  ) => {
+    if (typeof param === 'number') {
+      return false;
+    }
+    if (!paramsObject[paramName]) {
+      return false;
+    }
+    return paramsObject[paramName].split(',').includes(param);
+  };
+
+  const getFilterParams = (source: TProductsItem[], paramName: TFilterOptions) => {
+    if (paramName === 'price' || paramName === 'stock') {
+      const arr = source.map((item) => item[paramName]);
+      return [Math.min(...arr), Math.max(...arr)];
+    }
+    const set = new Set(source.map((item) => item[paramName]));
+    return Array.from(set).sort();
+  };
+
+  const [searchParamsObject, setSearchParamsObject] = useSearchParamsObject();
+
+  const categoriesList = getFilterParams(products, 'category');
+
+  const brandsList = getFilterParams(products, 'brand');
+
+  const handleCheckboxChange = (filterName: string, filter: string | number) => {
+    if (isInSearchParams(filterName, filter, searchParamsObject)) {
+      let filterArr = searchParamsObject[filterName].split(',');
+      if (filterArr.length === 1) {
+        const copySearchParamsObject = { ...searchParamsObject };
+        delete copySearchParamsObject[filterName];
+        setSearchParamsObject(copySearchParamsObject);
+      } else {
+        filterArr = filterArr.filter((item) => item !== filter);
+        setSearchParamsObject({ ...searchParamsObject, [filterName]: filterArr.join(',') });
+      }
+    } else if (searchParamsObject[filterName]) {
+      setSearchParamsObject({ ...searchParamsObject, [filterName]: `${searchParamsObject[filterName]},${filter}` });
+    } else {
+      setSearchParamsObject({ ...searchParamsObject, [filterName]: filter.toString() });
+    }
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === '') {
+      const copySearchParamsObject = { ...searchParamsObject };
+      delete copySearchParamsObject.search;
+      setSearchParamsObject(copySearchParamsObject);
+    } else {
+      setSearchParamsObject({ ...searchParamsObject, search: event.target.value });
+    }
+  };
+
+  // const [sortingBy, setSortingBy] = useState('');
+  // console.log(sortingBy);
+  const handleSortingChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    // setSortingBy(event.target.value);
+    if (event.target.value === 'default') {
+      const copySearchParamsObject = { ...searchParamsObject };
+      delete copySearchParamsObject.sortby;
+      setSearchParamsObject(copySearchParamsObject);
+    } else {
+      setSearchParamsObject({ ...searchParamsObject, sortby: event.target.value });
+    }
+  };
+
+  const filterProducts = (productsArray: TProductsItem[] | []) => {
+    let arr = productsArray.slice();
+    if (searchParamsObject.category) {
+      const params = searchParamsObject.category.split(',');
+      arr = arr.filter((elem) => params.includes(elem.category));
+    }
+    if (searchParamsObject.brand) {
+      const params = searchParamsObject.brand.split(',');
+      arr = arr.filter((elem) => params.includes(elem.brand));
+    }
+    return arr;
+  };
+
+  const searchInProducts = (productsArray: TProductsItem[] | []) => {
+    let arr = productsArray.slice();
+    if (searchParamsObject.search) {
+      const query = searchParamsObject.search.trim().toLowerCase();
+      arr = arr.filter((elem) => elem.title.toLowerCase().includes(query)
+      || elem.category.toLowerCase().includes(query)
+      || elem.brand.toLowerCase().includes(query)
+      || elem.description.toLowerCase().includes(query)
+      || elem.price.toString().includes(query)
+      || elem.discountPercentage.toString().includes(query)
+      || elem.rating.toString().includes(query)
+      || elem.stock.toString().includes(query));
+    }
+    return arr;
+  };
+
+  const sortProducts = (productsArray: TProductsItem[] | []) => {
+    const { sortby } = searchParamsObject;
+    if (sortby === 'price-ascending') {
+      return productsArray.sort((a, b) => a.price - b.price);
+    }
+    if (sortby === 'price-descending') {
+      return productsArray.sort((a, b) => b.price - a.price);
+    }
+    if (sortby === 'rating-ascending') {
+      return productsArray.sort((a, b) => a.rating - b.rating);
+    }
+    if (sortby === 'rating-descending') {
+      return productsArray.sort((a, b) => b.rating - a.rating);
+    }
+    if (sortby === 'discount-ascending') {
+      return productsArray.sort((a, b) => a.discountPercentage - b.discountPercentage);
+    }
+    if (sortby === 'discount-descending') {
+      return productsArray.sort((a, b) => b.discountPercentage - a.discountPercentage);
+    }
+    return productsArray;
+  };
+
+  const filteredProducts = filterProducts(products);
+  const filteredSearchedProducts = searchInProducts(filteredProducts);
+  const filteredSearchedSortedProducts = sortProducts(filteredSearchedProducts);
+
+  const handleResetClick = () => {
+    setSearchParamsObject({});
+    // handleSortingChange();
+  };
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyClick = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 500);
+    navigator.clipboard.writeText(window.location.href);
+  };
+
   return (
-    <>
-      {
-            products.map((item: TProductsItem) => (
-              <div key={item.id}>
-                <h3>{item.title}</h3>
-                <img src={item.thumbnail} alt={item.title} />
-                <dl>
-                  <dt>Category: </dt>
-                  <dd>{item.category}</dd>
-                </dl>
-                <dl>
-                  <dt>Brand: </dt>
-                  <dd>{item.brand}</dd>
-                </dl>
-                <dl>
-                  <dt>Price: </dt>
-                  <dd>
-                    $
-                    {item.price}
-                  </dd>
-                </dl>
-                <dl>
-                  <dt>Discount: </dt>
-                  <dd>
-                    {item.discountPercentage}
-                    %
-                  </dd>
-                </dl>
-                <dl>
-                  <dt>Rating: </dt>
-                  <dd>{item.rating}</dd>
-                </dl>
-                <dl>
-                  <dt>Stock: </dt>
-                  <dd>{item.stock}</dd>
-                </dl>
-                <ProductAddDropButton
-                  productId={item.id}
-                  productsInCart={productsInCart}
-                  addToCart={addToCart}
-                  dropFromCart={dropFromCart}
-                />
-                <Link to={`/${item.id}`}>Details</Link>
-              </div>
-            ))
-        }
-    </>
+    <main style={{ display: 'flex', gap: '50px' }}>
+      <FiltersList
+        products={products}
+        filteredSearchedProducts={filteredSearchedProducts}
+        categoriesList={categoriesList}
+        brandsList={brandsList}
+        searchParamsObject={searchParamsObject}
+        isInSearchParams={isInSearchParams}
+        handleCheckboxChange={handleCheckboxChange}
+        handleResetClick={handleResetClick}
+        handleCopyClick={handleCopyClick}
+        copied={copied}
+      />
+      <div>
+        <div>
+          <input type="text" value={searchParamsObject.search ?? ''} onChange={handleSearchChange} />
+          <p>
+            {'Found: '}
+            {filteredSearchedSortedProducts.length}
+          </p>
+          <select name="sort-by" id="sort-by" value={searchParamsObject.sortby} onChange={handleSortingChange}>
+            <option value="default">Sort by</option>
+            <option value="price-ascending">Cheapest first</option>
+            <option value="price-descending">Expensive first</option>
+            <option value="rating-descending">Higher rated first</option>
+            <option value="rating-ascending">Lower rated first</option>
+            <option value="discount-descending">Higher discount first</option>
+            <option value="discount-ascending">Lower discount first</option>
+          </select>
+        </div>
+        <ProductsList
+          productsInCart={productsInCart}
+          addToCart={addToCart}
+          dropFromCart={dropFromCart}
+          products={filteredSearchedSortedProducts}
+        />
+      </div>
+    </main>
   );
 }
 
