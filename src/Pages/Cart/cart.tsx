@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import ApprovePurchase from '../../Components/Cart/ApprovePerchase/ApprovePurchase';
 // import React, { useEffect, useState } from 'react';
 // import PostService from '../../Components/API/PostService';
 import CartProduct from '../../Components/Cart/CartProduct/CartProduct';
@@ -32,13 +33,14 @@ function Cart(props: TCartProps) {
   const {
     productsInCart, isPending, productsInCartCount, products, increaseProductCount, decreaseProductCount,
   } = props;
-  // eslint-disable-next-line no-unused-vars
   const [totalCount, setTotalCount] = useState(countTotalCount(productsInCartCount));
-  // eslint-disable-next-line no-unused-vars
   const [totalCost, setTotalCost] = useState(0);
   const [isCodeValid, setIsCodeValid] = useState(false);
   const [isCodeAdd, setIsCodeAdd] = useState(false);
   const [codeAdded, setCodeAdded] = useState<number[]>([]);
+  // Подтверждение покупки
+  const [formVisible, setFormVisible] = useState(false);
+  const [showAffirmative, setShowAffirmative] = useState(false);
 
   //  Блок с пагинацией
 
@@ -134,6 +136,12 @@ function Cart(props: TCartProps) {
     );
   }
 
+  if (showAffirmative) {
+    return (
+      <ApprovePurchase showAffirmative={showAffirmative} />
+    );
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.productsWrapper}>
@@ -189,12 +197,13 @@ function Cart(props: TCartProps) {
           </div>
         ) : <h4>No applied codes</h4>}
         <Promo isCodeTrue={isCodeValid} currenCodes={codeAdded} setIsCodeTrue={setIsCodeValid} setIsCodeAdd={addPromoCode} />
+        <button className={styles.byuButton} type="button" onClick={() => setFormVisible(true)}> BYU NOW</button>
       </div>
       <Modal
-        visible
-        setVisible={(bool) => { console.log(bool); }}
+        visible={formVisible}
+        setVisible={setFormVisible}
       >
-        <Purchase />
+        <Purchase setShowAffirmative={setShowAffirmative} />
 
       </Modal>
     </div>

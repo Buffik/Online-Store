@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useInput from '../../../../hooks/useInput';
+import handleCardImg from '../../../utils/handleCardImg';
+import isFormValidHandle from '../../../utils/isFormValidHandle';
 import styles from './purchase.module.scss';
 
-function Purchase() {
+interface IPurchase {
+    // eslint-disable-next-line no-unused-vars
+  setShowAffirmative: (bool: boolean) => void
+}
+
+function Purchase({ setShowAffirmative }: IPurchase) {
   const [runValidate, setRunValidate] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [isFormValid, setIsFormValid] = useState(false);
   const handleClickButton = (event: React.MouseEvent<HTMLButtonElement>, isFormVal: boolean) => {
     event.preventDefault();
     if (!isFormVal) setRunValidate(true);
+    if (isFormVal) {
+      setShowAffirmative(true);
+    }
   };
+
   const name = useInput('', runValidate, { isEmpty: true, minLengthName: true, minLengthNameForEachWord: true });
   const phone = useInput('', runValidate, {
     isEmpty: true, isPhoneLengthInvalid: true, isPhoneNotStartWithPlus: true, isPhoneInvalid: true,
@@ -21,6 +32,26 @@ function Purchase() {
   const cardYear = useInput('', runValidate, { isCardDateYearInvalid: true });
   const cardCVV = useInput('', runValidate, { isEmpty: true, isCardCVVInvalid: true });
 
+  useEffect(() => {
+    const result = isFormValidHandle([
+      name.isAllValid,
+      phone.isAllValid,
+      address.isAllValid,
+      email.isAllValid,
+      cardNumber.isAllValid,
+      cardMonth.isAllValid,
+      cardYear.isAllValid,
+      cardCVV.isAllValid,
+    ]);
+    setIsFormValid(result);
+  }, [name.isAllValid,
+    phone.isAllValid,
+    address.isAllValid,
+    email.isAllValid,
+    cardNumber.isAllValid,
+    cardMonth.isAllValid,
+    cardYear.isAllValid,
+    cardCVV.isAllValid]);
   return (
     <div className={styles.formWrapper}>
       <form className={styles.myForm} autoComplete="off">
@@ -37,7 +68,7 @@ function Purchase() {
             )}
           </div>
           )}
-        <input onChange={(e) => name.onChange(e)} value={name.value} type="text" name="Name" placeholder="Name" />
+        <input className={styles.myInput} onChange={(e) => name.onChange(e)} value={name.value} type="text" name="Name" placeholder="Name" />
         {(phone.isDirty)
           && (
           <div className={styles.errorTextWrapper}>
@@ -47,7 +78,7 @@ function Purchase() {
             {phone.isPhoneInvalid && <div>!! Should contains only digits !!</div>}
           </div>
           )}
-        <input onChange={(e) => phone.onChange(e)} value={phone.value} type="text" name="Phone" placeholder="Phone" />
+        <input className={styles.myInput} onChange={(e) => phone.onChange(e)} value={phone.value} type="text" name="Phone" placeholder="Phone" />
         {(address.isDirty)
           && (
           <div className={styles.errorTextWrapper}>
@@ -60,7 +91,7 @@ function Purchase() {
             )}
           </div>
           )}
-        <input onChange={(e) => address.onChange(e)} type="text" name="Address" placeholder="Delivery address" />
+        <input className={styles.myInput} onChange={(e) => address.onChange(e)} type="text" name="Address" placeholder="Delivery address" />
         {(email.isDirty)
           && (
           <div className={styles.errorTextWrapper}>
@@ -68,7 +99,7 @@ function Purchase() {
             {email.isMailInvalid && <div>!! E-mail should be correct !!</div>}
           </div>
           )}
-        <input onChange={(e) => email.onChange(e)} type="text" name="Email" placeholder="E-mail" />
+        <input className={styles.myInput} onChange={(e) => email.onChange(e)} type="text" name="Email" placeholder="E-mail" />
         <div className={styles.cardWrapper}>
           <h3>Credit card details</h3>
           {(cardNumber.isDirty)
@@ -88,7 +119,7 @@ function Purchase() {
           </div>
           )}
           <div className={styles.cardNumber}>
-            <img alt="" src="https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/1.8.0/package/dist/img/logos/dls-logo-stack.svg" />
+            <img className={styles.cardImg} alt="" src={handleCardImg(cardNumber.value)} />
             <input onChange={(e) => cardNumber.onChange(e)} type="text" name="cardNumber" placeholder="Card number" className={styles.cardNumberInput} />
           </div>
           {(cardMonth.isDirty)

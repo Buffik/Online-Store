@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
+import areAllInputsValid from '../Components/utils/areAllInputsValid';
 import { TValidations } from '../types/types';
 
 const useValidation = (value: string, validations:TValidations) => {
@@ -74,7 +75,7 @@ const useValidation = (value: string, validations:TValidations) => {
           break;
 
         case 'isPhoneLengthInvalid':
-          if (value.length < 10) {
+          if (value.trim().split(' ').join('').length < 10) {
             setIsPhoneLengthInvalid(true);
           } else {
             setIsPhoneLengthInvalid(false);
@@ -164,6 +165,21 @@ const useValidation = (value: string, validations:TValidations) => {
     });
   }, [value]);
 
+  const isAllValid = areAllInputsValid([isEmpty,
+    minLengthName,
+    minLengthNameForEachWord,
+    isPhoneLengthInvalid,
+    isPhoneNotStartWithPlus,
+    isPhoneInvalid,
+    minLengthAddress,
+    minLengthAddressForEachWord,
+    isMailInvalid,
+    isCardNumberInvalid,
+    isCardNumberLengthInvalid,
+    isCardDateMonthInvalid,
+    isCardDateYearInvalid,
+    isCardCVVInvalid]);
+
   return {
     isEmpty,
     minLengthName,
@@ -179,6 +195,7 @@ const useValidation = (value: string, validations:TValidations) => {
     isCardDateMonthInvalid,
     isCardDateYearInvalid,
     isCardCVVInvalid,
+    isAllValid,
   };
 };
 

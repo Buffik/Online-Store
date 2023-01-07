@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+margin: 20px 0;
+}
+
+.text {
+  font-size: 20px;
+  font-weight: bold;
+  color: teal;
+  margin-right: 20px;
+}
+
+.input {
+  color: teal;
+  width: 55px;
+  text-align: center;
+  outline: none;
+  border: 1px solid teal;
+  border-radius: 0.2rem;
+  font-size: 140%;
+  margin-right: 20px;
+}
+
+.paginateButton {
+  padding: 5px 15px;
+  color: teal;
+  font-size: 1.5rem;
+  background: transparent;
+  border: 1px solid teal;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.paginateText {
+  font-size: 20px;
+  font-weight: bold;
+  color: teal;
+}

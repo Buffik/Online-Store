@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-input {
+.myInput {
   margin-bottom: 20px;
   width: 60%;
   font-size: 1.5rem;
@@ -31,12 +31,21 @@ input {
 .cardNumber {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
 }
 
+.cardImg {
+  background-color: #fff;
+  width: 10%;
+  border-radius: 0.3rem;
+  padding: 0.3rem;
+  margin-right: 10px;
+}
+
 .cardNumberInput {
+  font-size: 1.5rem;
   border: 2px solid teal;
   border-radius: 10px;
   width: 75%;
@@ -55,6 +64,7 @@ input {
 
 .otherDataCVV {
   width: 35px;
+  border-radius: 0.3rem;
   font-size: 1rem;
   padding: 5px;
   border: 2px solid teal;
@@ -79,6 +89,7 @@ input {
   border: 2px solid teal;
   border-radius: 5px;
   & input {
+    text-align: center;
     width: 30px;
     border: 0;
     font-size: 1rem;
