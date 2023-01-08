@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TValidations } from '../types/types';
 import useValidation from './useValidation';
 
@@ -13,12 +13,13 @@ const useInput = (initialValue: string, runValidate: boolean, validations: TVali
     } else setIsDirty(false);
   }, [runValidate]);
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value);
+  const onChange = (e: string) => {
+    setValue(e);
   };
 
   return {
     value,
+    setValue,
     isDirty,
     onChange,
     ...valid,

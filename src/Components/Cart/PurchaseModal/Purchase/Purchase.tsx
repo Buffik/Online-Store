@@ -32,6 +32,15 @@ function Purchase({ setShowAffirmative }: IPurchase) {
   const cardYear = useInput('', runValidate, { isCardDateYearInvalid: true });
   const cardCVV = useInput('', runValidate, { isEmpty: true, isCardCVVInvalid: true });
 
+  const handleMonth = (e:string) => {
+    if (cardMonth.value.length < 2) {
+      const result = `0${e.trim()}`;
+      cardMonth.onChange(result);
+    } else {
+      cardMonth.onChange(e.trim());
+    }
+  };
+
   useEffect(() => {
     const result = isFormValidHandle([
       name.isAllValid,
@@ -68,7 +77,7 @@ function Purchase({ setShowAffirmative }: IPurchase) {
             )}
           </div>
           )}
-        <input className={styles.myInput} onChange={(e) => name.onChange(e)} value={name.value} type="text" name="Name" placeholder="Name" />
+        <input className={styles.myInput} onChange={(e) => name.onChange(e.currentTarget.value)} value={name.value} type="text" name="Name" placeholder="Name" />
         {(phone.isDirty)
           && (
           <div className={styles.errorTextWrapper}>
@@ -78,7 +87,7 @@ function Purchase({ setShowAffirmative }: IPurchase) {
             {phone.isPhoneInvalid && <div>!! Should contains only digits !!</div>}
           </div>
           )}
-        <input className={styles.myInput} onChange={(e) => phone.onChange(e)} value={phone.value} type="text" name="Phone" placeholder="Phone" />
+        <input className={styles.myInput} onChange={(e) => phone.onChange(e.currentTarget.value)} value={phone.value} type="text" name="Phone" placeholder="Phone" />
         {(address.isDirty)
           && (
           <div className={styles.errorTextWrapper}>
@@ -91,7 +100,7 @@ function Purchase({ setShowAffirmative }: IPurchase) {
             )}
           </div>
           )}
-        <input className={styles.myInput} onChange={(e) => address.onChange(e)} type="text" name="Address" placeholder="Delivery address" />
+        <input className={styles.myInput} onChange={(e) => address.onChange(e.currentTarget.value)} type="text" name="Address" placeholder="Delivery address" />
         {(email.isDirty)
           && (
           <div className={styles.errorTextWrapper}>
@@ -99,7 +108,7 @@ function Purchase({ setShowAffirmative }: IPurchase) {
             {email.isMailInvalid && <div>!! E-mail should be correct !!</div>}
           </div>
           )}
-        <input className={styles.myInput} onChange={(e) => email.onChange(e)} type="text" name="Email" placeholder="E-mail" />
+        <input className={styles.myInput} onChange={(e) => email.onChange(e.currentTarget.value)} type="text" name="Email" placeholder="E-mail" />
         <div className={styles.cardWrapper}>
           <h3>Credit card details</h3>
           {(cardNumber.isDirty)
@@ -120,7 +129,7 @@ function Purchase({ setShowAffirmative }: IPurchase) {
           )}
           <div className={styles.cardNumber}>
             <img className={styles.cardImg} alt="" src={handleCardImg(cardNumber.value)} />
-            <input onChange={(e) => cardNumber.onChange(e)} type="text" name="cardNumber" placeholder="Card number" className={styles.cardNumberInput} />
+            <input onChange={(e) => cardNumber.onChange(e.currentTarget.value)} type="text" name="cardNumber" placeholder="Card number" className={styles.cardNumberInput} />
           </div>
           {(cardMonth.isDirty)
           && (
@@ -136,16 +145,16 @@ function Purchase({ setShowAffirmative }: IPurchase) {
             <div className={styles.otherDataExpirationWrapper}>
               <span className={styles.otherDataExpirationPlaceholder}>Date:</span>
               <div className={styles.dataExpiration}>
-                <input onChange={(e) => cardMonth.onChange(e)} type="text" name="month" placeholder="MM" />
+                <input onChange={(e) => handleMonth(e.currentTarget.value)} type="text" name="month" placeholder="MM" />
                 <span>/</span>
-                <input onChange={(e) => cardYear.onChange(e)} type="text" name="year" placeholder="YY" />
+                <input onChange={(e) => cardYear.onChange(e.currentTarget.value)} type="text" name="year" placeholder="YY" />
               </div>
             </div>
             <div>
               {' '}
               CVV:
               {' '}
-              <input onChange={(e) => cardCVV.onChange(e)} type="text" name="cardCVV" placeholder="CVV" className={styles.otherDataCVV} />
+              <input onChange={(e) => cardCVV.onChange(e.currentTarget.value)} type="text" name="cardCVV" placeholder="CVV" className={styles.otherDataCVV} />
             </div>
           </div>
         </div>
