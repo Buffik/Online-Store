@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-// import { useLocation } from 'react-router-dom';
 import FiltersList from '../../Components/Main/FiltersList';
 import ProductsList from '../../Components/Main/ProductsList';
 // import TestForMain from '../../Components/TestForMain';
 import { TProductPartialProps, TProductsItem } from '../../types/types';
 import useSearchParamsObject from '../../hooks/useSearchParamsObject';
+import LoadingSpinner from '../../Components/UI/LoadingSpinner';
 
 type TMainProps = {
   productsInCart: TProductPartialProps[];
@@ -16,22 +16,23 @@ type TMainProps = {
 
 type TParamsObject = Record<string, string>;
 
-// type TIsInSearchParams = {
-//   paramName: string;
-//   param: string | number;
-//   paramsObject: TParamsObject;
-// }
-
 type TFilterOptions = 'category' | 'brand' | 'price' | 'stock';
 
 function Main(props: TMainProps) {
-  const { productsInCart, addToCart, dropFromCart } = props;
+  const {
+    productsInCart,
+    addToCart,
+    dropFromCart,
+  } = props;
   const [products, setProducts] = useState([]);
+
+  const [isPending, setIsPending] = useState(true);
 
   const fetchProducts = async () => {
     const response = await fetch('https://dummyjson.com/products?limit=20');
     const productsList = await response.json();
     setProducts(productsList.products);
+    setIsPending(false);
   };
 
   useEffect(() => {
@@ -85,6 +86,57 @@ function Main(props: TMainProps) {
     }
   };
 
+  // let filteredSearchedProducts: TProductsItem[] = products.slice();
+
+  const fillSlider = (filter: 'price' | 'stock') => {
+    const sliderColor = '#999999';
+    const rangeColor = '#000000';
+    const max = Math.max(...products.map((item) => item[filter]));
+    const min = Math.min(...products.map((item) => item[filter]));
+    const valueMin = Number(searchParamsObject[`${[filter]}range`]?.split(',')[0]);
+    const valueMax = Number(searchParamsObject[`${[filter]}range`]?.split(',')[1]);
+    const rangeDistance = max - min;
+    const fromPosition = valueMin - min;
+    const toPosition = valueMax - min;
+    return `linear-gradient(
+      to right,
+      ${sliderColor} 0%,
+      ${sliderColor} ${((fromPosition) / (rangeDistance)) * 100}%,
+      ${rangeColor} ${((fromPosition) / (rangeDistance)) * 100}%,
+      ${rangeColor} ${((toPosition) / (rangeDistance)) * 100}%, 
+      ${sliderColor} ${((toPosition) / (rangeDistance)) * 100}%, 
+      ${sliderColor} 100%)`;
+  };
+
+  const getMinPrice = (source: TProductsItem[], param: 'price' | 'stock') => {
+    if (source.length !== 0) {
+      return Math.min(...source.map((item) => item[param]));
+    }
+    return undefined;
+  };
+  const getMaxPrice = (source: TProductsItem[], param: 'price' | 'stock') => {
+    if (source.length !== 0) {
+      return Math.max(...source.map((item) => item[param]));
+    }
+    return undefined;
+  };
+
+  const handleSliderMinInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const param = (event.target.id === 'filter-price-min') ? 'price' : 'stock';
+    const minValue = Number(event.target.value);
+    const maxValue = Number(searchParamsObject[`${param}range`]?.split(',')[1] ?? getMaxPrice(products, param));
+    setSearchParamsObject({ ...searchParamsObject, [`${param}range`]: [minValue, maxValue].sort((a, b) => a - b).join(',') });
+    fillSlider('price');
+  };
+
+  const handleSliderMaxInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const param = (event.target.id === 'filter-price-max') ? 'price' : 'stock';
+    const minValue = Number(searchParamsObject[`${param}range`]?.split(',')[0] ?? getMinPrice(products, param));
+    const maxValue = Number(event.target.value);
+    setSearchParamsObject({ ...searchParamsObject, [`${param}range`]: [minValue, maxValue].sort((a, b) => a - b).join(',') });
+    fillSlider('stock');
+  };
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '') {
       const copySearchParamsObject = { ...searchParamsObject };
@@ -94,11 +146,7 @@ function Main(props: TMainProps) {
       setSearchParamsObject({ ...searchParamsObject, search: event.target.value });
     }
   };
-
-  // const [sortingBy, setSortingBy] = useState('');
-  // console.log(sortingBy);
   const handleSortingChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    // setSortingBy(event.target.value);
     if (event.target.value === 'default') {
       const copySearchParamsObject = { ...searchParamsObject };
       delete copySearchParamsObject.sortby;
@@ -118,6 +166,20 @@ function Main(props: TMainProps) {
       const params = searchParamsObject.brand.split(',');
       arr = arr.filter((elem) => params.includes(elem.brand));
     }
+    if (searchParamsObject.pricerange) {
+      const params = searchParamsObject.pricerange.split(',').map((elem) => Number(elem));
+      arr = arr.filter((elem) => elem.price >= params[0] && elem.price <= params[1]);
+    }
+    if (searchParamsObject.stockrange) {
+      const params = searchParamsObject.stockrange.split(',').map((elem) => Number(elem));
+      arr = arr.filter((elem) => elem.stock >= params[0] && elem.stock <= params[1]);
+    }
+    // const minValue = getMinPrice(filteredSearchedProducts)
+    // ?? searchParamsObject?.pricerange?.split(',')[0];
+    // const maxValue = getMaxPrice(filteredSearchedProducts)
+    // ?? searchParamsObject?.pricerange?.split(',')[1];
+    // setSearchParamsObject({ ...searchParamsObject,
+    // pricerange: [minValue, maxValue].join(',') });
     return arr;
   };
 
@@ -166,7 +228,8 @@ function Main(props: TMainProps) {
 
   const handleResetClick = () => {
     setSearchParamsObject({});
-    // handleSortingChange();
+    fillSlider('price');
+    fillSlider('stock');
   };
 
   const [copied, setCopied] = useState(false);
@@ -178,44 +241,64 @@ function Main(props: TMainProps) {
   };
 
   return (
-    <main style={{ display: 'flex', gap: '50px' }}>
-      <FiltersList
-        products={products}
-        filteredSearchedProducts={filteredSearchedProducts}
-        categoriesList={categoriesList}
-        brandsList={brandsList}
-        searchParamsObject={searchParamsObject}
-        isInSearchParams={isInSearchParams}
-        handleCheckboxChange={handleCheckboxChange}
-        handleResetClick={handleResetClick}
-        handleCopyClick={handleCopyClick}
-        copied={copied}
-      />
-      <div>
-        <div>
-          <input type="text" value={searchParamsObject.search ?? ''} onChange={handleSearchChange} />
-          <p>
-            {'Found: '}
-            {filteredSearchedSortedProducts.length}
-          </p>
-          <select name="sort-by" id="sort-by" value={searchParamsObject.sortby} onChange={handleSortingChange}>
-            <option value="default">Sort by</option>
-            <option value="price-ascending">Cheapest first</option>
-            <option value="price-descending">Expensive first</option>
-            <option value="rating-descending">Higher rated first</option>
-            <option value="rating-ascending">Lower rated first</option>
-            <option value="discount-descending">Higher discount first</option>
-            <option value="discount-ascending">Lower discount first</option>
-          </select>
-        </div>
-        <ProductsList
-          productsInCart={productsInCart}
-          addToCart={addToCart}
-          dropFromCart={dropFromCart}
-          products={filteredSearchedSortedProducts}
-        />
-      </div>
-    </main>
+    <div>
+      {isPending
+        ? (
+          <div style={{
+            marginTop: '100px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          >
+            <LoadingSpinner />
+          </div>
+        )
+        : (
+          <main style={{ display: 'flex', gap: '50px' }}>
+            <FiltersList
+              products={products}
+              filteredSearchedProducts={filteredSearchedProducts}
+              categoriesList={categoriesList}
+              brandsList={brandsList}
+              searchParamsObject={searchParamsObject}
+              isInSearchParams={isInSearchParams}
+              handleCheckboxChange={handleCheckboxChange}
+              handleResetClick={handleResetClick}
+              handleCopyClick={handleCopyClick}
+              handleSliderMinInput={handleSliderMinInput}
+              handleSliderMaxInput={handleSliderMaxInput}
+              copied={copied}
+              fillSlider={fillSlider}
+            />
+            <div>
+              <div>
+                <input type="text" value={searchParamsObject.search ?? ''} onChange={handleSearchChange} />
+                <p>
+                  {'Found: '}
+                  {filteredSearchedSortedProducts.length}
+                </p>
+                <select name="sort-by" id="sort-by" value={searchParamsObject.sortby} onChange={handleSortingChange}>
+                  <option value="default">Sort by</option>
+                  <option value="price-ascending">Cheapest first</option>
+                  <option value="price-descending">Expensive first</option>
+                  <option value="rating-descending">Higher rated first</option>
+                  <option value="rating-ascending">Lower rated first</option>
+                  <option value="discount-descending">Higher discount first</option>
+                  <option value="discount-ascending">Lower discount first</option>
+                </select>
+              </div>
+              <ProductsList
+                productsInCart={productsInCart}
+                addToCart={addToCart}
+                dropFromCart={dropFromCart}
+                products={filteredSearchedSortedProducts}
+              />
+            </div>
+          </main>
+        )}
+    </div>
+
   );
 }
 
