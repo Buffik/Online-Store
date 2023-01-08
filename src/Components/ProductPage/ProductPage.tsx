@@ -25,7 +25,7 @@ function ProductPage({
 
   useEffect(() => {
     if (!id || id < 1 || id > 100) {
-      navigate('/*', { relative: 'path' });
+      navigate('/*', { replace: true });
     }
   }, [id, navigate]);
 
