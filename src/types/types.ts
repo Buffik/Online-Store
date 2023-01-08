@@ -6,10 +6,13 @@ export type TProductsItem = {
   category: string;
   brand: string;
   discountPercentage: number;
-  images?: string[];
   rating: number;
   stock: number;
   thumbnail: string;
+}
+
+export type TProductsItemWithImages = TProductsItem & {
+  images: string[];
 }
 
 export type TProductPartialProps = {
