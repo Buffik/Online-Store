@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import useFetching from '../../hooks/useFetching';
 import { TProductPartialProps, TProductsItemWithImages } from '../../types/types';
 import PostService from '../API/PostService';
@@ -7,7 +8,6 @@ import ProductAddDropButton from '../UI/button/ProductAddDropButton';
 import styles from './productPage.module.scss';
 
 interface IProductPage {
-  id: number
   productsInCart: TProductPartialProps[]
   // eslint-disable-next-line no-unused-vars
   addToCart(id: number | undefined): void;
@@ -16,8 +16,19 @@ interface IProductPage {
 }
 
 function ProductPage({
-  id, productsInCart, addToCart, dropFromCart,
+  productsInCart, addToCart, dropFromCart,
 }: IProductPage) {
+  const params = useParams();
+  const navigate = useNavigate();
+  const id = Number(params.id);
+  console.log(id);
+
+  useEffect(() => {
+    if (!id || id < 1 || id > 100) {
+      navigate('/*', { relative: 'path' });
+    }
+  }, [id, navigate]);
+
   const [currentPage, setCurrentPage] = useState<TProductsItemWithImages | null>(null);
   const [fetchProductById, isPending] = useFetching(async () => {
     // вспомнить про ошибку, перекинуть на 404 страницу при неверных данных
@@ -27,7 +38,7 @@ function ProductPage({
 
   useEffect(() => {
     fetchProductById();
-  }, []);
+  }, [id]);
 
   if (isPending) {
     return (

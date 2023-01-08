@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../../Components/header';
+import ProductPage from '../../Components/ProductPage/ProductPage';
 import Cart from '../../Pages/Cart/cart';
 import Main from '../../Pages/Main';
-import Other from '../../Pages/Other';
 import PageNotFound from '../../Pages/PageNotFound';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
 
@@ -47,7 +47,7 @@ export default function RootRouter(props: TRootRouterProps) {
             />
           )}
         />
-        <Route path="/other" element={<Other />} />
+        <Route path="/product/:id" element={<ProductPage productsInCart={productsInCart} addToCart={addToCart} dropFromCart={dropFromCart} />} />
         <Route
           path="/cart"
           element={(

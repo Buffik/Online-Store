@@ -62,7 +62,7 @@ export default function ProductsList(props: TProductsListProps) {
                 addToCart={addToCart}
                 dropFromCart={dropFromCart}
               />
-              <Link to={`/${product.id}`} style={{ marginLeft: '30px' }}>Details</Link>
+              <Link to={`/product/${product.id}`} style={{ marginLeft: '30px' }}>Details</Link>
             </div>
           ))
           : 'No products found'
