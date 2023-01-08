@@ -2,6 +2,7 @@
 import React from 'react';
 import { TProductsCart } from '../../../types/types';
 import ProductCartButton from '../../UI/button/ProductCartButton';
+import LoadingSpinner from '../../UI/LoadingSpinner';
 import styles from './CartProduct.module.scss';
 
 function CartProduct(props:TProductsCart) {
@@ -24,7 +25,15 @@ function CartProduct(props:TProductsCart) {
   } = props;
   if (!data) {
     return (
-      <div>Is loading</div>
+      <div style={{
+        marginTop: '100px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      >
+        <LoadingSpinner />
+      </div>
     );
   }
   return (

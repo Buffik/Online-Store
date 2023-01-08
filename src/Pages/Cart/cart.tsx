@@ -10,6 +10,7 @@ import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
 import Promo from '../../Components/Cart/Promo/Promo';
 import Modal from '../../Components/Cart/PurchaseModal/Modal';
 import Purchase from '../../Components/Cart/PurchaseModal/Purchase/Purchase';
+import LoadingSpinner from '../../Components/UI/LoadingSpinner';
 // eslint-disable-next-line no-unused-vars
 import countTotalCost from '../../Components/utils/countTotalCost';
 import countTotalCount from '../../Components/utils/countTotalCount';
@@ -128,8 +129,14 @@ function Cart(props: TCartProps) {
 
   if (isPending) {
     return (
-      <div>
-        Is loading...
+      <div style={{
+        marginTop: '100px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      >
+        <LoadingSpinner />
       </div>
     );
   }

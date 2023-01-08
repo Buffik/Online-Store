@@ -5,6 +5,7 @@ import useFetching from '../../hooks/useFetching';
 import { TProductPartialProps, TProductsItemWithImages } from '../../types/types';
 import PostService from '../API/PostService';
 import ProductAddDropButton from '../UI/button/ProductAddDropButton';
+import LoadingSpinner from '../UI/LoadingSpinner';
 import setDataToLocalStorage from '../utils/setDataToLocalStorage';
 import styles from './productPage.module.scss';
 
@@ -71,8 +72,14 @@ function ProductPage({
 
   if (isPending) {
     return (
-      <div>
-        Is loading...
+      <div style={{
+        marginTop: '100px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      >
+        <LoadingSpinner />
       </div>
     );
   }
