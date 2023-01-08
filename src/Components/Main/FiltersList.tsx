@@ -1,9 +1,6 @@
 import React from 'react';
-// import { isTemplateExpression } from 'typescript';
-// import { useSearchParams } from 'react-router-dom';
-// import ProductsList from '../../Components/Main/ProductsList';
-// import { useLocation } from 'react-router-dom';
 import { TProductsItem } from '../../types/types';
+import DualSlider from './DualSlider';
 
 type TParamsObject = Record<string, string>;
 
@@ -20,7 +17,13 @@ type TFiltersListProps = {
   handleResetClick(): void;
   // eslint-disable-next-line no-unused-vars
   handleCopyClick(): void;
+  // eslint-disable-next-line no-unused-vars
+  handleSliderMinInput(event: React.ChangeEvent<HTMLInputElement>): void;
+  // eslint-disable-next-line no-unused-vars
+  handleSliderMaxInput(event: React.ChangeEvent<HTMLInputElement>): void
   copied: boolean;
+  // eslint-disable-next-line no-unused-vars
+  fillSlider(filter: 'price' | 'stock'): string;
 }
 
 function FiltersList(props: TFiltersListProps) {
@@ -34,26 +37,11 @@ function FiltersList(props: TFiltersListProps) {
     handleCheckboxChange,
     handleResetClick,
     handleCopyClick,
+    handleSliderMinInput,
+    handleSliderMaxInput,
     copied,
+    fillSlider,
   } = props;
-
-  // const categoriesArray = categoriesList.map((category) => {
-  //   const obj = { [category]: isInSearchParams('category', category, searchParamsObject) };
-  //   return obj;
-  // });
-  // console.log(categoriesArray);
-
-  // let arr = new Array(categoriesList.length).fill(false);
-  // console.log(arr);
-  // arr = arr.map((category) => isInSearchParams('category', category, searchParamsObject));
-  // console.log(arr);
-  // const [checkedCategories] = useState(
-  //   new Array(categoriesList.length).fill(arr),
-  // );
-  // useEffect(() => console.log('checkedCategories'), []);
-
-  // console.log('checkedCategories');
-  // console.log(checkedCategories);
 
   return (
     <section>
@@ -98,6 +86,32 @@ function FiltersList(props: TFiltersListProps) {
             )
           </label>
         ))}
+      </fieldset>
+      <fieldset>
+        <legend>Price:</legend>
+        <DualSlider
+          sliderId="filter-price"
+          filter="price"
+          products={products}
+          handleSliderMinInput={handleSliderMinInput}
+          handleSliderMaxInput={handleSliderMaxInput}
+          searchParamsObject={searchParamsObject}
+          filteredSearchedProducts={filteredSearchedProducts}
+          fillSlider={fillSlider}
+        />
+      </fieldset>
+      <fieldset>
+        <legend>Stock:</legend>
+        <DualSlider
+          sliderId="filter-stock"
+          filter="stock"
+          products={products}
+          handleSliderMinInput={handleSliderMinInput}
+          handleSliderMaxInput={handleSliderMaxInput}
+          searchParamsObject={searchParamsObject}
+          filteredSearchedProducts={filteredSearchedProducts}
+          fillSlider={fillSlider}
+        />
       </fieldset>
     </section>
   );

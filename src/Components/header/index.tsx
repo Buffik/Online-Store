@@ -70,7 +70,7 @@ export default function Header(props: TProps) {
           {/* {cartTotal?.toFixed(2)} */}
           {cartTotal
             ? new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(cartTotal)
-            : new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(0)}
+            : '...'}
         </p>
       </nav>
     </div>

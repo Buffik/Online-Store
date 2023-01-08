@@ -24,7 +24,7 @@ export default function ProductsList(props: TProductsListProps) {
       {
         products.length
           ? products.map((product: TProductsItem) => (
-            <div key={product.id}>
+            <div key={product.id} style={{ width: '250px' }}>
               <h3 style={{ fontSize: '1.5em' }}>{product.title}</h3>
               <img src={product.thumbnail} alt={product.title} width={200} height={150} style={{ objectFit: 'contain' }} />
               <dl>
