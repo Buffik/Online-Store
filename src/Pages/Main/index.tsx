@@ -5,6 +5,7 @@ import ProductsList from '../../Components/Main/ProductsList';
 import { TProductPartialProps, TProductsItem } from '../../types/types';
 import useSearchParamsObject from '../../hooks/useSearchParamsObject';
 import LoadingSpinner from '../../Components/UI/LoadingSpinner';
+import setDataToLocalStorage from '../../Components/utils/setDataToLocalStorage';
 
 type TMainProps = {
   productsInCart: TProductPartialProps[];
@@ -239,6 +240,10 @@ function Main(props: TMainProps) {
     setTimeout(() => setCopied(false), 500);
     navigator.clipboard.writeText(window.location.href);
   };
+
+  useEffect(() => {
+    setDataToLocalStorage(productsInCart);
+  }, [productsInCart]);
 
   return (
     <div>

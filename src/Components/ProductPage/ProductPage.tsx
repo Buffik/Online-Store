@@ -5,6 +5,7 @@ import useFetching from '../../hooks/useFetching';
 import { TProductPartialProps, TProductsItemWithImages } from '../../types/types';
 import PostService from '../API/PostService';
 import ProductAddDropButton from '../UI/button/ProductAddDropButton';
+import setDataToLocalStorage from '../utils/setDataToLocalStorage';
 import styles from './productPage.module.scss';
 
 interface IProductPage {
@@ -13,22 +14,17 @@ interface IProductPage {
   addToCart(id: number | undefined): void;
   // eslint-disable-next-line no-unused-vars
   dropFromCart(id: number | undefined): void;
+  setFormVisible: (bool:boolean) => void
 }
 
 function ProductPage({
-  productsInCart, addToCart, dropFromCart,
+  productsInCart, addToCart, dropFromCart, setFormVisible,
 }: IProductPage) {
   const params = useParams();
   const navigate = useNavigate();
   const id = Number(params.id);
-  console.log(id);
 
-  useEffect(() => {
-    if (!id || id < 1 || id > 100) {
-      navigate('/*', { replace: true });
-    }
-  }, [id, navigate]);
-
+  // const [goToCart, setGoToCart] = useState(false);
   const [currentPage, setCurrentPage] = useState<TProductsItemWithImages | null>(null);
   const [fetchProductById, isPending] = useFetching(async () => {
     // вспомнить про ошибку, перекинуть на 404 страницу при неверных данных
@@ -36,9 +32,42 @@ function ProductPage({
     setCurrentPage(data);
   });
 
+  // if (goToCart) {
+  //   const history = useNavigate();
+  //   useEffect(() => {
+  //     history('/cart', { replace: true });
+  //   }, [goToCart]);
+  // }
+
+  useEffect(() => {
+    if (!id || id < 1 || id > 100) {
+      navigate('/*', { replace: true });
+    }
+  }, [id, navigate]);
+
   useEffect(() => {
     fetchProductById();
   }, [id]);
+
+  useEffect(() => {
+    setDataToLocalStorage(productsInCart);
+  }, [productsInCart]);
+
+  const handleBuyButtonClick = () => {
+    const isProductInCart = productsInCart.reduce<boolean>((acc, el) => {
+      if (el.id === id) {
+        // eslint-disable-next-line no-param-reassign
+        acc = true;
+        return acc;
+      }
+      return acc;
+    }, false);
+    if (!isProductInCart) {
+      addToCart(id);
+    }
+    setFormVisible(true);
+    navigate('/cart', { replace: true });
+  };
 
   if (isPending) {
     return (
@@ -104,7 +133,7 @@ function ProductPage({
               {currentPage?.price}
               .00
             </div>
-            <button type="button">Buy now</button>
+            <button type="button" onClick={() => handleBuyButtonClick()}>Buy now</button>
             <ProductAddDropButton
               productId={id}
               productsInCart={productsInCart}
