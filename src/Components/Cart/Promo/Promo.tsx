@@ -25,7 +25,7 @@ function Promo({
 
   return (
     <div className={styles.wrapper}>
-      <div>
+      <div className={styles.wrapperInput}>
         <input className={styles.input} placeholder="Enter promo code" value={codeInput} onChange={(event) => setCodeInput(event.currentTarget.value)} />
       </div>
       <div className={styles.textSummary}>

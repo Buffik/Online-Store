@@ -6,10 +6,13 @@ export type TProductsItem = {
   category: string;
   brand: string;
   discountPercentage: number;
-  images?: string[];
   rating: number;
   stock: number;
   thumbnail: string;
+}
+
+export type TProductsItemWithImages = TProductsItem & {
+  images: string[];
 }
 
 export type TProductPartialProps = {
@@ -19,6 +22,7 @@ export type TProductPartialProps = {
 
 export type TProductCartIdCountProps = {
   data: TProductPartialProps
+  productIndex: number
 }
 
 export type TProductHandlers = {
@@ -48,3 +52,7 @@ export interface IAddHandler extends IPromoCodeHandler{
   // eslint-disable-next-line no-unused-vars
   inputData: (string:string) => void
 }
+
+export type TValidations = {
+  [key:string]: boolean
+};

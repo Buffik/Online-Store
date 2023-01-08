@@ -7,6 +7,7 @@ import styles from './CartProduct.module.scss';
 function CartProduct(props:TProductsCart) {
   // eslint-disable-next-line max-len
   const {
+    productIndex,
     id,
     title,
     description,
@@ -28,6 +29,7 @@ function CartProduct(props:TProductsCart) {
   }
   return (
     <div className={styles.cardProduct}>
+      <div className={styles.productIndex}>{productIndex}</div>
       <img className={styles.infoImg} src={thumbnail} alt={title} />
       <div className={styles.infoWrapper}>
         <h3>{title}</h3>
