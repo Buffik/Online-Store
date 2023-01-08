@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import Footer from '../../Components/Footer';
 import Header from '../../Components/header';
 import ProductPage from '../../Components/ProductPage/ProductPage';
 import Cart from '../../Pages/Cart/cart';
@@ -63,6 +64,7 @@ export default function RootRouter(props: TRootRouterProps) {
         />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
