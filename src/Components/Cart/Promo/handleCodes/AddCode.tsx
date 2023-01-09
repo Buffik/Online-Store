@@ -7,7 +7,7 @@ function AddCode({
 }: IAddHandler) {
   return (
     <div className={styles.textCode}>
-      {`Code "${code}", discount - ${discount}%`}
+      {`Code "${code}" -${discount}%`}
       <button className={styles.buttonCode} type="button" value={discount} onClick={(e) => { setCode(e, true); inputData(''); }}>{todo}</button>
     </div>
   );

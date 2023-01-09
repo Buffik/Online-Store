@@ -5,6 +5,7 @@ import useFetching from '../../hooks/useFetching';
 import { TProductPartialProps, TProductsItemWithImages } from '../../types/types';
 import PostService from '../API/PostService';
 import ProductAddDropButton from '../UI/button/ProductAddDropButton';
+import SiteContainer from '../UI/container/SiteContainer';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import checkUniqueImgs from '../utils/checkUniqueImgs';
 import setDataToLocalStorage from '../utils/setDataToLocalStorage';
@@ -59,7 +60,6 @@ function ProductPage({
 
   useMemo(
     () => {
-      console.log('render memo');
       if (currentPage && currentPage.images.length !== 0) {
         setCurrentImg(currentPage.images[currentPage.images.length - 1]);
         setArrImg(currentPage.images);
@@ -79,7 +79,6 @@ function ProductPage({
 
   useMemo(() => {
     if (allImgsSizes.length && allImgsSizes.length > 1) {
-      console.log('again');
       checkUniqueImgs(allImgsSizes, arrImg, setCleanArrImg);
     }
   }, [allImgsSizes]);
@@ -115,73 +114,77 @@ function ProductPage({
   }
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.breedsWrapper}>
-        <Link to="/">Home</Link>
-        <span className={styles.breedsItems}>&gt;&gt;</span>
-        <div>{currentPage?.category}</div>
-        <span className={styles.breedsItems}>&gt;&gt;</span>
-        <div>{currentPage?.brand}</div>
-        <span className={styles.breedsItems}>&gt;&gt;</span>
-        <div>{currentPage?.title}</div>
-      </div>
-      <div className={styles.productWrapper}>
-        <h2>{currentPage?.title}</h2>
-        <div className={styles.detailsWrapper}>
-          <div className={styles.imagesWrapper}>
-            <img className={styles.mainImg} src={currentImg} alt={currentPage?.title} />
-            <ProductImagesCarousel cleanArrImg={cleanArrImg} setCurrentImg={setCurrentImg} />
-          </div>
-          <div className={styles.infoWrapper}>
-            <div>
-              Stock:
-              {' '}
-              {currentPage?.stock}
+    <SiteContainer>
+      <div className={styles.wrapper}>
+        <div className={styles.breedsWrapper}>
+          <Link to="/">Home</Link>
+          <span className={styles.breedsItems}>&gt;&gt;</span>
+          <div>{currentPage?.category}</div>
+          <span className={styles.breedsItems}>&gt;&gt;</span>
+          <div>{currentPage?.brand}</div>
+          <span className={styles.breedsItems}>&gt;&gt;</span>
+          <div>{currentPage?.title}</div>
+        </div>
+        <div className={styles.productWrapper}>
+          <h2>{currentPage?.title}</h2>
+          <div className={styles.detailsWrapper}>
+            <div className={styles.imagesWrapper}>
+              <div className={styles.mainImgWrapper}>
+                <img className={styles.mainImg} src={currentImg} alt={currentPage?.title} />
+              </div>
+              {cleanArrImg.length > 1
+              && <ProductImagesCarousel cleanArrImg={cleanArrImg} setCurrentImg={setCurrentImg} />}
             </div>
-            <div>
-              Brand:
-              {' '}
-              {currentPage?.stock}
+            <div className={styles.infoWrapper}>
+              <div className={styles.infoText}>
+                <span className={styles.infoHeaders}>Available stock:</span>
+                {' '}
+                {currentPage?.stock}
+              </div>
+              <div className={styles.infoText}>
+                <span className={styles.infoHeaders}>Brand:</span>
+                {' '}
+                {currentPage?.brand}
+              </div>
+              <div className={styles.infoDescription}>
+                {currentPage?.description}
+              </div>
+              <div className={styles.infoText}>
+                <span className={styles.infoHeaders}>Rating:</span>
+                {' '}
+                {currentPage?.rating}
+              </div>
+              <div className={styles.infoText}>
+                <span className={styles.infoHeaders}>Category:</span>
+                {' '}
+                {currentPage?.category}
+              </div>
+              <div className={styles.infoText}>
+                <span className={styles.infoHeaders}>Discount:</span>
+                {' '}
+                {currentPage?.discountPercentage}
+                %
+              </div>
             </div>
-            <div>
-              Description:
-              {' '}
-              {currentPage?.description}
+            <div className={styles.buttonsWrapper}>
+              <div className={styles.productPrice}>
+                Price €
+                {' '}
+                {currentPage?.price}
+                .00
+              </div>
+              <button type="button" onClick={() => handleBuyButtonClick()}>Buy now</button>
+              <ProductAddDropButton
+                productId={id}
+                productsInCart={productsInCart}
+                addToCart={addToCart}
+                dropFromCart={dropFromCart}
+              />
             </div>
-            <div>
-              Rating:
-              {' '}
-              {currentPage?.rating}
-            </div>
-            <div>
-              Category:
-              {' '}
-              {currentPage?.category}
-            </div>
-            <div>
-              Discount Percentage:
-              {' '}
-              {currentPage?.discountPercentage}
-            </div>
-          </div>
-          <div className={styles.buttonsWrapper}>
-            <div>
-              Price €
-              {' '}
-              {currentPage?.price}
-              .00
-            </div>
-            <button type="button" onClick={() => handleBuyButtonClick()}>Buy now</button>
-            <ProductAddDropButton
-              productId={id}
-              productsInCart={productsInCart}
-              addToCart={addToCart}
-              dropFromCart={dropFromCart}
-            />
           </div>
         </div>
       </div>
-    </div>
+    </SiteContainer>
   );
 }
 

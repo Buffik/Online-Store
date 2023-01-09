@@ -197,7 +197,7 @@ function Cart(props: TCartProps) {
                 {' '}
                 {countTotalSumWithDiscounts(totalCost, codeAdded)}
               </div>
-              <div>Applied codes</div>
+              <div style={{ textAlign: 'center' }}>Applied codes</div>
               <div>
                 {codeAdded.map((discount) => <DeleteCode key={discount} todo="DEL" discount={discount} setCode={delPromoCode} />)}
               </div>
