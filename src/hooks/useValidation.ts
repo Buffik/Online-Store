@@ -91,13 +91,9 @@ const useValidation = (value: string, validations:TValidations) => {
           break;
 
         case 'isPhoneInvalid':
-          value.split('').forEach((char, index) => {
-            if (index !== 0) {
-              if (!/^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(value)) {
-                setIsPhoneInvalid(true);
-              } else setIsPhoneInvalid(false);
-            }
-          });
+          if (!/^[\s()+-]*([0-9][\s()+-]*){6,20}$/.test(value)) {
+            setIsPhoneInvalid(true);
+          } else setIsPhoneInvalid(false);
           break;
 
         case 'minLengthAddress':
