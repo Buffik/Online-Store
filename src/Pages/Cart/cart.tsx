@@ -207,7 +207,7 @@ function Cart(props: TCartProps) {
               </div>
               <div style={{ textAlign: 'center' }}>Applied codes</div>
               <div>
-                {codeAdded.map((discount) => <DeleteCode key={discount} todo="DEL" discount={discount} setCode={delPromoCode} />)}
+                {codeAdded.map((discount) => <DeleteCode key={discount} code={discount === 10 ? 'PROMO' : 'ANOTHER'} todo="DEL" discount={discount} setCode={delPromoCode} />)}
               </div>
             </div>
           ) : <h4>No applied codes</h4>}

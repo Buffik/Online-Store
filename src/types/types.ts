@@ -42,6 +42,7 @@ export type TPromoCodesArr = {
 
 export interface IPromoCodeHandler {
   todo: string
+  code: string
   discount: number
   // eslint-disable-next-line no-unused-vars, no-undef
   setCode: (event: React.MouseEvent<HTMLButtonElement>, isAdd: boolean) => void
