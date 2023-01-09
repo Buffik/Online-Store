@@ -20,9 +20,22 @@
   font-size: 1.2rem;
   color: var(--accent-color);
   transition: all 0.4s;
+  display: flex;
+  gap: 5px;
+  align-items: center;
 
   &:hover {
     color: var(--accent-hover-color);
+  }
+
+  &::before {
+    content: "";
+    background-image: url("../../assets/images/logo-icon.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
   }
 }
 

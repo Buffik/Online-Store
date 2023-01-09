@@ -250,9 +250,9 @@ function Main(props: TMainProps) {
 
   const productsView = (searchParamsObject?.view === 'list' || searchParamsObject?.view === 'grid') ? searchParamsObject.view : 'grid';
 
-  useEffect(() => {
-    setSearchParamsObject({ ...searchParamsObject, view: 'grid' });
-  }, []);
+  // useEffect(() => {
+  //   setSearchParamsObject({ ...searchParamsObject, view: 'grid' });
+  // }, []);
 
   useEffect(() => {
     setDataToLocalStorage(productsInCart);
