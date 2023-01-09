@@ -1,14 +1,45 @@
 .wrapper {
+  margin: auto;
+  padding: 0 30px;
   max-width: 1220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .breedsWrapper {
+  color:#B9B9B9;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
   max-width: 800px;
-  margin: auto;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  & a {
+    text-decoration: none;
+    color:#333232;
+    &:hover {
+      transition: all ease 0.3s;
+      color: teal;
+    }
+  }
+}
+
+.breedsItems {
+  color: teal;
+  font-size: 25px;
+  font-weight: bold;
+  margin: 0 30px;
 }
 
 .productWrapper {
   display: block;
+
+  & h2 {
+    text-align: center;
+    font-size: 30px;
+  }
 }
 
 .detailsWrapper {
@@ -16,7 +47,8 @@
 }
 
 .imagesWrapper {
-  
+  max-width: 500px;
+  margin-right: 20px;
 }
 
 .imagesCarouselWrapper {
