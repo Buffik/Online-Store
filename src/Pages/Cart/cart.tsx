@@ -10,6 +10,8 @@ import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
 import Promo from '../../Components/Cart/Promo/Promo';
 import Modal from '../../Components/Cart/PurchaseModal/Modal';
 import Purchase from '../../Components/Cart/PurchaseModal/Purchase/Purchase';
+import SiteContainer from '../../Components/UI/container/SiteContainer';
+import LoadingSpinner from '../../Components/UI/LoadingSpinner';
 // eslint-disable-next-line no-unused-vars
 import countTotalCost from '../../Components/utils/countTotalCost';
 import countTotalCount from '../../Components/utils/countTotalCount';
@@ -122,17 +124,15 @@ function Cart(props: TCartProps) {
 
   if (isPending) {
     return (
-      <div>
-        Is loading...
-      </div>
+      <SiteContainer>
+        <LoadingSpinner />
+      </SiteContainer>
     );
   }
 
   if (!products?.length) {
     return (
-      <div>
-        Cart is empty
-      </div>
+      <SiteContainer>Cart is empty</SiteContainer>
     );
   }
 
@@ -143,70 +143,73 @@ function Cart(props: TCartProps) {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.productsWrapper}>
-        <CartPagination handleProductsPerPage={handleProductsPerPage} productsPerPage={productsPerPage} maxPages={maxPages} currentPage={currentPage} goNextFromCurrentPage={goNextFromCurrentPage} goBackFromCurrentPage={goBackFromCurrentPage} />
-        { currentProducts?.map((product: TProductsItem, index) => (
-          <CartProduct
-            key={product.id}
-            productIndex={index + 1 + firstProductIndex}
-            id={product.id}
-            title={product.title}
-            description={product.description}
-            price={product.price}
-            category={product.category}
-            brand={product.brand}
-            discountPercentage={product.discountPercentage}
-            rating={product.rating}
-            stock={product.stock}
-            thumbnail={product.thumbnail}
-            onClickHandlerIncrease={increaseProductCount}
-            onClickHandlerDecrease={decreaseProductCount}
-            data={productsInCartCount[index + firstProductIndex]}
-          />
-        ))}
-      </div>
-      <div className={styles.summaryWrapper}>
-        <h2>Summary</h2>
-        <div className={styles.textSummary}>
-          <span className={styles.textProducts}>Products:</span>
-          {' '}
-          {totalCount}
+    <SiteContainer>
+      <div className={styles.wrapper}>
+        <div className={styles.productsWrapper}>
+          <CartPagination handleProductsPerPage={handleProductsPerPage} productsPerPage={productsPerPage} maxPages={maxPages} currentPage={currentPage} goNextFromCurrentPage={goNextFromCurrentPage} goBackFromCurrentPage={goBackFromCurrentPage} />
+          { currentProducts?.map((product: TProductsItem, index) => (
+            <CartProduct
+              key={product.id}
+              productIndex={index + 1 + firstProductIndex}
+              id={product.id}
+              title={product.title}
+              description={product.description}
+              price={product.price}
+              category={product.category}
+              brand={product.brand}
+              discountPercentage={product.discountPercentage}
+              rating={product.rating}
+              stock={product.stock}
+              thumbnail={product.thumbnail}
+              onClickHandlerIncrease={increaseProductCount}
+              onClickHandlerDecrease={decreaseProductCount}
+              data={productsInCartCount[index + firstProductIndex]}
+            />
+          ))}
         </div>
-        <div className={isCodeAdd ? styles.textSummaryLineThrough : styles.textSummary}>
-          <span className={styles.textTotal}>Total:</span>
-          {' '}
-          €
-          {' '}
-          {totalCost}
-          .00
-        </div>
-        {isCodeAdd ? (
-          <div>
-            <div className={styles.textSummaryWithDiscount}>
-              <span className={styles.textTotal}>Total:</span>
-              {' '}
-              €
-              {' '}
-              {countTotalSumWithDiscounts(totalCost, codeAdded)}
-            </div>
-            <div>Applied codes</div>
-            <div>
-              {codeAdded.map((discount) => <DeleteCode key={discount} todo="DEL" discount={discount} setCode={delPromoCode} />)}
-            </div>
+        <div className={styles.summaryWrapper}>
+          <h2>Summary</h2>
+          <div className={styles.textSummary}>
+            <span className={styles.textProducts}>Products:</span>
+            {' '}
+            {totalCount}
           </div>
-        ) : <h4>No applied codes</h4>}
-        <Promo isCodeTrue={isCodeValid} currenCodes={codeAdded} setIsCodeTrue={setIsCodeValid} setIsCodeAdd={addPromoCode} />
-        <button className={styles.byuButton} type="button" onClick={() => setFormVisible(true)}> BYU NOW</button>
-      </div>
-      <Modal
-        visible={formVisible}
-        setVisible={setFormVisible}
-      >
-        <Purchase setShowAffirmative={setShowAffirmative} />
+          <div className={isCodeAdd ? styles.textSummaryLineThrough : styles.textSummary}>
+            <span className={styles.textTotal}>Total:</span>
+            {' '}
+            €
+            {' '}
+            {totalCost}
+            .00
+          </div>
+          {isCodeAdd ? (
+            <div>
+              <div className={styles.textSummaryWithDiscount}>
+                <span className={styles.textTotal}>Total:</span>
+                {' '}
+                €
+                {' '}
+                {countTotalSumWithDiscounts(totalCost, codeAdded)}
+              </div>
+              <div>Applied codes</div>
+              <div>
+                {codeAdded.map((discount) => <DeleteCode key={discount} todo="DEL" discount={discount} setCode={delPromoCode} />)}
+              </div>
+            </div>
+          ) : <h4>No applied codes</h4>}
+          <Promo isCodeTrue={isCodeValid} currenCodes={codeAdded} setIsCodeTrue={setIsCodeValid} setIsCodeAdd={addPromoCode} />
+          <button className={styles.byuButton} type="button" onClick={() => setFormVisible(true)}> BUY NOW</button>
+        </div>
+        <Modal
+          visible={formVisible}
+          setVisible={setFormVisible}
+        >
+          <Purchase setShowAffirmative={setShowAffirmative} />
 
-      </Modal>
-    </div>
+        </Modal>
+      </div>
+    </SiteContainer>
+
   );
 }
 

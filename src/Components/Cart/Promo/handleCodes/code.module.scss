@@ -4,24 +4,24 @@
 
 .buttonCode {
   padding: 5px 15px;
-  background-color: teal;
+  background-color: var(--accent-color);
   color: white;
   font-size: 14px;
-  border: 1px solid teal;
+  border: 1px solid var(--accent-color);
   border-radius: 5px;
   cursor: pointer;
   margin: 5px;
   
   &:hover {
     transition: all 0.3s;
-    color: teal;
-    background-color: white;
+    // color: teal;
+    background-color: var(--accent-hover-color);
   }
 }
 
 .textSummary {
   font-size: 2rem;
   font-weight: bold;
-  color: rgb(26, 180, 180)
+  color: var(--accent-color);
 }
 

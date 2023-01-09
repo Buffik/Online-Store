@@ -5,6 +5,8 @@ import ProductsList from '../../Components/Main/ProductsList';
 import { TProductPartialProps, TProductsItem } from '../../types/types';
 import useSearchParamsObject from '../../hooks/useSearchParamsObject';
 import LoadingSpinner from '../../Components/UI/LoadingSpinner';
+import SiteContainer from '../../Components/UI/container/SiteContainer';
+import styles from './Main.module.scss';
 
 type TMainProps = {
   productsInCart: TProductPartialProps[];
@@ -89,8 +91,8 @@ function Main(props: TMainProps) {
   // let filteredSearchedProducts: TProductsItem[] = products.slice();
 
   const fillSlider = (filter: 'price' | 'stock') => {
-    const sliderColor = '#999999';
-    const rangeColor = '#000000';
+    const sliderColor = '#b9b9b9';
+    const rangeColor = '#2CB708';
     const max = Math.max(...products.map((item) => item[filter]));
     const min = Math.min(...products.map((item) => item[filter]));
     const valueMin = Number(searchParamsObject[`${[filter]}range`]?.split(',')[0]);
@@ -240,22 +242,25 @@ function Main(props: TMainProps) {
     navigator.clipboard.writeText(window.location.href);
   };
 
+  const handleViewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const param = (event.target.id === 'products-view-list') ? 'list' : 'grid';
+    setSearchParamsObject({ ...searchParamsObject, view: param });
+  };
+
+  const productsView = (searchParamsObject?.view === 'list' || searchParamsObject?.view === 'grid') ? searchParamsObject.view : 'list';
+
+  useEffect(() => {
+    setSearchParamsObject({ ...searchParamsObject, view: 'list' });
+  }, []);
+
   return (
-    <div>
+    <SiteContainer>
       {isPending
         ? (
-          <div style={{
-            marginTop: '100px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          >
-            <LoadingSpinner />
-          </div>
+          <LoadingSpinner />
         )
         : (
-          <main style={{ display: 'flex', gap: '50px' }}>
+          <main className={styles.main}>
             <FiltersList
               products={products}
               filteredSearchedProducts={filteredSearchedProducts}
@@ -271,9 +276,15 @@ function Main(props: TMainProps) {
               copied={copied}
               fillSlider={fillSlider}
             />
-            <div>
-              <div>
-                <input type="text" value={searchParamsObject.search ?? ''} onChange={handleSearchChange} />
+            <div style={{ width: '100%' }}>
+              <div className={styles.findSortContainer}>
+                <input
+                  type="text"
+                  value={searchParamsObject.search ?? ''}
+                  onChange={handleSearchChange}
+                  placeholder="Find products..."
+                  aria-label="Find products."
+                />
                 <p>
                   {'Found: '}
                   {filteredSearchedSortedProducts.length}
@@ -287,17 +298,38 @@ function Main(props: TMainProps) {
                   <option value="discount-descending">Higher discount first</option>
                   <option value="discount-ascending">Lower discount first</option>
                 </select>
+                <label htmlFor="products-view-list">
+                  <input
+                    type="radio"
+                    name="products-view"
+                    id="products-view-list"
+                    checked={productsView === 'list'}
+                    onChange={handleViewChange}
+                  />
+                  List
+                </label>
+                <label htmlFor="products-view-grid">
+                  <input
+                    type="radio"
+                    name="products-view"
+                    id="products-view-grid"
+                    checked={productsView === 'grid'}
+                    onChange={handleViewChange}
+                  />
+                  Grid
+                </label>
               </div>
               <ProductsList
                 productsInCart={productsInCart}
                 addToCart={addToCart}
                 dropFromCart={dropFromCart}
                 products={filteredSearchedSortedProducts}
+                view={productsView}
               />
             </div>
           </main>
         )}
-    </div>
+    </SiteContainer>
 
   );
 }

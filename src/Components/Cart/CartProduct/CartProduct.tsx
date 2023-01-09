@@ -32,7 +32,7 @@ function CartProduct(props:TProductsCart) {
       <div className={styles.productIndex}>{productIndex}</div>
       <img className={styles.infoImg} src={thumbnail} alt={title} />
       <div className={styles.infoWrapper}>
-        <h3>{title}</h3>
+        <h3 className={styles.title}>{title}</h3>
         <hr />
         <p className={styles.textAbout}>{description}</p>
 
@@ -50,18 +50,21 @@ function CartProduct(props:TProductsCart) {
           <div>
             Rating:
             {' '}
-            {rating}
+            <span>{rating}</span>
           </div>
           <div>
             Discount:
             {' '}
-            {discountPercentage}
+            <span>
+              {discountPercentage}
+              %
+            </span>
           </div>
         </div>
       </div>
       <div className={styles.buttonsWrapper}>
         <div className={styles.textStock}>
-          Available stock:
+          {'Available stock: '}
           {stock}
         </div>
         <ProductCartButton value={id} onClick={onClickHandlerIncrease}><div>+</div></ProductCartButton>

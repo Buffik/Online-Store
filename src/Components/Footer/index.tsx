@@ -8,9 +8,9 @@ function Footer() {
       <div className={styles.container}>
         <p>
           {'Developed by '}
-          <a href="https://github.com/Buffik">Buffik</a>
+          <a className={styles.footer__link} href="https://github.com/Buffik">Buffik</a>
           {', '}
-          <a href="https://github.com/dinara-n">dinara-n</a>
+          <a className={styles.footer__link} href="https://github.com/dinara-n">dinara-n</a>
         </p>
         <p>© 2023</p>
         <a href="https://rs.school/js/">

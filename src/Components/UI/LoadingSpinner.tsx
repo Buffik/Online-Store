@@ -3,9 +3,11 @@ import styles from './LoadingSpinner.module.scss';
 
 function LoadingSpinner() {
   return (
-    <section className={styles.container}>
-      <div className={styles.spinner} />
-    </section>
+    <div className={styles.container}>
+      <section className={styles.box}>
+        <div className={styles.spinner} />
+      </section>
+    </div>
   );
 }
 
