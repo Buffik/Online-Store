@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TProductPartialProps } from '../../../types/types';
-import styles from './approvePurchase.module.css';
+import SiteContainer from '../../UI/container/SiteContainer';
+import LoadingSpinner from '../../UI/LoadingSpinner';
+import styles from './approvePurchase.module.scss';
 
 interface IApprovePurchase {
   showAffirmative: boolean
@@ -29,16 +31,19 @@ function ApprovePurchase({
         setProductsInCart([]);
         setProductsInCartCount([]);
         history('/', { replace: true });
-      }, 3000);
+      }, 5000);
     }, []);
   }
   return (
-    <h1 className={styles.text}>
-      Thank you dor order! redirecting in
-      {' '}
-      {time}
-      s...
-    </h1>
+    <SiteContainer>
+      <h1 className={styles.text}>
+        Thank you for the order! Redirecting in
+        {' '}
+        {time}
+        s...
+      </h1>
+      <LoadingSpinner />
+    </SiteContainer>
   );
 }
 
