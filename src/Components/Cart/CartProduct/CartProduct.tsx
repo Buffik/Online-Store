@@ -44,21 +44,39 @@ function CartProduct(props:TProductsCart) {
       <Link to={`/product/${id}`} className={styles.dataLinkWrapper}>
         <img className={styles.infoImg} src={thumbnail} alt={title} />
         <div className={styles.infoWrapper}>
-          <h3>{title}</h3>
+          <h3 className={styles.infoHeader}>{title}</h3>
           <hr />
           <p className={styles.textAbout}>{description}</p>
-          <div>
-            Category:
-            {' '}
-            <span>{rating}</span>
-          </div>
-          <div>
-            Brand:
-            {' '}
-            <span>
-              {discountPercentage}
-              %
-            </span>
+          <div className={styles.subtitlesWrapper}>
+            <div className={styles.subtitlesWrapperFirstLine}>
+              <div>
+                <span className={styles.infoHeaders}>Category:</span>
+                {' '}
+                <span>{category}</span>
+              </div>
+              <div>
+                <span className={styles.infoHeaders}>Brand:</span>
+                {' '}
+                <span>
+                  {brand}
+                </span>
+              </div>
+            </div>
+            <div className={styles.subtitlesWrapperSecondLine}>
+              <div>
+                <span className={styles.infoHeaders}>Rating:</span>
+                {' '}
+                <span>{rating}</span>
+              </div>
+              <div>
+                <span className={styles.infoHeaders}>Discount:</span>
+                {' '}
+                <span>
+                  {discountPercentage}
+                  %
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </Link>
