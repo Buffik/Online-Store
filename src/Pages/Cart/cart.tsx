@@ -10,6 +10,7 @@ import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
 import Promo from '../../Components/Cart/Promo/Promo';
 import Modal from '../../Components/Cart/PurchaseModal/Modal';
 import Purchase from '../../Components/Cart/PurchaseModal/Purchase/Purchase';
+import CartContainer from '../../Components/UI/container/CartContainer/CartContainer';
 import SiteContainer from '../../Components/UI/container/SiteContainer';
 import LoadingSpinner from '../../Components/UI/LoadingSpinner';
 // eslint-disable-next-line no-unused-vars
@@ -149,7 +150,7 @@ function Cart(props: TCartProps) {
   }
 
   return (
-    <SiteContainer>
+    <CartContainer>
       <div className={styles.wrapper}>
         <div className={styles.productsWrapper}>
           <CartPagination handleProductsPerPage={handleProductsPerPage} productsPerPage={productsPerPage} maxPages={maxPages} currentPage={currentPage} goNextFromCurrentPage={goNextFromCurrentPage} goBackFromCurrentPage={goBackFromCurrentPage} />
@@ -197,7 +198,7 @@ function Cart(props: TCartProps) {
                 {' '}
                 {countTotalSumWithDiscounts(totalCost, codeAdded)}
               </div>
-              <div>Applied codes</div>
+              <div style={{ textAlign: 'center' }}>Applied codes</div>
               <div>
                 {codeAdded.map((discount) => <DeleteCode key={discount} todo="DEL" discount={discount} setCode={delPromoCode} />)}
               </div>
@@ -214,7 +215,7 @@ function Cart(props: TCartProps) {
 
         </Modal>
       </div>
-    </SiteContainer>
+    </CartContainer>
 
   );
 }

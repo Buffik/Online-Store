@@ -1,0 +1,30 @@
+.carouselWrapper {
+  max-width: 400px;
+  display: flex;
+  min-height: 100px;
+  align-items: center;
+}
+
+.carouselButton {
+  padding: 12px;
+  &:last-of-type {
+    margin-left: 5px;
+  }
+}
+
+.carousel {
+  width: 340px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+
+}
+
+.carouselData {
+  display: flex;
+  flex-wrap: nowrap;
+  transition: translate;
+  transition-property: transform;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+}

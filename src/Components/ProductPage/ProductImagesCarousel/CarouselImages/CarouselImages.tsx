@@ -11,9 +11,7 @@ interface ICarouselImages {
 
 function CarouselImages({ value, setCurrentImg }: ICarouselImages) {
   return (
-    <div className={styles}>
-      <img src={value} onClick={() => setCurrentImg(value)} alt="product" />
-    </div>
+    <img className={styles.carouselImg} src={value} onClick={() => setCurrentImg(value)} alt="product" />
   );
 }
 

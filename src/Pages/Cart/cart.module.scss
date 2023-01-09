@@ -1,6 +1,6 @@
 .wrapper {
   // width: 95%;
-  margin: auto;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
 }
@@ -40,6 +40,7 @@
 }
 
 .textSummaryWithDiscount {
+  text-align: center;
   font-size: 1.7rem;
   font-weight: bold;
   color: var(--accent-color);

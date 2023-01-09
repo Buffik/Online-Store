@@ -1,5 +1,5 @@
 .wrapper {
-  margin: auto;
+  margin: 0 auto;
   padding: 0 30px;
   max-width: 1220px;
   display: flex;
@@ -10,7 +10,7 @@
 .breedsWrapper {
   color:#B9B9B9;
   text-align: center;
-  margin: 0 auto;
+  margin: 0 auto 30px auto;;
   display: flex;
   max-width: 800px;
   justify-content: center;
@@ -18,18 +18,17 @@
   font-size: 20px;
   & a {
     text-decoration: none;
-    color:#333232;
+    color: var(--accent-color);
     &:hover {
       transition: all ease 0.3s;
-      color: teal;
+      color: var(--accent-hover-color);
     }
   }
 }
 
 .breedsItems {
-  color: teal;
+  color: var(--accent-color);;
   font-size: 25px;
-  font-weight: bold;
   margin: 0 30px;
 }
 
@@ -51,12 +50,59 @@
   margin-right: 20px;
 }
 
-.imagesCarouselWrapper {
-
+.mainImgWrapper {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid var(--unimportant-color);
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
-// styles for info
+.mainImg {
+  width: 100%;
+  max-height: 100%;
+  object-fit:contain;
+  border-radius: 10px;
+}
+
+.infoWrapper {
+  width: 100%;
+  margin-right: 20px;
+}
+
+.infoText {
+  margin-bottom: 20px;
+}
+
+.infoHeaders {
+  color: var(--accent-color);
+}
+
+.infoDescription {
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
 
 .buttonsWrapper {
-  
+  padding: 20px 25px;
+  min-width: 290px;
+  min-height: 165px;
+  max-height: 165px;
+  box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.1), 4px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productPrice {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-font-color);
 }
