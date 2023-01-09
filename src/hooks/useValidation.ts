@@ -142,11 +142,14 @@ const useValidation = (value: string, validations:TValidations) => {
           break;
 
         case 'isCardDateMonthInvalid':
-          if (value.trim().length === 1 && !/^(0[1-9])$/.test(value.trim())) {
+          if (value.trim().length === 1 && !/^([1-9])$/.test(value.trim())) {
+            console.log('here');
             setIsCardDateMonthInvalid(true);
+            break;
           } else setIsCardDateMonthInvalid(false);
 
-          if (value.trim().length > 1 && !/^(0[1-9]|1[0-2])$/.test(value)) {
+          if (value.trim().length > 1 && !/^(1[012]|0?[1-9])$/.test(value)) {
+            console.log('there');
             setIsCardDateMonthInvalid(true);
           } else setIsCardDateMonthInvalid(false);
           break;

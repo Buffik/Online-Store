@@ -120,7 +120,7 @@ function Purchase({ setShowAffirmative }: IPurchase) {
           )}
           <div className={styles.cardNumber}>
             <img className={styles.cardImg} alt="" src={handleCardImg(cardNumber.value)} />
-            <input onChange={(e) => cardNumber.onChange(e.currentTarget.value)} type="text" name="cardNumber" placeholder="Card number" className={styles.cardNumberInput} />
+            <input onChange={(e) => cardNumber.onChange(e.currentTarget.value)} type="number" name="cardNumber" placeholder="Card number" className={styles.cardNumberInput} />
           </div>
           {(cardMonth.isDirty)
           && (
@@ -136,16 +136,16 @@ function Purchase({ setShowAffirmative }: IPurchase) {
             <div className={styles.otherDataExpirationWrapper}>
               <span className={styles.otherDataExpirationPlaceholder}>Date:</span>
               <div className={styles.dataExpiration}>
-                <input onChange={(e) => cardMonth.onChange(e.currentTarget.value)} type="text" name="month" placeholder="MM" />
+                <input className={styles.dataExpirationMonth} onChange={(e) => cardMonth.onChange(e.currentTarget.value)} type="number" name="month" placeholder="MM" />
                 <span>/</span>
-                <input onChange={(e) => cardYear.onChange(e.currentTarget.value)} type="text" name="year" placeholder="YY" />
+                <input className={styles.dataExpirationYear} onChange={(e) => cardYear.onChange(e.currentTarget.value)} type="number" name="year" placeholder="YY" />
               </div>
             </div>
             <div>
               {' '}
               CVV:
               {' '}
-              <input onChange={(e) => cardCVV.onChange(e.currentTarget.value)} type="text" name="cardCVV" placeholder="CVV" className={styles.otherDataCVV} />
+              <input onChange={(e) => cardCVV.onChange(e.currentTarget.value)} type="number" name="cardCVV" placeholder="CVV" className={styles.otherDataCVV} />
             </div>
           </div>
         </div>
