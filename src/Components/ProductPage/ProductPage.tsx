@@ -5,6 +5,7 @@ import useFetching from '../../hooks/useFetching';
 import { TProductPartialProps, TProductsItemWithImages } from '../../types/types';
 import PostService from '../API/PostService';
 import ProductAddDropButton from '../UI/button/ProductAddDropButton';
+import CartContainer from '../UI/container/CartContainer/CartContainer';
 import SiteContainer from '../UI/container/SiteContainer';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import checkUniqueImgs from '../utils/checkUniqueImgs';
@@ -114,7 +115,7 @@ function ProductPage({
   }
 
   return (
-    <SiteContainer>
+    <CartContainer>
       <div className={styles.wrapper}>
         <div className={styles.breedsWrapper}>
           <Link to="/">Home</Link>
@@ -184,7 +185,7 @@ function ProductPage({
           </div>
         </div>
       </div>
-    </SiteContainer>
+    </CartContainer>
   );
 }
 
