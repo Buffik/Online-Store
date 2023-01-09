@@ -21,7 +21,7 @@ function CartPagination({
 }: ICartPagination) {
   return (
     <div className={styles.wrapper}>
-      <span className={styles.text}>Limit:</span>
+      <span className={styles.text}>Items on a page:</span>
       {' '}
       <input className={styles.input} type="number" min="1" max="100" value={productsPerPage} onChange={(e) => handleProductsPerPage(e)} />
       <div>

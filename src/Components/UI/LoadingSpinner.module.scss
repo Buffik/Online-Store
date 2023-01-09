@@ -1,4 +1,8 @@
-.container {
+:root {
+  --spinner-color: var(--accent-color);
+}
+
+.box {
   width: 55px;
   height: 55px;
   display: flex;

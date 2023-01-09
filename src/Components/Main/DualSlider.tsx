@@ -51,14 +51,16 @@ function DualSlider(props: TDualSliderProps) {
         className={styles.slider}
         style={{ background: `${fillSlider(filter)}` }}
       />
-      <p style={{ paddingTop: '30px' }}>{searchParamsObject[`${filter}range`]?.split(',')[0] ?? filteredSearchedProducts.length ? Math.min(...filteredSearchedProducts.map((item) => item[filter])) : 0}</p>
-      <p>{searchParamsObject[`${[filter]}range`]?.split(',')[1] ?? filteredSearchedProducts.length ? Math.max(...filteredSearchedProducts.map((item) => item[filter])) : 0}</p>
-      <div
-        className={styles.spinner}
-        style={{
-          marginTop: '30px',
-        }}
-      />
+      <div className={styles.dualSlider__labels}>
+        <p>
+          €
+          {searchParamsObject[`${filter}range`]?.split(',')[0] ?? filteredSearchedProducts.length ? Math.min(...filteredSearchedProducts.map((item) => item[filter])) : 0}
+        </p>
+        <p>
+          €
+          {searchParamsObject[`${[filter]}range`]?.split(',')[1] ?? filteredSearchedProducts.length ? Math.max(...filteredSearchedProducts.map((item) => item[filter])) : 0}
+        </p>
+      </div>
     </section>
   );
 }

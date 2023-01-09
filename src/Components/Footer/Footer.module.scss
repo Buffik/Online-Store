@@ -1,13 +1,23 @@
 .footer {
+  padding: 35px 0;
   width: 100%;
+  background-color: var(--footer-bg-color);
   display: flex;
   justify-content: center;
 }
 
+.footer p {
+  color: var(--unimportant-color);
+}
+
 .container {
   width: 80%;
-  max-width: 800px;
+  max-width: 1000px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.footer__link {
+  color: var(--primary-font-color);
 }

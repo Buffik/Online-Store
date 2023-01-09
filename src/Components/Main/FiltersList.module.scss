@@ -1,0 +1,35 @@
+.filters {
+  width: 290px;
+  flex: 0 0 auto;
+}
+
+.filter__title {
+  font-size: 1.12rem;
+  border-top: 1px solid var(--border-color);
+  padding: 20px 0 0;
+}
+
+.filter__section {
+  margin-bottom: 20px;
+}
+
+.filter__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter__button {
+  width: 140px;
+  padding: 9.5px 20px;
+  background-color: var(--unimportant-bg-color);
+  color: var(--primary-font-color);
+
+  &:hover {
+    background-color: var(--accent-active-color);
+  }
+}
+
+.filter__label {
+  display: flex;
+  gap: 5px;
+}

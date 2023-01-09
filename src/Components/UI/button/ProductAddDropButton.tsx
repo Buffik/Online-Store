@@ -1,5 +1,6 @@
 import React from 'react';
 import { TProductPartialProps } from '../../../types/types';
+import styles from './ProductAddDropButton.module.scss';
 
 type ProductAddDropButtonProps = {
   productId: number | undefined;
@@ -34,7 +35,11 @@ function ProductAddDropButton(props: ProductAddDropButtonProps) {
   };
 
   return (
-    <button type="button" onClick={handleClick}>
+    <button
+      className={styles.button}
+      type="button"
+      onClick={handleClick}
+    >
       {(isProductInCart(productId)) ? 'Drop From Cart' : 'Add to Cart'}
     </button>
   );

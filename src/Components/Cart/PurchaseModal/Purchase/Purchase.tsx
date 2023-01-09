@@ -55,7 +55,7 @@ function Purchase({ setShowAffirmative }: IPurchase) {
   return (
     <div className={styles.formWrapper}>
       <form className={styles.myForm} autoComplete="off">
-        <h2>Personal details</h2>
+        <h2 className={styles.title}>Personal details</h2>
         {(name.isDirty)
           && (
           <div className={styles.errorTextWrapper}>
@@ -101,7 +101,7 @@ function Purchase({ setShowAffirmative }: IPurchase) {
           )}
         <input className={styles.myInput} onChange={(e) => email.onChange(e)} type="text" name="Email" placeholder="E-mail" />
         <div className={styles.cardWrapper}>
-          <h3>Credit card details</h3>
+          <h3 className={styles.title}>Credit card details</h3>
           {(cardNumber.isDirty)
           && (
           <div className={styles.errorTextWrapper}>

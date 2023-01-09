@@ -1,6 +1,7 @@
 import React from 'react';
 import { TProductsItem } from '../../types/types';
 import DualSlider from './DualSlider';
+import styles from './FiltersList.module.scss';
 
 type TParamsObject = Record<string, string>;
 
@@ -44,51 +45,57 @@ function FiltersList(props: TFiltersListProps) {
   } = props;
 
   return (
-    <section>
-      <button type="button" onClick={handleResetClick}>Reset</button>
-      <button type="button" onClick={handleCopyClick}>{copied ? 'Filters copied' : 'Copy filters'}</button>
-      <fieldset>
-        <legend>Category:</legend>
+    <section className={styles.filters}>
+      <div className={styles.filter__buttons}>
+        <button className={styles.filter__button} type="button" onClick={handleResetClick}>Reset</button>
+        <button className={styles.filter__button} type="button" onClick={handleCopyClick}>{copied ? 'Filters copied' : 'Copy filters'}</button>
+      </div>
+      <h3 className={styles.filter__title}>Category</h3>
+      <ul className={styles.filter__section}>
         {categoriesList.map((category) => (
-          <label key={category} htmlFor={`filter-category-${category}`} style={{ display: 'flex' }}>
-            <input
-              type="checkbox"
-              id={`filter-category-${category}`}
-              name="category"
-              checked={isInSearchParams('category', category, searchParamsObject)}
-              onChange={() => handleCheckboxChange('category', category)}
-            />
-            {category}
-            (
-            {filteredSearchedProducts.filter((product) => product.category === category).length}
-            /
-            {products.filter((product) => product.category === category).length}
-            )
-          </label>
+          <li key={category}>
+            <label className={styles.filter__label} htmlFor={`filter-category-${category}`}>
+              <input
+                type="checkbox"
+                id={`filter-category-${category}`}
+                name="category"
+                checked={isInSearchParams('category', category, searchParamsObject)}
+                onChange={() => handleCheckboxChange('category', category)}
+              />
+              {category}
+              (
+              {filteredSearchedProducts.filter((product) => product.category === category).length}
+              /
+              {products.filter((product) => product.category === category).length}
+              )
+            </label>
+          </li>
         ))}
-      </fieldset>
-      <fieldset>
-        <legend>Brand:</legend>
+      </ul>
+      <h3 className={styles.filter__title}>Brand</h3>
+      <ul className={styles.filter__section}>
         {brandsList.map((brand) => (
-          <label key={brand} htmlFor={`filter-brand-${brand}`} style={{ display: 'flex' }}>
-            <input
-              type="checkbox"
-              id={`filter-brand-${brand}`}
-              name="brand"
-              checked={isInSearchParams('brand', brand, searchParamsObject)}
-              onChange={() => handleCheckboxChange('brand', brand)}
-            />
-            {brand}
-            (
-            {filteredSearchedProducts.filter((product) => product.brand === brand).length}
-            /
-            {products.filter((product) => product.brand === brand).length}
-            )
-          </label>
+          <li key={brand}>
+            <label className={styles.filter__label} htmlFor={`filter-brand-${brand}`}>
+              <input
+                type="checkbox"
+                id={`filter-brand-${brand}`}
+                name="brand"
+                checked={isInSearchParams('brand', brand, searchParamsObject)}
+                onChange={() => handleCheckboxChange('brand', brand)}
+              />
+              {brand}
+              (
+              {filteredSearchedProducts.filter((product) => product.brand === brand).length}
+              /
+              {products.filter((product) => product.brand === brand).length}
+              )
+            </label>
+          </li>
         ))}
-      </fieldset>
-      <fieldset>
-        <legend>Price:</legend>
+      </ul>
+      <h3 className={styles.filter__title}>Price</h3>
+      <div className={styles.filter__section}>
         <DualSlider
           sliderId="filter-price"
           filter="price"
@@ -99,9 +106,9 @@ function FiltersList(props: TFiltersListProps) {
           filteredSearchedProducts={filteredSearchedProducts}
           fillSlider={fillSlider}
         />
-      </fieldset>
-      <fieldset>
-        <legend>Stock:</legend>
+      </div>
+      <h3 className={styles.filter__title}>Stock</h3>
+      <div className={styles.filter__section}>
         <DualSlider
           sliderId="filter-stock"
           filter="stock"
@@ -112,7 +119,7 @@ function FiltersList(props: TFiltersListProps) {
           filteredSearchedProducts={filteredSearchedProducts}
           fillSlider={fillSlider}
         />
-      </fieldset>
+      </div>
     </section>
   );
 }

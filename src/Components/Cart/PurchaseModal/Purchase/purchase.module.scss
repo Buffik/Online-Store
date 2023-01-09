@@ -9,6 +9,11 @@
   align-items: center;
 }
 
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
 .myInput {
   margin-bottom: 20px;
   width: 60%;
@@ -23,7 +28,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  border: 2px solid teal;
+  border: 1px solid var(--unimportant-color);
   border-radius: 10px;
   margin-bottom: 20px;
 }
@@ -46,7 +51,7 @@
 
 .cardNumberInput {
   font-size: 1.5rem;
-  border: 2px solid teal;
+  border: 1px solid var(--accent-color);
   border-radius: 10px;
   width: 75%;
   margin: auto 0;
@@ -63,14 +68,17 @@
 }
 
 .otherDataCVV {
-  width: 35px;
+  width: 60px;
   border-radius: 0.3rem;
   font-size: 1rem;
   padding: 5px;
-  border: 2px solid teal;
+  border: 1px solid var(--accent-color);
   margin-bottom: 0;
   &:focus {
     outline: 0;
+  }
+  &::placeholder {
+    font-size: 0.85rem;
   }
 }
 
@@ -86,11 +94,12 @@
 .dataExpiration {
   margin-right: 5px;
   display: flex;
-  border: 2px solid teal;
+  border: 1px solid var(--accent-color);
   border-radius: 5px;
+  font-size: 0.9rem;
   & input {
     text-align: center;
-    width: 30px;
+    width: 35px;
     border: 0;
     font-size: 1rem;
     padding: 5px;
@@ -103,16 +112,16 @@
 
 .formButton {
   cursor: pointer;
-  font-size: 2rem;
-  padding: 10px 20px;
-  background-color: teal;
+  font-size: 1.5rem;
+  padding: 10px 25px;
+  background-color: var(--accent-color);
   color: white;
-  border: 2px solid teal;
+  border: 1px solid var(--accent-color);
   border-radius: 10px;
   &:hover {
     transition: 0.3s all;
-    color: teal;
-    background-color: white;
+    // color: teal;
+    background-color: var(--accent-hover-color);
   }
 }
 

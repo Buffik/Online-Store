@@ -3,11 +3,16 @@
   margin-bottom: 20px;
   max-width: 100%;
   padding: 1rem;
-  border: 2px solid teal;
+  border: 1px solid var(--unimportant-color);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.title {
+  font-size: 1.5rem;
 }
 
 .dataLinkWrapper {
@@ -26,9 +31,8 @@
   padding: 0 15px;
   & hr {
     width: 100%;
-    height: 1px;
-    background-color: teal;
-    border: 1px solid teal;
+    height: 2px;
+    background-color: var(--accent-color);
     border-radius: 5px;
   }
 }
@@ -36,14 +40,14 @@
 .infoImg {
   max-width: 200px;
   height: auto;
-  border: 2px solid teal;
+  border: 1px solid var(--unimportant-color);
   border-radius: 10px;
   object-fit: cover;
 }
 
 .buttonsWrapper {
   width: 100%;
-  max-width: 15%;
+  max-width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,6 +56,7 @@
 
 .textAbout, .textStock {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .textStock {
@@ -60,7 +65,7 @@
 
 .textCount {
   padding: 5px 10px;
-  background-color: teal;
+  background-color: var(--accent-color);
   color: white;
   border-radius: 5px;
 }
@@ -70,14 +75,20 @@
   width: 100%;
   justify-content: space-between;
   & div {
-    color: teal;
+    // color: var(--accent-color);
+    margin: 10px;
+  }
+
+  & span {
+    font-weight: bold;
   }
 }
 
 .textPrice {
   margin-top: 10px;
   font-weight: bold;
-  color: teal
+  font-size: 1.2rem;
+  // color: var(--accent-color);
 }
 
 .productIndex {
@@ -85,8 +96,8 @@
   margin-right: 10px;
   width: 6%;
   text-align: center;
-  border: 1px solid teal;
+  border: 1px solid var(--accent-color);
   border-radius: 5rem;
-  background-color: teal;
+  background-color: var(--accent-color);
 }
 

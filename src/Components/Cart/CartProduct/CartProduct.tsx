@@ -47,33 +47,25 @@ function CartProduct(props:TProductsCart) {
           <hr />
           <p className={styles.textAbout}>{description}</p>
 
+
           <div>
             Category:
             {' '}
-            {category}
+            <span>{rating}</span>
           </div>
           <div>
             Brand:
             {' '}
-            {brand}
-          </div>
-          <div className={styles.ratingWrapper}>
-            <div>
-              Rating:
-              {' '}
-              {rating}
-            </div>
-            <div>
-              Discount:
-              {' '}
+            <span>
               {discountPercentage}
-            </div>
+              %
+            </span>
           </div>
         </div>
       </Link>
       <div className={styles.buttonsWrapper}>
         <div className={styles.textStock}>
-          Available stock:
+          {'Available stock: '}
           {stock}
         </div>
         <ProductCartButton value={id} onClick={onClickHandlerIncrease}><div>+</div></ProductCartButton>

@@ -14,13 +14,13 @@
 .input {
   padding: 5px 15px;
   margin: 5px 0;
-  border: 1px solid teal;
+  border: 1px solid var(--accent-color);
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .textSummary {
   font-size: 1rem;
   font-weight: bold;
-  color: rgb(26, 180, 180);
+  color: var(--unimportant-color);
 }

@@ -7,6 +7,7 @@ import Cart from '../../Pages/Cart/cart';
 import Main from '../../Pages/Main';
 import PageNotFound from '../../Pages/PageNotFound';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
+import styles from './RootRouter.module.scss';
 
 type TRootRouterProps = {
   isPending: boolean;
@@ -46,7 +47,7 @@ export default function RootRouter(props: TRootRouterProps) {
     setFormVisible,
   } = props;
   return (
-    <div>
+    <div className={styles.container}>
       <Header productsInCart={productsInCartCount} products={products} />
       <Routes>
         <Route
