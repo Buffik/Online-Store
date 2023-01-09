@@ -93,7 +93,7 @@ const useValidation = (value: string, validations:TValidations) => {
         case 'isPhoneInvalid':
           value.split('').forEach((char, index) => {
             if (index !== 0) {
-              if (!/[0-9]/.test(char)) {
+              if (!/^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/.test(value)) {
                 setIsPhoneInvalid(true);
               } else setIsPhoneInvalid(false);
             }
