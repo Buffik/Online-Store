@@ -8,9 +8,20 @@ export default class PostService {
   }
 
   static async getCartItems(arr:TProductPartialProps[]) {
-    let itemRequests = [];
-    itemRequests = arr.map((item) => PostService.getById(item.id));
+    const itemRequests = arr.map((item) => PostService.getById(item.id));
     const promises = await Promise.all(itemRequests);
+    return promises;
+  }
+
+  static async getImgByURL(URL: string) {
+    const response = await fetch(URL);
+    const contentLength = Number(response.headers.get('Content-Length'));
+    return contentLength;
+  }
+
+  static async getAllSizes(arr: string[]) {
+    const imgSizes = arr.map((img) => PostService.getImgByURL(img));
+    const promises = await Promise.all(imgSizes);
     return promises;
   }
 }

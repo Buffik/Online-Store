@@ -15,6 +15,13 @@
   font-size: 1.5rem;
 }
 
+.dataLinkWrapper {
+  width: 90%;
+  display: flex;
+  text-decoration: none;
+  color: teal;
+}
+
 .infoWrapper {
   width: 100%;
   display: flex;
@@ -31,10 +38,11 @@
 }
 
 .infoImg {
-  width: 30%;
+  max-width: 200px;
   height: auto;
   border: 1px solid var(--unimportant-color);
   border-radius: 10px;
+  object-fit: cover;
 }
 
 .buttonsWrapper {

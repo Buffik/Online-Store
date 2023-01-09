@@ -4,14 +4,16 @@ import RootRouter from './RootRouter';
 import PostService from '../Components/API/PostService';
 import useFetching from '../hooks/useFetching';
 import { TProductsItem, TProductPartialProps } from '../types/types';
-// import { isTemplateExpression } from 'typescript';
+import handleLocalStorage from '../Components/utils/handleLocalStorage';
+import setDataToLocalStorage from '../Components/utils/setDataToLocalStorage';
 
 function App() {
   // eslint-disable-next-line max-len
-  const arr = [{ id: 1, count: 1 }, { id: 3, count: 1 }, { id: 4, count: 1 }, { id: 11, count: 1 }, { id: 15, count: 1 }, { id: 27, count: 1 }, { id: 37, count: 1 }];
-  const [productsInCart, setProductsInCart] = useState<TProductPartialProps[]>(arr);
-  const [productsInCartCount, setProductsInCartCount] = useState<TProductPartialProps[]>(arr);
+  const [productsInCart, setProductsInCart] = useState<TProductPartialProps[]>(handleLocalStorage());
+  // eslint-disable-next-line max-len
+  const [productsInCartCount, setProductsInCartCount] = useState<TProductPartialProps[]>(handleLocalStorage());
   const [products, setProducts] = useState<TProductsItem[] | null>(null);
+  const [formVisible, setFormVisible] = useState(false);
   const [fetchProductsById, isPending] = useFetching(async () => {
     const response = await PostService.getCartItems(productsInCart)
       .then((items) => items.map((item) => item));
@@ -40,6 +42,7 @@ function App() {
       return product;
     });
     setProductsInCartCount(result);
+    setDataToLocalStorage(result);
   };
 
   const decreaseProductCount = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -57,6 +60,7 @@ function App() {
       return acc;
     }, []);
     setProductsInCartCount(result);
+    setDataToLocalStorage(result);
   };
 
   const isProductInCart = (id?: number): boolean => {
@@ -85,12 +89,16 @@ function App() {
       <RootRouter
         isPending={isPending}
         productsInCart={productsInCart}
+        setProductsInCart={setProductsInCart}
         productsInCartCount={productsInCartCount}
+        setProductsInCartCount={setProductsInCartCount}
         products={products}
         increaseProductCount={increaseProductCount}
         decreaseProductCount={decreaseProductCount}
         addToCart={addToCart}
         dropFromCart={dropFromCart}
+        formVisible={formVisible}
+        setFormVisible={setFormVisible}
       />
     </HashRouter>
 

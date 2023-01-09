@@ -7,6 +7,8 @@ import useSearchParamsObject from '../../hooks/useSearchParamsObject';
 import LoadingSpinner from '../../Components/UI/LoadingSpinner';
 import SiteContainer from '../../Components/UI/container/SiteContainer';
 import styles from './Main.module.scss';
+import setDataToLocalStorage from '../../Components/utils/setDataToLocalStorage';
+
 
 type TMainProps = {
   productsInCart: TProductPartialProps[];
@@ -242,6 +244,7 @@ function Main(props: TMainProps) {
     navigator.clipboard.writeText(window.location.href);
   };
 
+
   const handleViewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const param = (event.target.id === 'products-view-list') ? 'list' : 'grid';
     setSearchParamsObject({ ...searchParamsObject, view: param });
@@ -252,6 +255,11 @@ function Main(props: TMainProps) {
   useEffect(() => {
     setSearchParamsObject({ ...searchParamsObject, view: 'grid' });
   }, []);
+
+  useEffect(() => {
+    setDataToLocalStorage(productsInCart);
+  }, [productsInCart]);
+
 
   return (
     <SiteContainer>
