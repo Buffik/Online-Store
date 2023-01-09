@@ -247,10 +247,10 @@ function Main(props: TMainProps) {
     setSearchParamsObject({ ...searchParamsObject, view: param });
   };
 
-  const productsView = (searchParamsObject?.view === 'list' || searchParamsObject?.view === 'grid') ? searchParamsObject.view : 'list';
+  const productsView = (searchParamsObject?.view === 'list' || searchParamsObject?.view === 'grid') ? searchParamsObject.view : 'grid';
 
   useEffect(() => {
-    setSearchParamsObject({ ...searchParamsObject, view: 'list' });
+    setSearchParamsObject({ ...searchParamsObject, view: 'grid' });
   }, []);
 
   return (

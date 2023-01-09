@@ -9,7 +9,12 @@
 }
 
 .product {
+  box-sizing: content-box;
   width: 250px;
+  // border: 1px solid var(--unimportant-color);
+  box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.1), 4px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
 }
 
 .product__image {
