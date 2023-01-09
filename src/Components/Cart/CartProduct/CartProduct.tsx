@@ -1,7 +1,9 @@
 /* eslint-disable max-len */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { TProductsCart } from '../../../types/types';
 import ProductCartButton from '../../UI/button/ProductCartButton';
+import LoadingSpinner from '../../UI/LoadingSpinner';
 import styles from './CartProduct.module.scss';
 
 function CartProduct(props:TProductsCart) {
@@ -24,41 +26,51 @@ function CartProduct(props:TProductsCart) {
   } = props;
   if (!data) {
     return (
-      <div>Is loading</div>
+      <div style={{
+        marginTop: '100px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      >
+        <LoadingSpinner />
+      </div>
     );
   }
   return (
     <div className={styles.cardProduct}>
       <div className={styles.productIndex}>{productIndex}</div>
-      <img className={styles.infoImg} src={thumbnail} alt={title} />
-      <div className={styles.infoWrapper}>
-        <h3>{title}</h3>
-        <hr />
-        <p className={styles.textAbout}>{description}</p>
+      <Link to={`/product/${id}`} className={styles.dataLinkWrapper}>
+        <img className={styles.infoImg} src={thumbnail} alt={title} />
+        <div className={styles.infoWrapper}>
+          <h3>{title}</h3>
+          <hr />
+          <p className={styles.textAbout}>{description}</p>
 
-        <div>
-          Category:
-          {' '}
-          {category}
-        </div>
-        <div>
-          Brand:
-          {' '}
-          {brand}
-        </div>
-        <div className={styles.ratingWrapper}>
           <div>
-            Rating:
+            Category:
             {' '}
-            {rating}
+            {category}
           </div>
           <div>
-            Discount:
+            Brand:
             {' '}
-            {discountPercentage}
+            {brand}
+          </div>
+          <div className={styles.ratingWrapper}>
+            <div>
+              Rating:
+              {' '}
+              {rating}
+            </div>
+            <div>
+              Discount:
+              {' '}
+              {discountPercentage}
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
       <div className={styles.buttonsWrapper}>
         <div className={styles.textStock}>
           Available stock:

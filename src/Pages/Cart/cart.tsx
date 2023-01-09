@@ -10,6 +10,7 @@ import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
 import Promo from '../../Components/Cart/Promo/Promo';
 import Modal from '../../Components/Cart/PurchaseModal/Modal';
 import Purchase from '../../Components/Cart/PurchaseModal/Purchase/Purchase';
+import LoadingSpinner from '../../Components/UI/LoadingSpinner';
 // eslint-disable-next-line no-unused-vars
 import countTotalCost from '../../Components/utils/countTotalCost';
 import countTotalCount from '../../Components/utils/countTotalCount';
@@ -20,18 +21,25 @@ import styles from './cart.module.scss';
 
 type TCartProps = {
   productsInCart: TProductPartialProps[]
+  // eslint-disable-next-line no-unused-vars
+  setProductsInCart(arr: TProductPartialProps[]): void;
   isPending: boolean;
   productsInCartCount: TProductPartialProps[];
+  // eslint-disable-next-line no-unused-vars
+  setProductsInCartCount(arr: TProductPartialProps[]): void;
   products: TProductsItem[] | null;
   // eslint-disable-next-line no-unused-vars
   increaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
   // eslint-disable-next-line no-unused-vars
   decreaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
+  formVisible: boolean;
+  // eslint-disable-next-line no-unused-vars
+  setFormVisible(bool:boolean): void;
 }
 
 function Cart(props: TCartProps) {
   const {
-    productsInCart, isPending, productsInCartCount, products, increaseProductCount, decreaseProductCount,
+    productsInCart, setProductsInCart, isPending, productsInCartCount, setProductsInCartCount, products, increaseProductCount, decreaseProductCount, formVisible, setFormVisible,
   } = props;
   const [totalCount, setTotalCount] = useState(countTotalCount(productsInCartCount));
   const [totalCost, setTotalCost] = useState(0);
@@ -39,7 +47,6 @@ function Cart(props: TCartProps) {
   const [isCodeAdd, setIsCodeAdd] = useState(false);
   const [codeAdded, setCodeAdded] = useState<number[]>([]);
   // Подтверждение покупки
-  const [formVisible, setFormVisible] = useState(false);
   const [showAffirmative, setShowAffirmative] = useState(false);
 
   //  Блок с пагинацией
@@ -122,9 +129,21 @@ function Cart(props: TCartProps) {
 
   if (isPending) {
     return (
-      <div>
-        Is loading...
+      <div style={{
+        marginTop: '100px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      >
+        <LoadingSpinner />
       </div>
+    );
+  }
+
+  if (showAffirmative) {
+    return (
+      <ApprovePurchase showAffirmative={showAffirmative} setFormVisible={setFormVisible} setProductsInCart={setProductsInCart} setProductsInCartCount={setProductsInCartCount} />
     );
   }
 
@@ -133,12 +152,6 @@ function Cart(props: TCartProps) {
       <div>
         Cart is empty
       </div>
-    );
-  }
-
-  if (showAffirmative) {
-    return (
-      <ApprovePurchase showAffirmative={showAffirmative} />
     );
   }
 
