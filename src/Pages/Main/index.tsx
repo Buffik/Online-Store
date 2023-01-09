@@ -9,7 +9,6 @@ import SiteContainer from '../../Components/UI/container/SiteContainer';
 import styles from './Main.module.scss';
 import setDataToLocalStorage from '../../Components/utils/setDataToLocalStorage';
 
-
 type TMainProps = {
   productsInCart: TProductPartialProps[];
   // eslint-disable-next-line no-unused-vars
@@ -244,7 +243,6 @@ function Main(props: TMainProps) {
     navigator.clipboard.writeText(window.location.href);
   };
 
-
   const handleViewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const param = (event.target.id === 'products-view-list') ? 'list' : 'grid';
     setSearchParamsObject({ ...searchParamsObject, view: param });
@@ -259,7 +257,6 @@ function Main(props: TMainProps) {
   useEffect(() => {
     setDataToLocalStorage(productsInCart);
   }, [productsInCart]);
-
 
   return (
     <SiteContainer>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -46,8 +47,6 @@ function CartProduct(props:TProductsCart) {
           <h3>{title}</h3>
           <hr />
           <p className={styles.textAbout}>{description}</p>
-
-
           <div>
             Category:
             {' '}
