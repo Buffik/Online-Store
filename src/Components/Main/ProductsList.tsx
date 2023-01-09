@@ -34,8 +34,8 @@ export default function ProductsList(props: TProductsListProps) {
                   className={styles.product__image}
                   src={product.thumbnail}
                   alt={product.title}
-                  width={250}
-                  height={187.5}
+                  width={200}
+                  height={150}
                 />
               </Link>
               <div className={styles.product__secondColumn}>

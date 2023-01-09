@@ -26,8 +26,10 @@ function ProductAddDropButton(props: ProductAddDropButtonProps) {
     return false;
   };
 
+  const inCart = isProductInCart(productId);
+
   const handleClick = (): void => {
-    if (isProductInCart(productId)) {
+    if (inCart) {
       dropFromCart(productId);
     } else {
       addToCart(productId);
@@ -36,11 +38,11 @@ function ProductAddDropButton(props: ProductAddDropButtonProps) {
 
   return (
     <button
-      className={styles.button}
+      className={(inCart) ? [styles.button, styles.button_drop].join(' ') : styles.button}
       type="button"
       onClick={handleClick}
     >
-      {(isProductInCart(productId)) ? 'Drop From Cart' : 'Add to Cart'}
+      {(inCart) ? 'Drop From Cart' : 'Add to Cart'}
     </button>
   );
 }
