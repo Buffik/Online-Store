@@ -3,10 +3,16 @@
   display: flex;
   min-height: 100px;
   align-items: center;
+  gap: 10px;
 }
 
 .carouselButton {
-  padding: 12px;
+  padding: 8px 12px;
+  background-color: transparent;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  color: var(--accent-color);
+  font-size: 1.2rem;
   &:last-of-type {
     margin-left: 5px;
   }

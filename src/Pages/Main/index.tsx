@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import FiltersList from '../../Components/Main/FiltersList';
 import ProductsList from '../../Components/Main/ProductsList';
@@ -304,17 +305,7 @@ function Main(props: TMainProps) {
                   <option value="discount-descending">Higher discount first</option>
                   <option value="discount-ascending">Lower discount first</option>
                 </select>
-                <label htmlFor="products-view-list">
-                  <input
-                    type="radio"
-                    name="products-view"
-                    id="products-view-list"
-                    checked={productsView === 'list'}
-                    onChange={handleViewChange}
-                  />
-                  List
-                </label>
-                <label htmlFor="products-view-grid">
+                <div className={styles.productsView}>
                   <input
                     type="radio"
                     name="products-view"
@@ -322,8 +313,26 @@ function Main(props: TMainProps) {
                     checked={productsView === 'grid'}
                     onChange={handleViewChange}
                   />
-                  Grid
-                </label>
+                  <label
+                    className={styles.productsView__label_grid}
+                    htmlFor="products-view-grid"
+                    title="View products as a grid"
+                    aria-label="View products as a grid"
+                  />
+                  <input
+                    type="radio"
+                    name="products-view"
+                    id="products-view-list"
+                    checked={productsView === 'list'}
+                    onChange={handleViewChange}
+                  />
+                  <label
+                    className={styles.productsView__label_list}
+                    htmlFor="products-view-list"
+                    title="View products as a list"
+                    aria-label="View products as a list"
+                  />
+                </div>
               </div>
               <ProductsList
                 productsInCart={productsInCart}
