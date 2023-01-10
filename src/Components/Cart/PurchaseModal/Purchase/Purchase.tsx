@@ -113,7 +113,7 @@ function Purchase({ setShowAffirmative }: IPurchase) {
             )}
             {cardNumber.isCardNumberLengthInvalid && (
             <div>
-              !! Card number length should be at least 16 !!
+              !! Card number length should be 16 !!
             </div>
             )}
           </div>
