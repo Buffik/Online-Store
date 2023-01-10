@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import ApprovePurchase from '../../Components/Cart/ApprovePerchase/ApprovePurchase';
 // import React, { useEffect, useState } from 'react';
 // import PostService from '../../Components/API/PostService';
@@ -20,6 +20,7 @@ import countTotalSumWithDiscounts from '../../Components/utils/countTotalSumWith
 // import useFetching from '../../hooks/useFetching';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
 import styles from './cart.module.scss';
+import emptyCartImg from '../../assets/images/emptyCart.svg';
 
 type TCartProps = {
   productsInCart: TProductPartialProps[]
@@ -145,7 +146,13 @@ function Cart(props: TCartProps) {
 
   if (!products?.length) {
     return (
-      <SiteContainer>Cart is empty</SiteContainer>
+      <SiteContainer>
+        <section className={styles.emptyWrapper}>
+          <img className={styles.emptyImg} src={emptyCartImg} alt="" />
+          <h1 className={styles.emptyTitle}>Cart is empty</h1>
+          <Link to="/" className="">Back to main</Link>
+        </section>
+      </SiteContainer>
     );
   }
 
@@ -200,7 +207,7 @@ function Cart(props: TCartProps) {
               </div>
               <div style={{ textAlign: 'center' }}>Applied codes</div>
               <div>
-                {codeAdded.map((discount) => <DeleteCode key={discount} todo="DEL" discount={discount} setCode={delPromoCode} />)}
+                {codeAdded.map((discount) => <DeleteCode key={discount} code={discount === 10 ? 'PROMO' : 'ANOTHER'} todo="DEL" discount={discount} setCode={delPromoCode} />)}
               </div>
             </div>
           ) : <h4>No applied codes</h4>}

@@ -71,3 +71,22 @@
     background-color: var(--accent-hover-color);
   }
 }
+
+.emptyWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.emptyImg {
+  width: 140px;
+  transform: translateX(-12px);
+}
+
+.emptyTitle {
+  margin-top: 30px;
+    margin-bottom: 50px;
+    font-size: 2rem;
+    color: var(--accent-color);
+}
