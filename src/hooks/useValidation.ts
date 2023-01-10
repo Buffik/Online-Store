@@ -132,7 +132,7 @@ const useValidation = (value: string, validations:TValidations) => {
           break;
 
         case 'isCardNumberLengthInvalid':
-          if (value.length < 16) {
+          if (value.length < 16 || value.length > 16) {
             setIsCardNumberLengthInvalid(true);
           } else setIsCardNumberLengthInvalid(false);
           break;
