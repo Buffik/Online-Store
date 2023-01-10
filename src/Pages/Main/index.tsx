@@ -48,7 +48,7 @@ function Main(props: TMainProps) {
     paramsObject: TParamsObject,
   ) => {
     if (typeof param === 'number') {
-      return false;
+      return paramsObject[paramName] !== undefined;
     }
     if (!paramsObject[paramName]) {
       return false;
@@ -58,7 +58,8 @@ function Main(props: TMainProps) {
 
   const getFilterParams = (source: TProductsItem[], paramName: TFilterOptions) => {
     if (paramName === 'price' || paramName === 'stock') {
-      const arr = source.map((item) => item[paramName]);
+      let arr = source.map((item) => item[paramName]);
+      arr = (arr.length > 0) ? arr : [0];
       return [Math.min(...arr), Math.max(...arr)];
     }
     const set = new Set(source.map((item) => item[paramName]));
@@ -91,37 +92,37 @@ function Main(props: TMainProps) {
 
   // let filteredSearchedProducts: TProductsItem[] = products.slice();
 
-  const fillSlider = (filter: 'price' | 'stock') => {
-    const sliderColor = '#b9b9b9';
-    const rangeColor = '#2CB708';
-    const max = Math.max(...products.map((item) => item[filter]));
-    const min = Math.min(...products.map((item) => item[filter]));
-    const valueMin = Number(searchParamsObject[`${[filter]}range`]?.split(',')[0]);
-    const valueMax = Number(searchParamsObject[`${[filter]}range`]?.split(',')[1]);
-    const rangeDistance = max - min;
-    const fromPosition = valueMin - min;
-    const toPosition = valueMax - min;
-    return `linear-gradient(
-      to right,
-      ${sliderColor} 0%,
-      ${sliderColor} ${((fromPosition) / (rangeDistance)) * 100}%,
-      ${rangeColor} ${((fromPosition) / (rangeDistance)) * 100}%,
-      ${rangeColor} ${((toPosition) / (rangeDistance)) * 100}%, 
-      ${sliderColor} ${((toPosition) / (rangeDistance)) * 100}%, 
-      ${sliderColor} 100%)`;
-  };
+  // const fillSlider = (filter: 'price' | 'stock') => {
+  //   const sliderColor = '#b9b9b9';
+  //   const rangeColor = '#2CB708';
+  //   const max = Math.max(...products.map((item) => item[filter]));
+  //   const min = Math.min(...products.map((item) => item[filter]));
+  //   const valueMin = Number(searchParamsObject[`${[filter]}range`]?.split(',')[0]);
+  //   const valueMax = Number(searchParamsObject[`${[filter]}range`]?.split(',')[1]);
+  //   const rangeDistance = max - min;
+  //   const fromPosition = valueMin - min;
+  //   const toPosition = valueMax - min;
+  //   return `linear-gradient(
+  //     to right,
+  //     ${sliderColor} 0%,
+  //     ${sliderColor} ${((fromPosition) / (rangeDistance)) * 100}%,
+  //     ${rangeColor} ${((fromPosition) / (rangeDistance)) * 100}%,
+  //     ${rangeColor} ${((toPosition) / (rangeDistance)) * 100}%,
+  //     ${sliderColor} ${((toPosition) / (rangeDistance)) * 100}%,
+  //     ${sliderColor} 100%)`;
+  // };
 
   const getMinPrice = (source: TProductsItem[], param: 'price' | 'stock') => {
     if (source.length !== 0) {
       return Math.min(...source.map((item) => item[param]));
     }
-    return undefined;
+    return [0];
   };
   const getMaxPrice = (source: TProductsItem[], param: 'price' | 'stock') => {
     if (source.length !== 0) {
       return Math.max(...source.map((item) => item[param]));
     }
-    return undefined;
+    return [0];
   };
 
   const handleSliderMinInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,7 +130,7 @@ function Main(props: TMainProps) {
     const minValue = Number(event.target.value);
     const maxValue = Number(searchParamsObject[`${param}range`]?.split(',')[1] ?? getMaxPrice(products, param));
     setSearchParamsObject({ ...searchParamsObject, [`${param}range`]: [minValue, maxValue].sort((a, b) => a - b).join(',') });
-    fillSlider('price');
+    // fillSlider('price');
   };
 
   const handleSliderMaxInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,7 +138,7 @@ function Main(props: TMainProps) {
     const minValue = Number(searchParamsObject[`${param}range`]?.split(',')[0] ?? getMinPrice(products, param));
     const maxValue = Number(event.target.value);
     setSearchParamsObject({ ...searchParamsObject, [`${param}range`]: [minValue, maxValue].sort((a, b) => a - b).join(',') });
-    fillSlider('stock');
+    // fillSlider('stock');
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -231,8 +232,8 @@ function Main(props: TMainProps) {
 
   const handleResetClick = () => {
     setSearchParamsObject({});
-    fillSlider('price');
-    fillSlider('stock');
+    // fillSlider('price');
+    // fillSlider('stock');
   };
 
   const [copied, setCopied] = useState(false);
@@ -279,7 +280,7 @@ function Main(props: TMainProps) {
               handleSliderMinInput={handleSliderMinInput}
               handleSliderMaxInput={handleSliderMaxInput}
               copied={copied}
-              fillSlider={fillSlider}
+              // fillSlider={fillSlider}
             />
             <div style={{ width: '100%' }}>
               <div className={styles.findSortContainer}>
@@ -290,7 +291,7 @@ function Main(props: TMainProps) {
                   placeholder="Find products..."
                   aria-label="Find products."
                 />
-                <p>
+                <p className={styles.foundText}>
                   {'Found: '}
                   {filteredSearchedSortedProducts.length}
                 </p>
