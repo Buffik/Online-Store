@@ -10,7 +10,7 @@ function PageNotFound() {
       <SiteContainer>
         <section className={styles.message}>
           <img src={emptyBox} alt="" />
-          <h1 className={styles.title}>404 Page Not Found!</h1>
+          <h1 className={styles.title}>Error 404: Page Not Found!</h1>
           <p className={styles.text}>This page does not seem to exist.</p>
           <NavLink
             className={styles.link}

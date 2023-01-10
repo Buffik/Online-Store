@@ -1,6 +1,10 @@
 .filters {
   width: 290px;
   flex: 0 0 auto;
+
+  @media (max-width: 1199px) {
+    width: 220px;
+  }
 }
 
 .filter__title {
@@ -11,6 +15,11 @@
 
 .filter__section {
   margin-bottom: 20px;
+}
+
+ul.filter__section {
+  max-height: 250px;
+  overflow-y: auto;
 }
 
 .filter__buttons {
@@ -27,9 +36,36 @@
   &:hover {
     background-color: var(--accent-active-color);
   }
+
+  @media (max-width: 1199px) {
+    width: 100px;
+  }
 }
 
 .filter__label {
   display: flex;
-  gap: 5px;
+  align-items: center;
+  gap: 10px;
+  // margin-bottom: 5px;
+  margin-top: -10px;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--unimportant-color);
+    border-radius: 2px;
+    background-image: url("../../assets/images/checkmark.png");
+    background-repeat: no-repeat;
+    background-position: -100px -100px;
+  }
+}
+
+input[type="checkbox"] {
+  appearance: none;
+}
+
+input[type="checkbox"]:checked + .filter__label::before {
+  background-position: center center;
 }
