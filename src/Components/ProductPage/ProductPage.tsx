@@ -102,15 +102,17 @@ function ProductPage({
 
   if (isPending) {
     return (
-      <div style={{
-        marginTop: '100px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-      >
-        <LoadingSpinner />
-      </div>
+      <CartContainer>
+        <div style={{
+          marginTop: '100px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        >
+          <LoadingSpinner />
+        </div>
+      </CartContainer>
     );
   }
 
@@ -147,9 +149,6 @@ function ProductPage({
                 {' '}
                 {currentPage?.brand}
               </div>
-              <div className={styles.infoDescription}>
-                {currentPage?.description}
-              </div>
               <div className={styles.infoText}>
                 <span className={styles.infoHeaders}>Rating:</span>
                 {' '}
@@ -166,13 +165,17 @@ function ProductPage({
                 {currentPage?.discountPercentage}
                 %
               </div>
+              <div className={styles.infoHeaders}>Description:</div>
+              <div className={styles.infoDescription}>
+                {currentPage?.description}
+              </div>
             </div>
             <div className={styles.buttonsWrapper}>
               <div className={styles.productPrice}>
-                Price €
-                {' '}
-                {currentPage?.price}
-                .00
+                <span>Price: </span>
+                {currentPage
+                  ? new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(currentPage?.price)
+                  : 0}
               </div>
               <button type="button" onClick={() => handleBuyButtonClick()}>Buy now</button>
               <ProductAddDropButton
