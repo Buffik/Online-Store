@@ -25,15 +25,16 @@
 
 .footer__link {
   color: var(--primary-font-color);
+  text-decoration: none;
   margin-left: 8px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 
   &::before {
     content: "";
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
     background-image: url("../../assets/images/github-mark.svg");
     background-repeat: no-repeat;
     background-size: contain;
