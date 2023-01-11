@@ -56,11 +56,11 @@ function DualSlider(props: TDualSliderProps) {
       />
       <div className={styles.dualSlider__labels}>
         <p>
-          €
+          {(sliderId === 'filter-price') ? '€' : ''}
           {searchParamsObject[`${filter}range`]?.split(',')[0] ?? filteredSearchedProducts.length ? Math.min(...arr) : 0}
         </p>
         <p>
-          €
+          {(sliderId === 'filter-price') ? '€' : ''}
           {searchParamsObject[`${[filter]}range`]?.split(',')[1] ?? filteredSearchedProducts.length ? Math.max(...arr) : 0}
         </p>
       </div>

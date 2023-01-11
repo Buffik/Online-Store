@@ -116,15 +116,23 @@ function ProductPage({
     );
   }
 
+  const linkToCategories = `/?category=${currentPage?.category}`;
+  const linkToBrands = `/?brand=${currentPage?.brand}`;
+
   return (
     <CartContainer>
       <div className={styles.wrapper}>
         <div className={styles.breedsWrapper}>
           <Link to="/">Home</Link>
           <span className={styles.breedsItems}>&gt;&gt;</span>
-          <div>{currentPage?.category}</div>
+          <Link
+            className={styles.breedsCategory}
+            to={linkToCategories}
+          >
+            {currentPage?.category}
+          </Link>
           <span className={styles.breedsItems}>&gt;&gt;</span>
-          <div>{currentPage?.brand}</div>
+          <Link to={linkToBrands}>{currentPage?.brand}</Link>
           <span className={styles.breedsItems}>&gt;&gt;</span>
           <div>{currentPage?.title}</div>
         </div>
