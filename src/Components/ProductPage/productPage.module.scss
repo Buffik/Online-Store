@@ -29,6 +29,10 @@
   }
 }
 
+.breedsCategory {
+  text-transform: capitalize;
+}
+
 .breedsItems {
   color: var(--unimportant-color);
   font-size: 1.2rem;
@@ -85,6 +89,7 @@
 
 .infoHeaders {
   color: var(--accent-color);
+  // font-weight: bold;
 }
 
 .infoDescription {
