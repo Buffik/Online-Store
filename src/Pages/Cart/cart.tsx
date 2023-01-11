@@ -189,21 +189,14 @@ function Cart(props: TCartProps) {
             {totalCount}
           </div>
           <div className={isCodeAdd ? styles.textSummaryLineThrough : styles.textSummary}>
-            <span className={styles.textTotal}>Total:</span>
-            {' '}
-            €
-            {' '}
-            {totalCost}
-            .00
+            <span className={styles.textTotal}>Total: </span>
+            {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(totalCost)}
           </div>
           {isCodeAdd ? (
             <div>
               <div className={styles.textSummaryWithDiscount}>
-                <span className={styles.textTotal}>Total:</span>
-                {' '}
-                €
-                {' '}
-                {countTotalSumWithDiscounts(totalCost, codeAdded)}
+                <span className={styles.textTotal}>Total: </span>
+                {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(Number(countTotalSumWithDiscounts(totalCost, codeAdded)))}
               </div>
               <div style={{ textAlign: 'center' }}>Applied codes</div>
               <div>

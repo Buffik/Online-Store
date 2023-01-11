@@ -89,9 +89,7 @@ function CartProduct(props:TProductsCart) {
         <div className={styles.textCount}>{data.count}</div>
         <ProductCartButton value={id} onClick={onClickHandlerDecrease}><div>{data.count === 1 ? 'Delete from cart' : '-'}</div></ProductCartButton>
         <div className={styles.textPrice}>
-          €
-          {price * data.count}
-          .00
+          {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(price * data.count)}
         </div>
       </div>
     </div>
