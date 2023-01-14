@@ -5,6 +5,10 @@
   gap: 50px;
 }
 
+.rightColumnWrapper {
+  width: 100%;
+}
+
 .findSortContainer {
   display: flex;
   justify-content: space-between;
@@ -53,4 +57,10 @@
 
 .productsView input[type="radio"]:checked + .productsView__label_list {
   background-image: url("../../assets/images/list-green.png");
+}
+
+.productsView input[type="radio"]:focus + .productsView__label_grid,
+.productsView input[type="radio"]:focus + .productsView__label_list {
+  outline: 1px solid var(--accent-color);
+  outline-offset: 2px;
 }

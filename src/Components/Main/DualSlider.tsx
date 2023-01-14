@@ -51,15 +51,15 @@ function DualSlider(props: TDualSliderProps) {
         max={Math.max(...products.map((item) => item[filter]))}
         value={searchParamsObject[`${[filter]}range`]?.split(',')[1] ?? Math.max(...arr)}
         onInput={handleSliderMaxInput}
-        className={styles.slider}
+        className={[styles.slider, styles.sliderMax].join(' ')}
         // style={{ background: `${fillSlider(filter)}` }}
       />
-      <div className={styles.dualSlider__labels}>
-        <p>
+      <div className={styles.slider__labels}>
+        <p className={styles.slider__labelMin}>
           {(sliderId === 'filter-price') ? '€' : ''}
           {searchParamsObject[`${filter}range`]?.split(',')[0] ?? filteredSearchedProducts.length ? Math.min(...arr) : 0}
         </p>
-        <p>
+        <p className={styles.slider__labelMax}>
           {(sliderId === 'filter-price') ? '€' : ''}
           {searchParamsObject[`${[filter]}range`]?.split(',')[1] ?? filteredSearchedProducts.length ? Math.max(...arr) : 0}
         </p>

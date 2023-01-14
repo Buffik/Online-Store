@@ -15,6 +15,7 @@
 
 .filter__section {
   margin-bottom: 20px;
+  padding: 0 2px;
 }
 
 ul.filter__section {
@@ -36,6 +37,10 @@ ul.filter__section {
 
   &:hover {
     background-color: var(--accent-active-color);
+  }
+
+  &:focus {
+    outline-color: var(--accent-color);
   }
 
   @media (max-width: 1199px) {
@@ -69,4 +74,8 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked + .filter__label::before {
   background-position: center center;
+}
+
+input[type="checkbox"]:focus + .filter__label::before {
+  outline: 1px solid var(--accent-color);
 }
