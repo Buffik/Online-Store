@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SiteContainer from '../../Components/UI/container/SiteContainer';
 import styles from './PageNotFound.module.scss';
 import emptyBox from '../../assets/images/empty.png';
@@ -9,15 +9,15 @@ function PageNotFound() {
     <main className={styles.main}>
       <SiteContainer>
         <section className={styles.message}>
-          <img src={emptyBox} alt="" />
+          <img src={emptyBox} alt="A confused person inside a box" />
           <h1 className={styles.title}>Error 404: Page Not Found!</h1>
           <p className={styles.text}>This page does not seem to exist.</p>
-          <NavLink
+          <Link
             className={styles.link}
             to="/"
           >
             Back to main
-          </NavLink>
+          </Link>
         </section>
       </SiteContainer>
     </main>

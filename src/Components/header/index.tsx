@@ -1,5 +1,5 @@
 // import React, { useMemo } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
 import formatPrice from '../utils/formatPrice';
@@ -29,12 +29,12 @@ export default function Header(props: TProps) {
   return (
     <header className={styles.header}>
       <nav className={styles.header__navigation}>
-        <NavLink
+        <Link
           className={styles.header__navigation__logo}
           to="/"
         >
           Online Store
-        </NavLink>
+        </Link>
         <p className={styles.header__navigation__total}>
           {'Cart total: '}
           <span className={styles.header__navigation__total__price}>
@@ -43,7 +43,7 @@ export default function Header(props: TProps) {
               : '...'}
           </span>
         </p>
-        <NavLink
+        <Link
           className={styles.header__navigation__cart}
           to="/cart"
         >
@@ -54,7 +54,7 @@ export default function Header(props: TProps) {
           <p className={styles.header__navigation__cart__items}>
             {cartTotalPrice}
           </p>
-        </NavLink>
+        </Link>
       </nav>
     </header>
   );
