@@ -3,24 +3,22 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import FiltersList from '../../Components/Main/FiltersList';
 import ProductsList from '../../Components/Main/ProductsList';
 // import TestForMain from '../../Components/TestForMain';
-import { TProductPartialProps, TProductsItem } from '../../types/types';
 import useSearchParamsObject from '../../hooks/useSearchParamsObject';
 import LoadingSpinner from '../../Components/UI/LoadingSpinner';
 import SiteContainer from '../../Components/UI/container/SiteContainer';
 import styles from './Main.module.scss';
-import setDataToLocalStorage from '../../Components/utils/setDataToLocalStorage';
+import filterProducts from '../../Components/utils/filterProducts';
+import searchInProducts from '../../Components/utils/searchInProducts';
+import sortProducts from '../../Components/utils/sortProducts';
+import {
+  TProductPartialProps, TProductsItem, TFilterRangeTypes,
+} from '../../types/types';
 
 type TMainProps = {
   productsInCart: TProductPartialProps[];
-  // eslint-disable-next-line no-unused-vars
   addToCart(id: number): void;
-  // eslint-disable-next-line no-unused-vars
   dropFromCart(id: number): void;
 }
-
-type TParamsObject = Record<string, string>;
-
-type TFilterOptions = 'category' | 'brand' | 'price' | 'stock';
 
 function Main(props: TMainProps) {
   const {
@@ -28,70 +26,28 @@ function Main(props: TMainProps) {
     addToCart,
     dropFromCart,
   } = props;
+
   const [products, setProducts] = useState([]);
 
   const [isPending, setIsPending] = useState(true);
 
-  const fetchProducts = async () => {
-    const response = await fetch('https://dummyjson.com/products?limit=20');
-    const productsList = await response.json();
-    setProducts(productsList.products);
-    setIsPending(false);
+  const fetchProducts = async (source: string) => {
+    try {
+      const response = await fetch(source);
+      const productsList = await response.json();
+      return productsList.products;
+    } catch (err) {
+      throw new Error('Error: Could not fetch products');
+    }
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts('https://dummyjson.com/products?limit=20')
+      .then((result) => setProducts(result))
+      .then(() => setIsPending(false));
   }, []);
 
-  const isInSearchParams = (
-    paramName: string,
-    param: string | number,
-    paramsObject: TParamsObject,
-  ) => {
-    if (typeof param === 'number') {
-      return paramsObject[paramName] !== undefined;
-    }
-    if (!paramsObject[paramName]) {
-      return false;
-    }
-    return paramsObject[paramName].split(',').includes(param);
-  };
-
-  const getFilterParams = (source: TProductsItem[], paramName: TFilterOptions) => {
-    if (paramName === 'price' || paramName === 'stock') {
-      let arr = source.map((item) => item[paramName]);
-      arr = (arr.length > 0) ? arr : [0];
-      return [Math.min(...arr), Math.max(...arr)];
-    }
-    const set = new Set(source.map((item) => item[paramName]));
-    return Array.from(set).sort();
-  };
-
   const [searchParamsObject, setSearchParamsObject] = useSearchParamsObject();
-
-  const categoriesList = getFilterParams(products, 'category');
-
-  const brandsList = getFilterParams(products, 'brand');
-
-  const handleCheckboxChange = (filterName: string, filter: string | number) => {
-    if (isInSearchParams(filterName, filter, searchParamsObject)) {
-      let filterArr = searchParamsObject[filterName].split(',');
-      if (filterArr.length === 1) {
-        const copySearchParamsObject = { ...searchParamsObject };
-        delete copySearchParamsObject[filterName];
-        setSearchParamsObject(copySearchParamsObject);
-      } else {
-        filterArr = filterArr.filter((item) => item !== filter);
-        setSearchParamsObject({ ...searchParamsObject, [filterName]: filterArr.join(',') });
-      }
-    } else if (searchParamsObject[filterName]) {
-      setSearchParamsObject({ ...searchParamsObject, [filterName]: `${searchParamsObject[filterName]},${filter}` });
-    } else {
-      setSearchParamsObject({ ...searchParamsObject, [filterName]: filter.toString() });
-    }
-  };
-
-  // let filteredSearchedProducts: TProductsItem[] = products.slice();
 
   // const fillSlider = (filter: 'price' | 'stock') => {
   //   const sliderColor = '#b9b9b9';
@@ -113,123 +69,62 @@ function Main(props: TMainProps) {
   //     ${sliderColor} 100%)`;
   // };
 
-  const getMinPrice = (source: TProductsItem[], param: 'price' | 'stock') => {
+  const getMinPrice = (source: TProductsItem[], paramName: TFilterRangeTypes) => {
     if (source.length !== 0) {
-      return Math.min(...source.map((item) => item[param]));
+      return Math.min(...source.map((item) => item[paramName]));
     }
-    return [0];
+    return 0;
   };
-  const getMaxPrice = (source: TProductsItem[], param: 'price' | 'stock') => {
+  const getMaxPrice = (source: TProductsItem[], paramName: TFilterRangeTypes) => {
     if (source.length !== 0) {
-      return Math.max(...source.map((item) => item[param]));
+      return Math.max(...source.map((item) => item[paramName]));
     }
-    return [0];
+    return 0;
   };
 
-  const handleSliderMinInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const param = (event.target.id === 'filter-price-min') ? 'price' : 'stock';
-    const minValue = Number(event.target.value);
-    const maxValue = Number(searchParamsObject[`${param}range`]?.split(',')[1] ?? getMaxPrice(products, param));
-    setSearchParamsObject({ ...searchParamsObject, [`${param}range`]: [minValue, maxValue].sort((a, b) => a - b).join(',') });
+  const handleSliderFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const [, filterName, minOrMax] = event.target.id.split('-'); // event.target.id example: filter-price-min
+    const param = (filterName === 'price' || filterName === 'stock') ? filterName : 'price';
+    let minValue;
+    let maxValue;
+    if (minOrMax === 'min') {
+      minValue = Number(event.target.value);
+      maxValue = Number(searchParamsObject[`${filterName}range`]?.split(',')[1] ?? getMaxPrice(products, param));
+    }
+    if (minOrMax === 'max') {
+      minValue = Number(searchParamsObject[`${param}range`]?.split(',')[0] ?? getMinPrice(products, param));
+      maxValue = Number(event.target.value);
+    }
+    if (minValue === undefined || maxValue === undefined) {
+      return;
+    }
+    setSearchParamsObject({ ...searchParamsObject, [`${filterName}range`]: [minValue, maxValue].sort((a, b) => a - b).join(',') });
     // fillSlider('price');
-  };
-
-  const handleSliderMaxInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const param = (event.target.id === 'filter-price-max') ? 'price' : 'stock';
-    const minValue = Number(searchParamsObject[`${param}range`]?.split(',')[0] ?? getMinPrice(products, param));
-    const maxValue = Number(event.target.value);
-    setSearchParamsObject({ ...searchParamsObject, [`${param}range`]: [minValue, maxValue].sort((a, b) => a - b).join(',') });
-    // fillSlider('stock');
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '') {
-      const copySearchParamsObject = { ...searchParamsObject };
-      delete copySearchParamsObject.search;
-      setSearchParamsObject(copySearchParamsObject);
+      const copiedSearchParamsObject = { ...searchParamsObject };
+      delete copiedSearchParamsObject.search;
+      setSearchParamsObject(copiedSearchParamsObject);
     } else {
       setSearchParamsObject({ ...searchParamsObject, search: event.target.value });
     }
   };
+
   const handleSortingChange = (event: ChangeEvent<HTMLSelectElement>) => {
     if (event.target.value === 'default') {
-      const copySearchParamsObject = { ...searchParamsObject };
-      delete copySearchParamsObject.sortby;
-      setSearchParamsObject(copySearchParamsObject);
+      const copiedSearchParamsObject = { ...searchParamsObject };
+      delete copiedSearchParamsObject.sortby;
+      setSearchParamsObject(copiedSearchParamsObject);
     } else {
       setSearchParamsObject({ ...searchParamsObject, sortby: event.target.value });
     }
   };
 
-  const filterProducts = (productsArray: TProductsItem[] | []) => {
-    let arr = productsArray.slice();
-    if (searchParamsObject.category) {
-      const params = searchParamsObject.category.split(',');
-      arr = arr.filter((elem) => params.includes(elem.category));
-    }
-    if (searchParamsObject.brand) {
-      const params = searchParamsObject.brand.split(',');
-      arr = arr.filter((elem) => params.includes(elem.brand));
-    }
-    if (searchParamsObject.pricerange) {
-      const params = searchParamsObject.pricerange.split(',').map((elem) => Number(elem));
-      arr = arr.filter((elem) => elem.price >= params[0] && elem.price <= params[1]);
-    }
-    if (searchParamsObject.stockrange) {
-      const params = searchParamsObject.stockrange.split(',').map((elem) => Number(elem));
-      arr = arr.filter((elem) => elem.stock >= params[0] && elem.stock <= params[1]);
-    }
-    // const minValue = getMinPrice(filteredSearchedProducts)
-    // ?? searchParamsObject?.pricerange?.split(',')[0];
-    // const maxValue = getMaxPrice(filteredSearchedProducts)
-    // ?? searchParamsObject?.pricerange?.split(',')[1];
-    // setSearchParamsObject({ ...searchParamsObject,
-    // pricerange: [minValue, maxValue].join(',') });
-    return arr;
-  };
-
-  const searchInProducts = (productsArray: TProductsItem[] | []) => {
-    let arr = productsArray.slice();
-    if (searchParamsObject.search) {
-      const query = searchParamsObject.search.trim().toLowerCase();
-      arr = arr.filter((elem) => elem.title.toLowerCase().includes(query)
-      || elem.category.toLowerCase().includes(query)
-      || elem.brand.toLowerCase().includes(query)
-      || elem.description.toLowerCase().includes(query)
-      || elem.price.toString().includes(query)
-      || elem.discountPercentage.toString().includes(query)
-      || elem.rating.toString().includes(query)
-      || elem.stock.toString().includes(query));
-    }
-    return arr;
-  };
-
-  const sortProducts = (productsArray: TProductsItem[] | []) => {
-    const { sortby } = searchParamsObject;
-    if (sortby === 'price-ascending') {
-      return productsArray.sort((a, b) => a.price - b.price);
-    }
-    if (sortby === 'price-descending') {
-      return productsArray.sort((a, b) => b.price - a.price);
-    }
-    if (sortby === 'rating-ascending') {
-      return productsArray.sort((a, b) => a.rating - b.rating);
-    }
-    if (sortby === 'rating-descending') {
-      return productsArray.sort((a, b) => b.rating - a.rating);
-    }
-    if (sortby === 'discount-ascending') {
-      return productsArray.sort((a, b) => a.discountPercentage - b.discountPercentage);
-    }
-    if (sortby === 'discount-descending') {
-      return productsArray.sort((a, b) => b.discountPercentage - a.discountPercentage);
-    }
-    return productsArray;
-  };
-
-  const filteredProducts = filterProducts(products);
-  const filteredSearchedProducts = searchInProducts(filteredProducts);
-  const filteredSearchedSortedProducts = sortProducts(filteredSearchedProducts);
+  const filteredProducts = filterProducts(products, searchParamsObject);
+  const filteredSearchedProducts = searchInProducts(filteredProducts, searchParamsObject);
+  const filteredSearchedSortedProducts = sortProducts(filteredSearchedProducts, searchParamsObject);
 
   const handleResetClick = () => {
     setSearchParamsObject({});
@@ -246,19 +141,11 @@ function Main(props: TMainProps) {
   };
 
   const handleViewChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const param = (event.target.id === 'products-view-list') ? 'list' : 'grid';
-    setSearchParamsObject({ ...searchParamsObject, view: param });
+    const viewValue = (event.target.id === 'products-view-list') ? 'list' : 'grid';
+    setSearchParamsObject({ ...searchParamsObject, view: viewValue });
   };
 
   const productsView = (searchParamsObject?.view === 'list' || searchParamsObject?.view === 'grid') ? searchParamsObject.view : 'grid';
-
-  // useEffect(() => {
-  //   setSearchParamsObject({ ...searchParamsObject, view: 'grid' });
-  // }, []);
-
-  useEffect(() => {
-    setDataToLocalStorage(productsInCart);
-  }, [productsInCart]);
 
   return (
     <SiteContainer>
@@ -268,22 +155,19 @@ function Main(props: TMainProps) {
         )
         : (
           <main className={styles.main}>
+            <h1 className="visually-hidden">Catalog</h1>
             <FiltersList
               products={products}
               filteredSearchedProducts={filteredSearchedProducts}
-              categoriesList={categoriesList}
-              brandsList={brandsList}
               searchParamsObject={searchParamsObject}
-              isInSearchParams={isInSearchParams}
-              handleCheckboxChange={handleCheckboxChange}
+              setSearchParamsObject={setSearchParamsObject}
               handleResetClick={handleResetClick}
               handleCopyClick={handleCopyClick}
-              handleSliderMinInput={handleSliderMinInput}
-              handleSliderMaxInput={handleSliderMaxInput}
+              handleSliderFilter={handleSliderFilter}
               copied={copied}
               // fillSlider={fillSlider}
             />
-            <div style={{ width: '100%' }}>
+            <div className={styles.rightColumnWrapper}>
               <div className={styles.findSortContainer}>
                 <input
                   type="text"
@@ -296,7 +180,7 @@ function Main(props: TMainProps) {
                   {'Found: '}
                   {filteredSearchedSortedProducts.length}
                 </p>
-                <select name="sort-by" id="sort-by" value={searchParamsObject.sortby} onChange={handleSortingChange}>
+                <select name="sort-by" id="sort-by" value={searchParamsObject.sortby ?? 'default'} onChange={handleSortingChange}>
                   <option value="default">Sort by</option>
                   <option value="price-ascending">Cheapest first</option>
                   <option value="price-descending">Expensive first</option>
@@ -317,7 +201,7 @@ function Main(props: TMainProps) {
                     className={styles.productsView__label_grid}
                     htmlFor="products-view-grid"
                     title="View products as a grid"
-                    aria-label="View products as a grid"
+                    aria-label="View products as a grid."
                   />
                   <input
                     type="radio"
@@ -330,7 +214,7 @@ function Main(props: TMainProps) {
                     className={styles.productsView__label_list}
                     htmlFor="products-view-list"
                     title="View products as a list"
-                    aria-label="View products as a list"
+                    aria-label="View products as a list."
                   />
                 </div>
               </div>

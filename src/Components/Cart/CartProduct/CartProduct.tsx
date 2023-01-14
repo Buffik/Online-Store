@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { TProductsCart } from '../../../types/types';
 import ProductCartButton from '../../UI/button/ProductCartButton';
 import LoadingSpinner from '../../UI/LoadingSpinner';
+import formatPrice from '../../utils/formatPrice';
 import styles from './CartProduct.module.scss';
 
 function CartProduct(props:TProductsCart) {
@@ -89,7 +90,7 @@ function CartProduct(props:TProductsCart) {
         <div className={styles.textCount}>{data.count}</div>
         <ProductCartButton value={id} onClick={onClickHandlerDecrease}><div>{data.count === 1 ? 'Delete from cart' : '-'}</div></ProductCartButton>
         <div className={styles.textPrice}>
-          {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(price * data.count)}
+          {formatPrice(price * data.count)}
         </div>
       </div>
     </div>

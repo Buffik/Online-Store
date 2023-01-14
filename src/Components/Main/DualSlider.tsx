@@ -1,18 +1,15 @@
 import React from 'react';
-import { TProductsItem } from '../../types/types';
+import { TProductsItem, TSearchParamsObject, TFilterRangeTypes } from '../../types/types';
+import formatPrice from '../utils/formatPrice';
 import styles from './DualSlider.module.scss';
 
 type TDualSliderProps = {
   sliderId: string;
-  filter: 'price' | 'stock';
+  filter: TFilterRangeTypes;
   products: TProductsItem[];
-  // eslint-disable-next-line no-unused-vars
-  handleSliderMinInput(event: React.ChangeEvent<HTMLInputElement>): void;
-  // eslint-disable-next-line no-unused-vars
-  handleSliderMaxInput(event: React.ChangeEvent<HTMLInputElement>): void
+  handleSliderFilter(event: React.ChangeEvent<HTMLInputElement>): void;
   filteredSearchedProducts: TProductsItem[] | [];
-  searchParamsObject: Record<string, string>;
-  // eslint-disable-next-line no-unused-vars
+  searchParamsObject: TSearchParamsObject;
   // fillSlider(filter: 'price' | 'stock'): string;
   }
 
@@ -21,15 +18,25 @@ function DualSlider(props: TDualSliderProps) {
     sliderId,
     filter,
     products,
-    handleSliderMinInput,
-    handleSliderMaxInput,
+    handleSliderFilter,
     filteredSearchedProducts,
     searchParamsObject,
     // fillSlider,
   } = props;
 
-  const filtered = filteredSearchedProducts.map((item) => item[filter]);
-  const arr = (filtered.length > 0) ? filtered : [0];
+  const filterValuesTotal = (products.length > 0)
+    ? products.map((item) => item[filter])
+    : [0];
+
+  const minTotalFilterValue = Math.min(...filterValuesTotal);
+  const maxTotalFilterValue = Math.max(...filterValuesTotal);
+
+  const filterValues = (filteredSearchedProducts.length > 0)
+    ? filteredSearchedProducts.map((item) => item[filter])
+    : [0];
+
+  const [minFilterValue, maxFilterValue] = searchParamsObject[`${filter}range`]?.split(',')
+    ?? [Math.min(...filterValues), Math.max(...filterValues)];
 
   return (
     <section className={styles.dualSlider}>
@@ -37,31 +44,33 @@ function DualSlider(props: TDualSliderProps) {
         type="range"
         name={`${sliderId}-min`}
         id={`${sliderId}-min`}
-        min={Math.min(...products.map((item) => item[filter]))}
-        max={Math.max(...products.map((item) => item[filter]))}
-        value={searchParamsObject[`${filter}range`]?.split(',')[0] ?? Math.min(...arr)}
-        onInput={handleSliderMinInput}
+        min={minTotalFilterValue}
+        max={maxTotalFilterValue}
+        value={minFilterValue}
+        onInput={handleSliderFilter}
         className={[styles.slider, styles.sliderMin].join(' ')}
       />
       <input
         type="range"
         name={`${sliderId}-max`}
         id={`${sliderId}-max`}
-        min={Math.min(...products.map((item) => item[filter]))}
-        max={Math.max(...products.map((item) => item[filter]))}
-        value={searchParamsObject[`${[filter]}range`]?.split(',')[1] ?? Math.max(...arr)}
-        onInput={handleSliderMaxInput}
+        min={minTotalFilterValue}
+        max={maxTotalFilterValue}
+        value={maxFilterValue}
+        onInput={handleSliderFilter}
         className={[styles.slider, styles.sliderMax].join(' ')}
         // style={{ background: `${fillSlider(filter)}` }}
       />
       <div className={styles.slider__labels}>
         <p className={styles.slider__labelMin}>
-          {(sliderId === 'filter-price') ? '€' : ''}
-          {searchParamsObject[`${filter}range`]?.split(',')[0] ?? filteredSearchedProducts.length ? Math.min(...arr) : 0}
+          {sliderId === 'filter-price'
+            ? formatPrice(Number(minFilterValue))
+            : minFilterValue}
         </p>
         <p className={styles.slider__labelMax}>
-          {(sliderId === 'filter-price') ? '€' : ''}
-          {searchParamsObject[`${[filter]}range`]?.split(',')[1] ?? filteredSearchedProducts.length ? Math.max(...arr) : 0}
+          {sliderId === 'filter-price'
+            ? formatPrice(Number(maxFilterValue))
+            : maxFilterValue}
         </p>
       </div>
     </section>

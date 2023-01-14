@@ -14,7 +14,7 @@ function Footer() {
         </p>
         <p>Online Store © 2023</p>
         <a href="https://rs.school/js/">
-          <img src={logo} width="55.28" height="20.53" alt="" />
+          <img src={logo} width="55.28" height="20.53" alt="Rolling Scopes School frontend course" />
         </a>
       </div>
     </footer>

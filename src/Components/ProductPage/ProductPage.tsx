@@ -6,11 +6,12 @@ import { TProductPartialProps, TProductsItemWithImages } from '../../types/types
 import PostService from '../API/PostService';
 import ProductAddDropButton from '../UI/button/ProductAddDropButton';
 import CartContainer from '../UI/container/CartContainer/CartContainer';
-import SiteContainer from '../UI/container/SiteContainer';
+// import SiteContainer from '../UI/container/SiteContainer';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import checkUniqueImgs from '../utils/checkUniqueImgs';
 import setDataToLocalStorage from '../utils/setDataToLocalStorage';
 import ProductImagesCarousel from './ProductImagesCarousel/ProductImagesCarousel';
+import formatPrice from '../utils/formatPrice';
 import styles from './productPage.module.scss';
 
 interface IProductPage {
@@ -137,7 +138,7 @@ function ProductPage({
           <div>{currentPage?.title}</div>
         </div>
         <div className={styles.productWrapper}>
-          <h2>{currentPage?.title}</h2>
+          <h1>{currentPage?.title}</h1>
           <div className={styles.detailsWrapper}>
             <div className={styles.imagesWrapper}>
               <div className={styles.mainImgWrapper}>
@@ -182,7 +183,7 @@ function ProductPage({
               <div className={styles.productPrice}>
                 <span>Price: </span>
                 {currentPage
-                  ? new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(currentPage?.price)
+                  ? formatPrice(currentPage?.price)
                   : 0}
               </div>
               <button type="button" onClick={() => handleBuyButtonClick()}>Buy now</button>

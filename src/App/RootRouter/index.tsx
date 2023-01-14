@@ -12,22 +12,15 @@ import styles from './RootRouter.module.scss';
 type TRootRouterProps = {
   isPending: boolean;
   productsInCart: TProductPartialProps[];
-  // eslint-disable-next-line no-unused-vars
   setProductsInCart(arr: TProductPartialProps[]): void;
   productsInCartCount: TProductPartialProps[];
-  // eslint-disable-next-line no-unused-vars
   setProductsInCartCount(arr: TProductPartialProps[]): void;
   products: TProductsItem[] | null;
-  // eslint-disable-next-line no-unused-vars
   increaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
-  // eslint-disable-next-line no-unused-vars
   decreaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
-  // eslint-disable-next-line no-unused-vars
   addToCart(id: number): void;
-  // eslint-disable-next-line no-unused-vars
   dropFromCart(id: number): void;
   formVisible: boolean;
-  // eslint-disable-next-line no-unused-vars
   setFormVisible(bool:boolean): void;
 }
 
@@ -48,7 +41,10 @@ export default function RootRouter(props: TRootRouterProps) {
   } = props;
   return (
     <div className={styles.container}>
-      <Header productsInCart={productsInCartCount} products={products} />
+      <Header
+        productsInCart={productsInCartCount}
+        products={products}
+      />
       <Routes>
         <Route
           path="/"
@@ -60,7 +56,17 @@ export default function RootRouter(props: TRootRouterProps) {
             />
           )}
         />
-        <Route path="/product/:id" element={<ProductPage productsInCart={productsInCart} addToCart={addToCart} dropFromCart={dropFromCart} setFormVisible={setFormVisible} />} />
+        <Route
+          path="/product/:id"
+          element={(
+            <ProductPage
+              productsInCart={productsInCart}
+              addToCart={addToCart}
+              dropFromCart={dropFromCart}
+              setFormVisible={setFormVisible}
+            />
+          )}
+        />
         <Route
           path="/cart"
           element={(
@@ -78,7 +84,10 @@ export default function RootRouter(props: TRootRouterProps) {
             />
           )}
         />
-        <Route path="*" element={<PageNotFound />} />
+        <Route
+          path="*"
+          element={<PageNotFound />}
+        />
       </Routes>
       <Footer />
     </div>

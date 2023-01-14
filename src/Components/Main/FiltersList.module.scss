@@ -79,3 +79,9 @@ input[type="checkbox"]:checked + .filter__label::before {
 input[type="checkbox"]:focus + .filter__label::before {
   outline: 1px solid var(--accent-color);
 }
+
+.filter__label__count {
+  margin-left: auto;
+  margin-right: 2px;
+  color: var(--unimportant-color);
+}
