@@ -11,7 +11,7 @@
   color: var(--unimportant-color);
   text-align: center;
   // margin: 0 auto 30px auto;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   align-self: flex-start;
   display: flex;
   // max-width: 800px;
@@ -42,7 +42,7 @@
 .productWrapper {
   display: block;
 
-  & h2 {
+  & h1 {
     text-align: center;
     font-size: 30px;
     margin-bottom: 50px;

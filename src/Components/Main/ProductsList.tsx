@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ProductAddDropButton from '../UI/button/ProductAddDropButton';
+import formatPrice from '../utils/formatPrice';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
 import styles from './ProductsList.module.scss';
 
 type TProductsListProps = {
   productsInCart: TProductPartialProps[];
-  // eslint-disable-next-line no-unused-vars
   addToCart(id: number): void;
-  // eslint-disable-next-line no-unused-vars
   dropFromCart(id: number): void;
   products: TProductsItem[];
   view: string;
@@ -26,9 +25,10 @@ export default function ProductsList(props: TProductsListProps) {
   return (
     <section className={[styles.products, productsView].join(' ')}>
       {
-        products.length
-          ? products.map((product: TProductsItem) => (
-            <div key={product.id} className={styles.product}>
+        (!products.length)
+          ? 'No products found'
+          : products.map((product) => (
+            <section key={product.id} className={styles.product}>
               <Link to={`/product/${product.id}`}>
                 <img
                   className={styles.product__image}
@@ -69,9 +69,7 @@ export default function ProductsList(props: TProductsListProps) {
               <div className={styles.product__thirdColumn}>
                 <dl className={styles.product__parameter_price}>
                   <dt className={styles.product__parameter_price__title}>Price: </dt>
-                  <dd style={{ fontWeight: 'bold' }}>
-                    {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(product.price)}
-                  </dd>
+                  <dd>{formatPrice(product.price)}</dd>
                 </dl>
                 <div className={styles.product__buttonsContainer}>
                   <ProductAddDropButton
@@ -83,9 +81,8 @@ export default function ProductsList(props: TProductsListProps) {
                   <Link className={styles.product__link} to={`/product/${product.id}`}>Details</Link>
                 </div>
               </div>
-            </div>
+            </section>
           ))
-          : 'No products found'
         }
     </section>
   );

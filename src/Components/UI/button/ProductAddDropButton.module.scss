@@ -13,4 +13,8 @@
     background-color: var(--accent-color);
     color: white;
   }
+
+  &:focus {
+    outline-color: var(--accent-color);
+  }
 }
