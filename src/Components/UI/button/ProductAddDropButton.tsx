@@ -5,9 +5,7 @@ import styles from './ProductAddDropButton.module.scss';
 type ProductAddDropButtonProps = {
   productId: number | undefined;
   productsInCart: TProductPartialProps[];
-  // eslint-disable-next-line no-unused-vars
   addToCart(id: number | undefined): void;
-  // eslint-disable-next-line no-unused-vars
   dropFromCart(id: number | undefined): void;
 }
 
@@ -19,17 +17,10 @@ function ProductAddDropButton(props: ProductAddDropButtonProps) {
     dropFromCart,
   } = props;
 
-  const isProductInCart = (id?: number): boolean => {
-    if (productsInCart.find((item) => item.id === id)) {
-      return true;
-    }
-    return false;
-  };
-
-  const inCart = isProductInCart(productId);
+  const isInCart = productsInCart.some((item) => item.id === productId);
 
   const handleClick = (): void => {
-    if (inCart) {
+    if (isInCart) {
       dropFromCart(productId);
     } else {
       addToCart(productId);
@@ -38,11 +29,13 @@ function ProductAddDropButton(props: ProductAddDropButtonProps) {
 
   return (
     <button
-      className={(inCart) ? [styles.button, styles.button_drop].join(' ') : styles.button}
+      className={(isInCart)
+        ? [styles.button, styles.button_drop].join(' ')
+        : styles.button}
       type="button"
       onClick={handleClick}
     >
-      {(inCart) ? 'Drop From Cart' : 'Add to Cart'}
+      {(isInCart) ? 'Drop From Cart' : 'Add to Cart'}
     </button>
   );
 }

@@ -19,6 +19,7 @@ import countTotalCount from '../../Components/utils/countTotalCount';
 import countTotalSumWithDiscounts from '../../Components/utils/countTotalSumWithDiscounts';
 // import useFetching from '../../hooks/useFetching';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
+import formatPrice from '../../Components/utils/formatPrice';
 import styles from './cart.module.scss';
 import emptyCartImg from '../../assets/images/emptyCart.svg';
 
@@ -159,6 +160,7 @@ function Cart(props: TCartProps) {
   return (
     <CartContainer>
       <div className={styles.wrapper}>
+        <h1 className="visually-hidden">Cart</h1>
         <div className={styles.productsWrapper}>
           <CartPagination handleProductsPerPage={handleProductsPerPage} productsPerPage={productsPerPage} maxPages={maxPages} currentPage={currentPage} goNextFromCurrentPage={goNextFromCurrentPage} goBackFromCurrentPage={goBackFromCurrentPage} />
           { currentProducts?.map((product: TProductsItem, index) => (
@@ -190,13 +192,13 @@ function Cart(props: TCartProps) {
           </div>
           <div className={isCodeAdd ? styles.textSummaryLineThrough : styles.textSummary}>
             <span className={styles.textTotal}>Total: </span>
-            {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(totalCost)}
+            {formatPrice(totalCost)}
           </div>
           {isCodeAdd ? (
             <div>
               <div className={styles.textSummaryWithDiscount}>
                 <span className={styles.textTotal}>Total: </span>
-                {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(Number(countTotalSumWithDiscounts(totalCost, codeAdded)))}
+                {formatPrice(Number(countTotalSumWithDiscounts(totalCost, codeAdded)))}
               </div>
               <div style={{ textAlign: 'center' }}>Applied codes</div>
               <div>

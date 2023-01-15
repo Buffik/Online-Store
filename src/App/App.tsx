@@ -8,10 +8,12 @@ import handleLocalStorage from '../Components/utils/handleLocalStorage';
 import setDataToLocalStorage from '../Components/utils/setDataToLocalStorage';
 
 function App() {
-  // eslint-disable-next-line max-len
-  const [productsInCart, setProductsInCart] = useState<TProductPartialProps[]>(handleLocalStorage());
-  // eslint-disable-next-line max-len
-  const [productsInCartCount, setProductsInCartCount] = useState<TProductPartialProps[]>(handleLocalStorage());
+  const [
+    productsInCart, setProductsInCart,
+  ] = useState<TProductPartialProps[]>(handleLocalStorage());
+  const [
+    productsInCartCount, setProductsInCartCount,
+  ] = useState<TProductPartialProps[]>(handleLocalStorage());
   const [products, setProducts] = useState<TProductsItem[] | null>(null);
   const [formVisible, setFormVisible] = useState(false);
   const [fetchProductsById, isPending] = useFetching(async () => {
@@ -22,6 +24,10 @@ function App() {
 
   useEffect(() => {
     fetchProductsById();
+  }, [productsInCart]);
+
+  useEffect(() => {
+    setDataToLocalStorage(productsInCart);
   }, [productsInCart]);
 
   const increaseProductCount = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -63,12 +69,7 @@ function App() {
     setDataToLocalStorage(result);
   };
 
-  const isProductInCart = (id?: number): boolean => {
-    if (productsInCart.find((item) => item.id === id)) {
-      return true;
-    }
-    return false;
-  };
+  const isProductInCart = (id?: number): boolean => productsInCart.some((item) => item.id === id);
 
   const addToCart = (id: number) => {
     if (!isProductInCart(id)) {

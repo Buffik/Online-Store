@@ -1,29 +1,22 @@
 import React from 'react';
-import { TProductsItem } from '../../types/types';
 import DualSlider from './DualSlider';
+import isInSearchParams from '../utils/isInSearchParams';
 import styles from './FiltersList.module.scss';
-
-type TParamsObject = Record<string, string>;
+import handleCheckboxFilter from '../utils/handleCheckboxChange';
+import getFilterOptions from '../utils/getFilterOptions';
+import {
+  TProductsItem, TSearchParamsObject, TSetSearchParamsObject, TFilterSelectionTypes,
+} from '../../types/types';
 
 type TFiltersListProps = {
   products: TProductsItem[];
   filteredSearchedProducts: TProductsItem[] | [];
-  categoriesList: number[] | string[];
-  brandsList: number[] | string[];
-  searchParamsObject: Record<string, string>;
-  // eslint-disable-next-line no-unused-vars
-  isInSearchParams(paramName: string, param: string | number, paramsObject: TParamsObject): boolean;
-  // eslint-disable-next-line no-unused-vars
-  handleCheckboxChange(filterName: string, filter: string | number): void;
+  searchParamsObject: TSearchParamsObject;
+  setSearchParamsObject: TSetSearchParamsObject;
   handleResetClick(): void;
-  // eslint-disable-next-line no-unused-vars
   handleCopyClick(): void;
-  // eslint-disable-next-line no-unused-vars
-  handleSliderMinInput(event: React.ChangeEvent<HTMLInputElement>): void;
-  // eslint-disable-next-line no-unused-vars
-  handleSliderMaxInput(event: React.ChangeEvent<HTMLInputElement>): void
+  handleSliderFilter(event: React.ChangeEvent<HTMLInputElement>): void;
   copied: boolean;
-  // eslint-disable-next-line no-unused-vars
   // fillSlider(filter: 'price' | 'stock'): string;
 }
 
@@ -31,21 +24,25 @@ function FiltersList(props: TFiltersListProps) {
   const {
     products,
     filteredSearchedProducts,
-    categoriesList,
-    brandsList,
     searchParamsObject,
-    isInSearchParams,
-    handleCheckboxChange,
+    setSearchParamsObject,
     handleResetClick,
     handleCopyClick,
-    handleSliderMinInput,
-    handleSliderMaxInput,
+    handleSliderFilter,
     copied,
     // fillSlider,
   } = props;
 
+  const categoriesList = getFilterOptions(products, 'category');
+  const brandsList = getFilterOptions(products, 'brand');
+
+  type TItemsCount = (items: TProductsItem[], key: TFilterSelectionTypes, value: string) => number;
+  const itemsCount:
+    TItemsCount = (items, key, value) => items.filter((product) => product[key] === value).length;
+
   return (
     <section className={styles.filters}>
+      <h2 className="visually-hidden">Filters</h2>
       <div className={styles.filter__buttons}>
         <button className={styles.filter__button} type="button" onClick={handleResetClick}>Reset</button>
         <button className={styles.filter__button} type="button" onClick={handleCopyClick}>{copied ? 'Filters copied' : 'Copy filters'}</button>
@@ -59,17 +56,17 @@ function FiltersList(props: TFiltersListProps) {
                 type="checkbox"
                 id={`filter-category-${category}`}
                 name="category"
-                checked={isInSearchParams('category', category, searchParamsObject)}
-                onChange={() => handleCheckboxChange('category', category)}
+                checked={isInSearchParams('category', category.toString(), searchParamsObject)}
+                onChange={() => handleCheckboxFilter('category', category.toString(), searchParamsObject, setSearchParamsObject)}
               />
               <label className={styles.filter__label} htmlFor={`filter-category-${category}`}>
                 {category}
                 {' '}
-                (
-                {filteredSearchedProducts.filter((product) => product.category === category).length}
-                /
-                {products.filter((product) => product.category === category).length}
-                )
+                <span className={styles.filter__label__count}>
+                  {itemsCount(filteredSearchedProducts, 'category', category)}
+                  /
+                  {itemsCount(products, 'category', category)}
+                </span>
               </label>
             </div>
           </li>
@@ -84,17 +81,17 @@ function FiltersList(props: TFiltersListProps) {
                 type="checkbox"
                 id={`filter-brand-${brand}`}
                 name="brand"
-                checked={isInSearchParams('brand', brand, searchParamsObject)}
-                onChange={() => handleCheckboxChange('brand', brand)}
+                checked={isInSearchParams('brand', brand.toString(), searchParamsObject)}
+                onChange={() => handleCheckboxFilter('brand', brand.toString(), searchParamsObject, setSearchParamsObject)}
               />
               <label className={styles.filter__label} htmlFor={`filter-brand-${brand}`}>
                 {brand}
                 {' '}
-                (
-                {filteredSearchedProducts.filter((product) => product.brand === brand).length}
-                /
-                {products.filter((product) => product.brand === brand).length}
-                )
+                <span className={styles.filter__label__count}>
+                  {itemsCount(filteredSearchedProducts, 'brand', brand)}
+                  /
+                  {itemsCount(products, 'brand', brand)}
+                </span>
               </label>
             </div>
 
@@ -107,8 +104,7 @@ function FiltersList(props: TFiltersListProps) {
           sliderId="filter-price"
           filter="price"
           products={products}
-          handleSliderMinInput={handleSliderMinInput}
-          handleSliderMaxInput={handleSliderMaxInput}
+          handleSliderFilter={handleSliderFilter}
           searchParamsObject={searchParamsObject}
           filteredSearchedProducts={filteredSearchedProducts}
           // fillSlider={fillSlider}
@@ -120,8 +116,7 @@ function FiltersList(props: TFiltersListProps) {
           sliderId="filter-stock"
           filter="stock"
           products={products}
-          handleSliderMinInput={handleSliderMinInput}
-          handleSliderMaxInput={handleSliderMaxInput}
+          handleSliderFilter={handleSliderFilter}
           searchParamsObject={searchParamsObject}
           filteredSearchedProducts={filteredSearchedProducts}
           // fillSlider={fillSlider}

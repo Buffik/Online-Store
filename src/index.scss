@@ -67,15 +67,15 @@ button {
   }
 }
 
-input[type='text'],
+input[type="text"],
 select {
   border-radius: 10px;
   font-size: 1rem;
   padding: 5px;
 }
 
-input[type='text'] {
-  border: 1px solid var(--accent-color);
+input[type="text"] {
+  border: 1px solid var(--unimportant-color);
   padding: 9.5px 15px;
 }
 
@@ -85,6 +85,18 @@ select {
 
 option {
   line-height: 25px;
+}
+
+a:focus,
+button:focus,
+input[type="text"]:focus,
+select:focus,
+option:focus {
+  outline: 1px solid var(--accent-color);
+}
+
+button:focus {
+  outline-color: var(--primary-font-color);
 }
 
 code {
@@ -101,4 +113,18 @@ h2 {
 h3 {
   font-size: 1.8rem;
   margin: 10px 0;
+}
+
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }
