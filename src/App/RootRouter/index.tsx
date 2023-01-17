@@ -11,8 +11,8 @@ import styles from './RootRouter.module.scss';
 
 type TRootRouterProps = {
   isPending: boolean;
-  productsInCart: TProductPartialProps[];
-  setProductsInCart(arr: TProductPartialProps[]): void;
+  // productsInCart: TProductPartialProps[];
+  // setProductsInCart(arr: TProductPartialProps[]): void;
   productsInCartCount: TProductPartialProps[];
   setProductsInCartCount(arr: TProductPartialProps[]): void;
   products: TProductsItem[] | null;
@@ -27,8 +27,6 @@ type TRootRouterProps = {
 export default function RootRouter(props: TRootRouterProps) {
   const {
     isPending,
-    productsInCart,
-    setProductsInCart,
     productsInCartCount,
     setProductsInCartCount,
     products,
@@ -50,7 +48,7 @@ export default function RootRouter(props: TRootRouterProps) {
           path="/"
           element={(
             <Main
-              productsInCart={productsInCart}
+              productsInCart={productsInCartCount}
               addToCart={addToCart}
               dropFromCart={dropFromCart}
             />
@@ -60,7 +58,7 @@ export default function RootRouter(props: TRootRouterProps) {
           path="/product/:id"
           element={(
             <ProductPage
-              productsInCart={productsInCart}
+              productsInCart={productsInCartCount}
               addToCart={addToCart}
               dropFromCart={dropFromCart}
               setFormVisible={setFormVisible}
@@ -71,8 +69,6 @@ export default function RootRouter(props: TRootRouterProps) {
           path="/cart"
           element={(
             <Cart
-              productsInCart={productsInCart}
-              setProductsInCart={setProductsInCart}
               isPending={isPending}
               productsInCartCount={productsInCartCount}
               setProductsInCartCount={setProductsInCartCount}
