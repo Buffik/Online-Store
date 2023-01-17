@@ -1,4 +1,3 @@
-// /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import FiltersList from '../../Components/Main/FiltersList';
 import ProductsList from '../../Components/Main/ProductsList';

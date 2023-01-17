@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import ApprovePurchase from '../../Components/Cart/ApprovePerchase/ApprovePurchase';
@@ -22,21 +21,24 @@ import emptyCartImg from '../../assets/images/emptyCart.svg';
 type TCartProps = {
   isPending: boolean;
   productsInCartCount: TProductPartialProps[];
-  // eslint-disable-next-line no-unused-vars
   setProductsInCartCount(arr: TProductPartialProps[]): void;
   products: TProductsItem[] | null;
-  // eslint-disable-next-line no-unused-vars
   increaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
-  // eslint-disable-next-line no-unused-vars
   decreaseProductCount(event: React.MouseEvent<HTMLButtonElement>): void;
   formVisible: boolean;
-  // eslint-disable-next-line no-unused-vars
   setFormVisible(bool:boolean): void;
 }
 
 function Cart(props: TCartProps) {
   const {
-    isPending, productsInCartCount, setProductsInCartCount, products, increaseProductCount, decreaseProductCount, formVisible, setFormVisible,
+    isPending,
+    productsInCartCount,
+    setProductsInCartCount,
+    products,
+    increaseProductCount,
+    decreaseProductCount,
+    formVisible,
+    setFormVisible,
   } = props;
   const [totalCount, setTotalCount] = useState(countTotalCount(productsInCartCount));
   const [totalCost, setTotalCost] = useState(0);
@@ -48,7 +50,6 @@ function Cart(props: TCartProps) {
 
   //  Блок с пагинацией
 
-  // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
 
   const initialStateToProductsPerPage = Number(searchParams.get('limit')) || 3;
@@ -134,7 +135,11 @@ function Cart(props: TCartProps) {
 
   if (showAffirmative) {
     return (
-      <ApprovePurchase showAffirmative={showAffirmative} setFormVisible={setFormVisible} setProductsInCartCount={setProductsInCartCount} />
+      <ApprovePurchase
+        showAffirmative={showAffirmative}
+        setFormVisible={setFormVisible}
+        setProductsInCartCount={setProductsInCartCount}
+      />
     );
   }
 
@@ -155,7 +160,14 @@ function Cart(props: TCartProps) {
       <div className={styles.wrapper}>
         <h1 className="visually-hidden">Cart</h1>
         <div className={styles.productsWrapper}>
-          <CartPagination handleProductsPerPage={handleProductsPerPage} productsPerPage={productsPerPage} maxPages={maxPages} currentPage={currentPage} goNextFromCurrentPage={goNextFromCurrentPage} goBackFromCurrentPage={goBackFromCurrentPage} />
+          <CartPagination
+            handleProductsPerPage={handleProductsPerPage}
+            productsPerPage={productsPerPage}
+            maxPages={maxPages}
+            currentPage={currentPage}
+            goNextFromCurrentPage={goNextFromCurrentPage}
+            goBackFromCurrentPage={goBackFromCurrentPage}
+          />
           { currentProducts?.map((product: TProductsItem, index) => (
             <CartProduct
               key={product.id}
@@ -199,7 +211,12 @@ function Cart(props: TCartProps) {
               </div>
             </div>
           ) : <h4>No applied codes</h4>}
-          <Promo isCodeTrue={isCodeValid} currenCodes={codeAdded} setIsCodeTrue={setIsCodeValid} setIsCodeAdd={addPromoCode} />
+          <Promo
+            isCodeTrue={isCodeValid}
+            currenCodes={codeAdded}
+            setIsCodeTrue={setIsCodeValid}
+            setIsCodeAdd={addPromoCode}
+          />
           <button className={styles.byuButton} type="button" onClick={() => setFormVisible(true)}> BUY NOW</button>
         </div>
         <Modal

@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type TProductsItem = {
   id: number;
   title: string;
@@ -26,10 +28,7 @@ export type TProductCartIdCountProps = {
 }
 
 export type TProductHandlers = {
-
-  // eslint-disable-next-line no-unused-vars, no-undef
   onClickHandlerIncrease: (event: React.MouseEvent<HTMLButtonElement>) => void,
-  // eslint-disable-next-line no-unused-vars, no-undef
   onClickHandlerDecrease: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
@@ -44,13 +43,11 @@ export interface IPromoCodeHandler {
   todo: string
   code: string
   discount: number
-  // eslint-disable-next-line no-unused-vars, no-undef
   setCode: (event: React.MouseEvent<HTMLButtonElement>, isAdd: boolean) => void
 }
 
 export interface IAddHandler extends IPromoCodeHandler{
   code: string
-  // eslint-disable-next-line no-unused-vars
   inputData: (string:string) => void
 }
 

@@ -5,7 +5,6 @@ import styles from './CarouselImages.module.scss';
 
 interface ICarouselImages {
   value: string
-  // eslint-disable-next-line no-unused-vars
   setCurrentImg(str:string): void
 }
 

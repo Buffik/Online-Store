@@ -1,8 +1,6 @@
-/* eslint-disable no-param-reassign */
 function checkUniqueImgs(
   arrImgSizes: number[],
   arrImg: string[],
-  // eslint-disable-next-line no-unused-vars
   callBack: (arr: string[]) => void,
 ) {
   const result = arrImgSizes.reduce<string[]>((acc, el, index) => {
@@ -12,12 +10,10 @@ function checkUniqueImgs(
       && !acc.includes(arrImg[index])
       && !acc.includes(arrImg[arrImgSizes.indexOf(el)])
     ) {
-      acc = [...acc, arrImg[arrImgSizes.indexOf(el)]];
-      return acc;
+      return [...acc, arrImg[arrImgSizes.indexOf(el)]];
     }
     if (arrImgSizes.indexOf(el) === arrImgSizes.lastIndexOf(el) && !acc.includes(arrImg[index])) {
-      acc = [...acc, arrImg[index]];
-      return acc;
+      return [...acc, arrImg[index]];
     }
     return acc;
   }, []);
