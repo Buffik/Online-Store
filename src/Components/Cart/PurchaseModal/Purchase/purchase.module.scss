@@ -122,6 +122,9 @@
     &:focus {
       outline: 0;
     }
+    &::placeholder {
+      font-size: 0.9rem;
+    }
   }
 }
 
