@@ -113,7 +113,7 @@ function ProductPage({
   }
 
   const linkToCategories = `/?category=${currentPage?.category}`;
-  const linkToBrands = `/?brand=${currentPage?.brand}`;
+  const linkToBrands = `/?category=${currentPage?.category}&brand=${currentPage?.brand}`;
 
   return (
     <CartContainer>
