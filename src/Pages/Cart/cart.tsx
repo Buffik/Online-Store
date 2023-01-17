@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import ApprovePurchase from '../../Components/Cart/ApprovePerchase/ApprovePurchase';
-// import React, { useEffect, useState } from 'react';
-// import PostService from '../../Components/API/PostService';
 import CartProduct from '../../Components/Cart/CartProduct/CartProduct';
 import CartPagination from '../../Components/Cart/Pagination/CartPagination';
 import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
@@ -13,20 +11,15 @@ import Purchase from '../../Components/Cart/PurchaseModal/Purchase/Purchase';
 import CartContainer from '../../Components/UI/container/CartContainer/CartContainer';
 import SiteContainer from '../../Components/UI/container/SiteContainer';
 import LoadingSpinner from '../../Components/UI/LoadingSpinner';
-// eslint-disable-next-line no-unused-vars
 import countTotalCost from '../../Components/utils/countTotalCost';
 import countTotalCount from '../../Components/utils/countTotalCount';
 import countTotalSumWithDiscounts from '../../Components/utils/countTotalSumWithDiscounts';
-// import useFetching from '../../hooks/useFetching';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
 import formatPrice from '../../Components/utils/formatPrice';
 import styles from './cart.module.scss';
 import emptyCartImg from '../../assets/images/emptyCart.svg';
 
 type TCartProps = {
-  productsInCart: TProductPartialProps[]
-  // eslint-disable-next-line no-unused-vars
-  setProductsInCart(arr: TProductPartialProps[]): void;
   isPending: boolean;
   productsInCartCount: TProductPartialProps[];
   // eslint-disable-next-line no-unused-vars
@@ -43,7 +36,7 @@ type TCartProps = {
 
 function Cart(props: TCartProps) {
   const {
-    productsInCart, setProductsInCart, isPending, productsInCartCount, setProductsInCartCount, products, increaseProductCount, decreaseProductCount, formVisible, setFormVisible,
+    isPending, productsInCartCount, setProductsInCartCount, products, increaseProductCount, decreaseProductCount, formVisible, setFormVisible,
   } = props;
   const [totalCount, setTotalCount] = useState(countTotalCount(productsInCartCount));
   const [totalCost, setTotalCost] = useState(0);
@@ -106,7 +99,7 @@ function Cart(props: TCartProps) {
 
   useEffect(() => {
     setTotalCount(countTotalCount(productsInCartCount));
-  }, [productsInCartCount, productsInCart]);
+  }, [productsInCartCount]);
 
   useEffect(() => {
     if (products) {
@@ -141,7 +134,7 @@ function Cart(props: TCartProps) {
 
   if (showAffirmative) {
     return (
-      <ApprovePurchase showAffirmative={showAffirmative} setFormVisible={setFormVisible} setProductsInCart={setProductsInCart} setProductsInCartCount={setProductsInCartCount} />
+      <ApprovePurchase showAffirmative={showAffirmative} setFormVisible={setFormVisible} setProductsInCartCount={setProductsInCartCount} />
     );
   }
 

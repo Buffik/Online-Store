@@ -6,9 +6,6 @@ function checkUniqueImgs(
   callBack: (arr: string[]) => void,
 ) {
   const result = arrImgSizes.reduce<string[]>((acc, el, index) => {
-    // if (!acc.includes(arrImg[index])) {
-    //   acc = [...acc, arrImg[index]];
-    // }
     if (
       arrImgSizes.indexOf(el)
       !== arrImgSizes.lastIndexOf(el)
