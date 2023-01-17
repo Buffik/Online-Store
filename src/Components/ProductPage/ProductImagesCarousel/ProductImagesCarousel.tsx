@@ -4,7 +4,6 @@ import styles from './ProductImagesCarousel.module.scss';
 
 interface IProductImagesCarousel {
   cleanArrImg: string[]
-  // eslint-disable-next-line no-unused-vars
   setCurrentImg(str:string): void
 }
 
@@ -12,7 +11,6 @@ function ProductImagesCarousel({ cleanArrImg, setCurrentImg }: IProductImagesCar
   const amountOfImgs = cleanArrImg.length;
   const IMAGE_WIDTH = 190;
 
-  // eslint-disable-next-line no-unused-vars
   const [currentOffset, setCurrentOffset] = useState(0);
 
   const handleLeftArrowClick = (px: number) => {

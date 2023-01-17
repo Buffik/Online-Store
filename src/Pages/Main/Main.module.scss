@@ -21,6 +21,11 @@
   align-items: center;
 }
 
+.productsView div {
+  display: flex;
+  align-items: center;
+}
+
 .productsView input[type="radio"] {
   appearance: none;
 }

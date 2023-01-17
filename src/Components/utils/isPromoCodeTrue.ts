@@ -4,8 +4,9 @@ const isPromoCodeTrue = (promoCodesArr: TPromoCodesArr, code:string, currentCode
   let result = false;
 
   promoCodesArr.forEach((item) => {
-    // eslint-disable-next-line max-len
-    if (item.name === code.toLocaleLowerCase().trim() && !currentCodes.includes(item.discount)) result = true;
+    if (item.name === code.toLocaleLowerCase().trim() && !currentCodes.includes(item.discount)) {
+      result = true;
+    }
   });
 
   return result;

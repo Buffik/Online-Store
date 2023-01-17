@@ -5,13 +5,11 @@ import isFormValidHandle from '../../../utils/isFormValidHandle';
 import styles from './purchase.module.scss';
 
 interface IPurchase {
-    // eslint-disable-next-line no-unused-vars
   setShowAffirmative: (bool: boolean) => void
 }
 
 function Purchase({ setShowAffirmative }: IPurchase) {
   const [runValidate, setRunValidate] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [isFormValid, setIsFormValid] = useState(false);
   const handleClickButton = (event: React.MouseEvent<HTMLButtonElement>, isFormVal: boolean) => {
     event.preventDefault();

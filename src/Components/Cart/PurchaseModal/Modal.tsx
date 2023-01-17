@@ -6,7 +6,6 @@ import styles from './modal.module.scss';
 interface IModal {
   children: React.ReactNode
   visible: boolean
-  // eslint-disable-next-line no-unused-vars
   setVisible: (bool:boolean) => void
 }
 

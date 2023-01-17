@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import FiltersList from '../../Components/Main/FiltersList';
 import ProductsList from '../../Components/Main/ProductsList';
@@ -190,32 +189,29 @@ function Main(props: TMainProps) {
                   <option value="discount-ascending">Lower discount first</option>
                 </select>
                 <div className={styles.productsView}>
-                  <input
-                    type="radio"
-                    name="products-view"
-                    id="products-view-grid"
-                    checked={productsView === 'grid'}
-                    onChange={handleViewChange}
-                  />
-                  <label
-                    className={styles.productsView__label_grid}
-                    htmlFor="products-view-grid"
-                    title="View products as a grid"
-                    aria-label="View products as a grid."
-                  />
-                  <input
-                    type="radio"
-                    name="products-view"
-                    id="products-view-list"
-                    checked={productsView === 'list'}
-                    onChange={handleViewChange}
-                  />
-                  <label
-                    className={styles.productsView__label_list}
-                    htmlFor="products-view-list"
-                    title="View products as a list"
-                    aria-label="View products as a list."
-                  />
+                  {['grid', 'list'].map((view) => (
+                    <div key={view}>
+                      <input
+                        type="radio"
+                        name="products-view"
+                        id={`products-view-${view}`}
+                        checked={productsView === view}
+                        onChange={handleViewChange}
+                      />
+                      <label
+                        className={(view === 'grid')
+                          ? styles.productsView__label_grid
+                          : styles.productsView__label_list}
+                        htmlFor={`products-view-${view}`}
+                        title={`View products as a ${view}`}
+                      >
+                        <span className="visually-hidden">
+                          {'View products as a '}
+                          {view}
+                        </span>
+                      </label>
+                    </div>
+                  ))}
                 </div>
               </div>
               <ProductsList

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import useFetching from '../../hooks/useFetching';
@@ -16,9 +15,7 @@ import styles from './productPage.module.scss';
 
 interface IProductPage {
   productsInCart: TProductPartialProps[]
-  // eslint-disable-next-line no-unused-vars
   addToCart(id: number | undefined): void;
-  // eslint-disable-next-line no-unused-vars
   dropFromCart(id: number | undefined): void;
   setFormVisible: (bool:boolean) => void
 }
@@ -88,9 +85,7 @@ function ProductPage({
   const handleBuyButtonClick = () => {
     const isProductInCart = productsInCart.reduce<boolean>((acc, el) => {
       if (el.id === id) {
-        // eslint-disable-next-line no-param-reassign
-        acc = true;
-        return acc;
+        return true;
       }
       return acc;
     }, false);
@@ -118,7 +113,7 @@ function ProductPage({
   }
 
   const linkToCategories = `/?category=${currentPage?.category}`;
-  const linkToBrands = `/?brand=${currentPage?.brand}`;
+  const linkToBrands = `/?category=${currentPage?.category}&brand=${currentPage?.brand}`;
 
   return (
     <CartContainer>
