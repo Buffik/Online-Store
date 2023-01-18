@@ -20,6 +20,9 @@ import emptyCartImg from '../../assets/images/emptyCart.svg';
 
 type TCartProps = {
   isPending: boolean;
+  productsInCart: TProductPartialProps[]
+  // eslint-disable-next-line no-unused-vars
+  setProductsInCart(arr: TProductPartialProps[]): void;
   productsInCartCount: TProductPartialProps[];
   setProductsInCartCount(arr: TProductPartialProps[]): void;
   products: TProductsItem[] | null;
@@ -32,6 +35,8 @@ type TCartProps = {
 function Cart(props: TCartProps) {
   const {
     isPending,
+    productsInCart,
+    setProductsInCart,
     productsInCartCount,
     setProductsInCartCount,
     products,
@@ -100,7 +105,7 @@ function Cart(props: TCartProps) {
 
   useEffect(() => {
     setTotalCount(countTotalCount(productsInCartCount));
-  }, [productsInCartCount]);
+  }, [productsInCartCount, productsInCart]);
 
   useEffect(() => {
     if (products) {
@@ -136,6 +141,7 @@ function Cart(props: TCartProps) {
   if (showAffirmative) {
     return (
       <ApprovePurchase
+        setProductsInCart={setProductsInCart}
         showAffirmative={showAffirmative}
         setFormVisible={setFormVisible}
         setProductsInCartCount={setProductsInCartCount}
