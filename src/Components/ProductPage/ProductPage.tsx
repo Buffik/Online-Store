@@ -5,7 +5,6 @@ import { TProductPartialProps, TProductsItemWithImages } from '../../types/types
 import PostService from '../API/PostService';
 import ProductAddDropButton from '../UI/button/ProductAddDropButton';
 import CartContainer from '../UI/container/CartContainer/CartContainer';
-// import SiteContainer from '../UI/container/SiteContainer';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import checkUniqueImgs from '../utils/checkUniqueImgs';
 import setDataToLocalStorage from '../utils/setDataToLocalStorage';
@@ -27,7 +26,6 @@ function ProductPage({
   const navigate = useNavigate();
   const id = Number(params.id);
 
-  // const [goToCart, setGoToCart] = useState(false);
   const [currentPage, setCurrentPage] = useState<TProductsItemWithImages>();
 
   const [fetchProductById, isPending] = useFetching(async () => {
@@ -67,10 +65,6 @@ function ProductPage({
     },
     [currentPage],
   );
-
-  // useEffect(() => {
-  //   i;
-  // }, [currentPage]);
 
   useEffect(() => {
     setDataToLocalStorage(productsInCart);

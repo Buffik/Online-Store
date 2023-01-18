@@ -7,11 +7,8 @@ import styles from './approvePurchase.module.scss';
 
 interface IApprovePurchase {
   showAffirmative: boolean
-  // eslint-disable-next-line no-unused-vars
   setFormVisible(bool:boolean): void;
-  // eslint-disable-next-line no-unused-vars
   setProductsInCart(arr: TProductPartialProps[]): void;
-  // eslint-disable-next-line no-unused-vars
   setProductsInCartCount(arr: TProductPartialProps[]): void;
 }
 

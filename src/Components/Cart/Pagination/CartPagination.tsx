@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './cartPagination.module.scss';
 
 interface ICartPagination {
-  // eslint-disable-next-line no-unused-vars
   handleProductsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
   productsPerPage: number
   maxPages: number

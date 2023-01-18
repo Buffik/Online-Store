@@ -8,9 +8,7 @@ import styles from './promo.module.scss';
 interface IPromoProps {
   isCodeTrue: boolean
   currenCodes: number[]
-    // eslint-disable-next-line no-unused-vars
   setIsCodeTrue: (boolean:boolean) => void
-  // eslint-disable-next-line no-unused-vars
   setIsCodeAdd: (event: React.MouseEvent<HTMLButtonElement>, isAdd: boolean) => void
 }
 
