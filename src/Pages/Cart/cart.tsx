@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import ApprovePurchase from '../../Components/Cart/ApprovePerchase/ApprovePurchase';
+import ApprovePurchase from '../../Components/Cart/ApprovePurchase/ApprovePurchase';
 import CartProduct from '../../Components/Cart/CartProduct/CartProduct';
 import CartPagination from '../../Components/Cart/Pagination/CartPagination';
 import DeleteCode from '../../Components/Cart/Promo/handleCodes/DeleteCode';
