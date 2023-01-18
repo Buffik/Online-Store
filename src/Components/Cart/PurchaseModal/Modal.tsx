@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import styles from './modal.module.scss';
 
@@ -16,6 +14,7 @@ function Modal({ children, visible, setVisible }: IModal) {
   }
   return (
     <div
+      role="presentation"
       className={rootClasses.join(' ')}
       onClick={() => setVisible(false)}
       onKeyUp={(e) => {
@@ -25,6 +24,7 @@ function Modal({ children, visible, setVisible }: IModal) {
       }}
     >
       <div
+        role="presentation"
         className={styles.myModalContent}
         onClick={(e) => e.stopPropagation()}
       >

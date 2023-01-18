@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TProductsCart } from '../../../types/types';
@@ -9,7 +7,6 @@ import formatPrice from '../../utils/formatPrice';
 import styles from './CartProduct.module.scss';
 
 function CartProduct(props:TProductsCart) {
-  // eslint-disable-next-line max-len
   const {
     productIndex,
     id,
@@ -86,9 +83,19 @@ function CartProduct(props:TProductsCart) {
           {'Available stock: '}
           {stock}
         </div>
-        <ProductCartButton value={id} onClick={onClickHandlerIncrease}><div>+</div></ProductCartButton>
+        <ProductCartButton
+          value={id}
+          onClick={onClickHandlerIncrease}
+        >
+          <div>+</div>
+        </ProductCartButton>
         <div className={styles.textCount}>{data.count}</div>
-        <ProductCartButton value={id} onClick={onClickHandlerDecrease}><div>{data.count === 1 ? 'Delete from cart' : '-'}</div></ProductCartButton>
+        <ProductCartButton
+          value={id}
+          onClick={onClickHandlerDecrease}
+        >
+          <div>{data.count === 1 ? 'Delete from cart' : '-'}</div>
+        </ProductCartButton>
         <div className={styles.textPrice}>
           {formatPrice(price * data.count)}
         </div>
