@@ -1,15 +1,15 @@
-import { TProductPartialProps } from '../../types/types';
+import { TProductPartialProps, TProductsItem, TProductsItemWithImages } from '../../types/types';
 
 export default class PostService {
-  static async getById(id:number) {
+  static async getById(id: number) {
     const URL = `https://dummyjson.com/products/${id}`;
-    const result = await fetch(URL).then((response) => response.json());
+    const result: TProductsItemWithImages = await fetch(URL).then((response) => response.json());
     return result;
   }
 
-  static async getCartItems(arr:TProductPartialProps[]) {
+  static async getCartItems(arr: TProductPartialProps[]) {
     const itemRequests = arr.map((item) => PostService.getById(item.id));
-    const promises = await Promise.all(itemRequests);
+    const promises: TProductsItem[] = await Promise.all(itemRequests);
     return promises;
   }
 
@@ -21,7 +21,7 @@ export default class PostService {
 
   static async getAllSizes(arr: string[]) {
     const imgSizes = arr.map((img) => PostService.getImgByURL(img));
-    const promises = await Promise.all(imgSizes);
+    const promises: number[] = await Promise.all(imgSizes);
     return promises;
   }
 }
