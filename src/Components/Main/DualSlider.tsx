@@ -10,7 +10,6 @@ type TDualSliderProps = {
   handleSliderFilter(event: React.ChangeEvent<HTMLInputElement>): void;
   filteredSearchedProducts: TProductsItem[] | [];
   searchParamsObject: TSearchParamsObject;
-  // fillSlider(filter: 'price' | 'stock'): string;
   }
 
 function DualSlider(props: TDualSliderProps) {
@@ -21,7 +20,6 @@ function DualSlider(props: TDualSliderProps) {
     handleSliderFilter,
     filteredSearchedProducts,
     searchParamsObject,
-    // fillSlider,
   } = props;
 
   const filterValuesTotal = (products.length > 0)
@@ -59,7 +57,6 @@ function DualSlider(props: TDualSliderProps) {
         value={maxFilterValue}
         onInput={handleSliderFilter}
         className={[styles.slider, styles.sliderMax].join(' ')}
-        // style={{ background: `${fillSlider(filter)}` }}
       />
       <div className={styles.slider__labels}>
         <p className={styles.slider__labelMin}>

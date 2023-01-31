@@ -8,6 +8,8 @@ import {
   TProductsItem, TSearchParamsObject, TSetSearchParamsObject, TFilterSelectionTypes,
 } from '../../types/types';
 
+type TItemsCount = (items: TProductsItem[], key: TFilterSelectionTypes, value: string) => number;
+
 type TFiltersListProps = {
   products: TProductsItem[];
   filteredSearchedProducts: TProductsItem[] | [];
@@ -17,7 +19,6 @@ type TFiltersListProps = {
   handleCopyClick(): void;
   handleSliderFilter(event: React.ChangeEvent<HTMLInputElement>): void;
   copied: boolean;
-  // fillSlider(filter: 'price' | 'stock'): string;
 }
 
 function FiltersList(props: TFiltersListProps) {
@@ -30,13 +31,11 @@ function FiltersList(props: TFiltersListProps) {
     handleCopyClick,
     handleSliderFilter,
     copied,
-    // fillSlider,
   } = props;
 
   const categoriesList = getFilterOptions(products, 'category');
   const brandsList = getFilterOptions(products, 'brand');
 
-  type TItemsCount = (items: TProductsItem[], key: TFilterSelectionTypes, value: string) => number;
   const itemsCount:
     TItemsCount = (items, key, value) => items.filter((product) => product[key] === value).length;
 
@@ -107,7 +106,6 @@ function FiltersList(props: TFiltersListProps) {
           handleSliderFilter={handleSliderFilter}
           searchParamsObject={searchParamsObject}
           filteredSearchedProducts={filteredSearchedProducts}
-          // fillSlider={fillSlider}
         />
       </div>
       <h3 className={styles.filter__title}>Stock</h3>
@@ -119,7 +117,6 @@ function FiltersList(props: TFiltersListProps) {
           handleSliderFilter={handleSliderFilter}
           searchParamsObject={searchParamsObject}
           filteredSearchedProducts={filteredSearchedProducts}
-          // fillSlider={fillSlider}
         />
       </div>
     </section>

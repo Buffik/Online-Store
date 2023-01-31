@@ -1,4 +1,3 @@
-// import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 import { TProductsItem, TProductPartialProps } from '../../types/types';
@@ -16,13 +15,15 @@ export default function Header(props: TProps) {
     products,
   } = props;
 
-  const cartTotalItems = products?.reduce((acc, elem) => {
-    const productInCart = productsInCart.find((item) => item.id === elem.id);
-    if (productInCart === undefined) {
-      return 0;
-    }
-    return acc + elem.price * productInCart.count;
-  }, 0);
+  const cartTotalItems = products
+    ? products.reduce((acc, elem) => {
+      const productInCart = productsInCart.find((item) => item.id === elem.id);
+      if (productInCart === undefined) {
+        return 0;
+      }
+      return acc + elem.price * productInCart.count;
+    }, 0)
+    : 0;
 
   const cartTotalPrice = productsInCart.reduce((acc, elem) => acc + elem.count, 0);
 
