@@ -1,0 +1,122 @@
+.cardProduct {
+  margin: auto;
+  margin-bottom: 20px;
+  max-width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--unimportant-color);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.dataLinkWrapper {
+  width: 90%;
+  display: flex;
+  text-decoration: none;
+  color: teal;
+}
+
+.infoWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 15px;
+  & hr {
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    border-radius: 5px;
+  }
+}
+
+.infoHeader {
+  text-align: center;
+  line-height: 2rem;
+}
+
+.infoImg {
+  max-width: 200px;
+  height: auto;
+  border: 1px solid var(--unimportant-color);
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.buttonsWrapper {
+  width: 100%;
+  max-width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.textAbout, .textStock {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitlesWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.subtitlesWrapperFirstLine, 
+.subtitlesWrapperSecondLine {
+  max-width: 45%;
+}
+
+.infoHeaders {
+  color: var(--accent-color);
+}
+
+.textStock {
+  margin-bottom: 10px;
+}
+
+.textCount {
+  padding: 5px 10px;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 5px;
+}
+
+.ratingWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  & div {
+    margin: 10px;
+  }
+
+  & span {
+    font-weight: bold;
+  }
+}
+
+.textPrice {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.productIndex {
+  color: white;
+  margin-right: 10px;
+  width: 6%;
+  text-align: center;
+  border: 1px solid var(--accent-color);
+  border-radius: 5rem;
+  background-color: var(--accent-color);
+}
+

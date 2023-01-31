@@ -1,0 +1,71 @@
+.main {
+  margin: 40px 0 50px;
+  width: 100%;
+  display: flex;
+  gap: 50px;
+}
+
+.rightColumnWrapper {
+  width: 100%;
+}
+
+.findSortContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productsView {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.productsView div {
+  display: flex;
+  align-items: center;
+}
+
+.productsView input[type="radio"] {
+  appearance: none;
+}
+
+.productsView label {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  cursor: pointer;
+}
+
+.productsView__label_grid {
+  background-image: url("../../assets/images/grid-grey.png");
+
+  &::before {
+    background-image: url("../../assets/images/grid-green.png");
+  }
+}
+
+.productsView input[type="radio"]:checked + .productsView__label_grid {
+  background-image: url("../../assets/images/grid-green.png");
+}
+
+.productsView__label_list {
+  background-image: url("../../assets/images/list-grey.png");
+
+  &::before {
+    background-image: url("../../assets/images/list-green.png");
+  }
+}
+
+.productsView input[type="radio"]:checked + .productsView__label_list {
+  background-image: url("../../assets/images/list-green.png");
+}
+
+.productsView input[type="radio"]:focus + .productsView__label_grid,
+.productsView input[type="radio"]:focus + .productsView__label_list {
+  outline: 1px solid var(--accent-color);
+  outline-offset: 2px;
+}
