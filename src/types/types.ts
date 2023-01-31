@@ -59,13 +59,6 @@ export type TSearchParamsObject = Record<string, string>;
 
 export type TSetSearchParamsObject = (searchParamsObject: TSearchParamsObject) => void;
 
-// export enum filterTypes {
-//   category = 'category',
-//   brand = 'brand',
-//   price = 'price',
-//   stock = 'stock',
-// }
-
 export type TFilterSelectionTypes = 'category' | 'brand';
 
 export type TFilterRangeTypes = 'price' | 'stock';

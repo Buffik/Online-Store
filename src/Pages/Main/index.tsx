@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import FiltersList from '../../Components/Main/FiltersList';
 import ProductsList from '../../Components/Main/ProductsList';
-// import TestForMain from '../../Components/TestForMain';
 import useSearchParamsObject from '../../hooks/useSearchParamsObject';
 import LoadingSpinner from '../../Components/UI/LoadingSpinner';
 import SiteContainer from '../../Components/UI/container/SiteContainer';
@@ -48,26 +47,6 @@ function Main(props: TMainProps) {
 
   const [searchParamsObject, setSearchParamsObject] = useSearchParamsObject();
 
-  // const fillSlider = (filter: 'price' | 'stock') => {
-  //   const sliderColor = '#b9b9b9';
-  //   const rangeColor = '#2CB708';
-  //   const max = Math.max(...products.map((item) => item[filter]));
-  //   const min = Math.min(...products.map((item) => item[filter]));
-  //   const valueMin = Number(searchParamsObject[`${[filter]}range`]?.split(',')[0]);
-  //   const valueMax = Number(searchParamsObject[`${[filter]}range`]?.split(',')[1]);
-  //   const rangeDistance = max - min;
-  //   const fromPosition = valueMin - min;
-  //   const toPosition = valueMax - min;
-  //   return `linear-gradient(
-  //     to right,
-  //     ${sliderColor} 0%,
-  //     ${sliderColor} ${((fromPosition) / (rangeDistance)) * 100}%,
-  //     ${rangeColor} ${((fromPosition) / (rangeDistance)) * 100}%,
-  //     ${rangeColor} ${((toPosition) / (rangeDistance)) * 100}%,
-  //     ${sliderColor} ${((toPosition) / (rangeDistance)) * 100}%,
-  //     ${sliderColor} 100%)`;
-  // };
-
   const getMinPrice = (source: TProductsItem[], paramName: TFilterRangeTypes) => {
     if (source.length !== 0) {
       return Math.min(...source.map((item) => item[paramName]));
@@ -98,7 +77,6 @@ function Main(props: TMainProps) {
       return;
     }
     setSearchParamsObject({ ...searchParamsObject, [`${filterName}range`]: [minValue, maxValue].sort((a, b) => a - b).join(',') });
-    // fillSlider('price');
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,8 +105,6 @@ function Main(props: TMainProps) {
 
   const handleResetClick = () => {
     setSearchParamsObject({});
-    // fillSlider('price');
-    // fillSlider('stock');
   };
 
   const [copied, setCopied] = useState(false);
@@ -164,7 +140,6 @@ function Main(props: TMainProps) {
               handleCopyClick={handleCopyClick}
               handleSliderFilter={handleSliderFilter}
               copied={copied}
-              // fillSlider={fillSlider}
             />
             <div className={styles.rightColumnWrapper}>
               <div className={styles.findSortContainer}>

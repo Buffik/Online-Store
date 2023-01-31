@@ -23,25 +23,6 @@ const sortProducts: TsortProducts = (productsArray, searchParamsObject) => {
     default:
       return productsArray;
   }
-  // if (sortby === 'price-ascending') {
-  //   return productsArray.sort((a, b) => a.price - b.price);
-  // }
-  // if (sortby === 'price-descending') {
-  //   return productsArray.sort((a, b) => b.price - a.price);
-  // }
-  // if (sortby === 'rating-ascending') {
-  //   return productsArray.sort((a, b) => a.rating - b.rating);
-  // }
-  // if (sortby === 'rating-descending') {
-  //   return productsArray.sort((a, b) => b.rating - a.rating);
-  // }
-  // if (sortby === 'discount-ascending') {
-  //   return productsArray.sort((a, b) => a.discountPercentage - b.discountPercentage);
-  // }
-  // if (sortby === 'discount-descending') {
-  //   return productsArray.sort((a, b) => b.discountPercentage - a.discountPercentage);
-  // }
-  // return productsArray;
 };
 
 export default sortProducts;

@@ -21,7 +21,6 @@ import emptyCartImg from '../../assets/images/emptyCart.svg';
 type TCartProps = {
   isPending: boolean;
   productsInCart: TProductPartialProps[]
-  // eslint-disable-next-line no-unused-vars
   setProductsInCart(arr: TProductPartialProps[]): void;
   productsInCartCount: TProductPartialProps[];
   setProductsInCartCount(arr: TProductPartialProps[]): void;

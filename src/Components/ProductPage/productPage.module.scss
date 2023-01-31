@@ -10,15 +10,12 @@
 .breedsWrapper {
   color: var(--unimportant-color);
   text-align: center;
-  // margin: 0 auto 30px auto;
   margin-bottom: 30px;
   align-self: flex-start;
   display: flex;
-  // max-width: 800px;
   justify-content: center;
   gap: 10px;
   align-items: center;
-  // font-size: 20px;
   & a {
     text-decoration: none;
     color: var(--accent-color);
@@ -36,7 +33,6 @@
 .breedsItems {
   color: var(--unimportant-color);
   font-size: 1.2rem;
-  // margin: 0 30px;
 }
 
 .productWrapper {
@@ -89,21 +85,16 @@
 
 .infoHeaders {
   color: var(--accent-color);
-  // font-weight: bold;
 }
 
 .infoDescription {
   margin-top: 10px;
   line-height: 150%;
-  // text-align: center;
-  // font-weight: bold;
 }
 
 .buttonsWrapper {
   padding: 30px 25px;
   min-width: 290px;
-  // min-height: 165px;
-  // max-height: 165px;
   align-self: flex-start;
   box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.1), 4px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
