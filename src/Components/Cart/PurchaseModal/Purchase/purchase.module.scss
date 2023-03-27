@@ -1,0 +1,154 @@
+.formWrapper {
+  width: 60vw;
+  height: 60%;
+}
+
+.myForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.myInput {
+  margin-bottom: 20px;
+  width: 60%;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.cardWrapper {
+  width: 55%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid var(--unimportant-color);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.cardNumber {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cardImg {
+  background-color: #fff;
+  width: 10%;
+  border-radius: 0.3rem;
+  padding: 0.3rem;
+  margin-right: 10px;
+}
+
+.cardNumberInput {
+  font-size: 1.5rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 10px;
+  width: 75%;
+  margin: auto 0;
+  &:focus {
+    outline: 0;
+  }
+  
+}
+
+.cardNumberInput::-webkit-inner-spin-button,
+.cardNumberInput::-webkit-outer-spin-button,
+.dataExpirationMonth::-webkit-inner-spin-button,
+.dataExpirationMonth::-webkit-outer-spin-button,
+.dataExpirationYear::-webkit-inner-spin-button,
+.dataExpirationYear::-webkit-outer-spin-button,
+.otherDataCVV::-webkit-inner-spin-button,
+.otherDataCVV::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+
+.otherData {
+  display: flex;
+  width: 300px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.otherDataCVV {
+  width: 60px;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  padding: 5px;
+  border: 1px solid var(--accent-color);
+  margin-bottom: 0;
+  &:focus {
+    outline: 0;
+  }
+  &::placeholder {
+    font-size: 0.85rem;
+  }
+}
+
+.otherDataExpirationWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.otherDataExpirationPlaceholder {
+  margin-right: 3px;
+}
+
+.dataExpiration {
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  font-size: 0.9rem;
+  & input {
+    text-align: center;
+    width: 35px;
+    border: 0;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 5px;
+    margin-bottom: 0;
+    &:focus {
+      outline: 0;
+    }
+    &::placeholder {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.formButton {
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 10px 25px;
+  background-color: var(--accent-color);
+  color: white;
+  border: 1px solid var(--accent-color);
+  border-radius: 10px;
+  &:hover {
+    transition: 0.3s all;
+    background-color: var(--accent-hover-color);
+  }
+}
+
+.errorTextWrapper {
+  width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  & > div {
+    padding: 0 10px 5px 10px;
+    color: var(--error-color)
+  }
+}

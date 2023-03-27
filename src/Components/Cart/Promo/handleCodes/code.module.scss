@@ -1,0 +1,27 @@
+.textCode {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.buttonCode {
+  padding: 5px 15px;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 14px;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+  
+  &:hover {
+    transition: all 0.3s;
+    background-color: var(--accent-hover-color);
+  }
+}
+
+.textSummary {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
