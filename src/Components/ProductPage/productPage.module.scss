@@ -1,0 +1,122 @@
+.wrapper {
+  margin: 40px auto;
+  padding: 0 30px;
+  max-width: 1220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.breedsWrapper {
+  color: var(--unimportant-color);
+  text-align: center;
+  margin-bottom: 30px;
+  align-self: flex-start;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  & a {
+    text-decoration: none;
+    color: var(--accent-color);
+    &:hover {
+      transition: all ease 0.3s;
+      color: var(--accent-hover-color);
+    }
+  }
+}
+
+.breedsCategory {
+  text-transform: capitalize;
+}
+
+.breedsItems {
+  color: var(--unimportant-color);
+  font-size: 1.2rem;
+}
+
+.productWrapper {
+  display: block;
+
+  & h1 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 50px;
+  }
+}
+
+.detailsWrapper {
+  display: flex;
+}
+
+.imagesWrapper {
+  max-width: 500px;
+  margin-right: 20px;
+}
+
+.mainImgWrapper {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid var(--unimportant-color);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.mainImg {
+  width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.infoWrapper {
+  width: 100%;
+  margin-right: 20px;
+  padding-top: 10px;
+}
+
+.infoText {
+  margin-bottom: 20px;
+}
+
+.infoHeaders {
+  color: var(--accent-color);
+}
+
+.infoDescription {
+  margin-top: 10px;
+  line-height: 150%;
+}
+
+.buttonsWrapper {
+  padding: 30px 25px;
+  min-width: 290px;
+  align-self: flex-start;
+  box-shadow: -4px 0px 4px rgba(0, 0, 0, 0.1), 4px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.buttonsWrapper button {
+  width: 180px;
+}
+
+.productPrice {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-font-color);
+  margin-bottom: 10px;
+}
+
+.productPrice span {
+  font-weight: normal;
+  font-size: 1.2rem;
+}

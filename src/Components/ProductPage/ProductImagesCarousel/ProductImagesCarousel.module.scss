@@ -1,0 +1,36 @@
+.carouselWrapper {
+  max-width: 400px;
+  display: flex;
+  min-height: 100px;
+  align-items: center;
+  gap: 10px;
+}
+
+.carouselButton {
+  padding: 8px 12px;
+  background-color: transparent;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  color: var(--accent-color);
+  font-size: 1.2rem;
+  &:last-of-type {
+    margin-left: 5px;
+  }
+}
+
+.carousel {
+  width: 340px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+
+}
+
+.carouselData {
+  display: flex;
+  flex-wrap: nowrap;
+  transition: translate;
+  transition-property: transform;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+}
